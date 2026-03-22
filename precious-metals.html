@@ -161,29 +161,18 @@
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
         // Fetch live gold and silver prices
         (async function() {
-            var apis = [
-                { url: 'https://api.metals.live/v1/spot', parse: function(data) {
-                    var g = data.find(function(m){return m.gold;});
-                    var s = data.find(function(m){return m.silver;});
-                    return { gold: g ? g.gold : null, silver: s ? s.silver : null };
-                }},
-                { url: 'https://api.metals.dev/v1/latest?api_key=demo&currency=USD&unit=toz', parse: function(data) {
-                    return { gold: data.metals && data.metals.gold, silver: data.metals && data.metals.silver };
-                }}
-            ];
-            for (var i = 0; i < apis.length; i++) {
-                try {
-                    var res = await fetch(apis[i].url);
-                    var data = await res.json();
-                    var prices = apis[i].parse(data);
-                    if (prices.gold) {
-                        document.getElementById('goldPrice').textContent = '$' + Number(prices.gold).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                        document.getElementById('silverPrice').textContent = '$' + Number(prices.silver).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                        document.getElementById('priceUpdated').textContent = 'Live spot prices \u2014 updated ' + new Date().toLocaleString();
-                        return;
-                    }
-                } catch(e) { continue; }
-            }
+            try {
+                var goldRes = await fetch('https://api.gold-api.com/price/XAU');
+                var silverRes = await fetch('https://api.gold-api.com/price/XAG');
+                var gold = await goldRes.json();
+                var silver = await silverRes.json();
+                if (gold.price && silver.price) {
+                    document.getElementById('goldPrice').textContent = '$' + Number(gold.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                    document.getElementById('silverPrice').textContent = '$' + Number(silver.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                    document.getElementById('priceUpdated').textContent = 'Live spot prices \u2014 updated ' + new Date().toLocaleString();
+                    return;
+                }
+            } catch(e) {}
             document.getElementById('goldPrice').textContent = '\u2014';
             document.getElementById('silverPrice').textContent = '\u2014';
             document.getElementById('priceUpdated').textContent = 'Prices unavailable \u2014 call for current rates';
