@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "Node Static Server",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "C:\\Program Files\\nodejs\\npx.cmd", "serve", "C:\\Users\\user\\Documents\\GitHub\\website", "--no-clipboard", "--listen", "5000"],
+      "port": 5000
+    },
+    {
       "name": "Python Static Server",
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "8000", "--directory", "C:/Users/user/Documents/GitHub/website"],
@@ -12,12 +18,6 @@
       "runtimeExecutable": "C:/Program Files/Git/usr/bin/perl.exe",
       "runtimeArgs": ["C:/Users/user/Documents/GitHub/website/.claude/server.pl", "8080", "C:/Users/user/Documents/GitHub/website"],
       "port": 8080
-    },
-    {
-      "name": "Node Static Server",
-      "runtimeExecutable": "cmd.exe",
-      "runtimeArgs": ["/c", "C:\\Program Files\\nodejs\\npx.cmd", "serve", "C:\\Users\\user\\Documents\\GitHub\\website", "--no-clipboard", "--listen", "5000"],
-      "port": 5000
     }
   ]
 }
