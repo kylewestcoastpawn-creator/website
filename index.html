@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West Coast Pawn & Gun | Buy · Sell · Trade · Loan</title>
+    <meta name="description" content="West Coast Pawn & Gun — Your premier destination for buying, selling, and trading firearms, ammunition, and accessories. FFL licensed dealer. Fair prices. No hassle. Expert staff.">
+    <meta property="og:title" content="West Coast Pawn & Gun">
+    <meta property="og:description" content="Buy, sell, trade, and pawn firearms on the West Coast. FFL licensed dealer with 500+ guns in stock.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://westcoastpawngun.com">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #8B0000;
+            --accent: #C0A060;
+            --light: #f4f4f4;
+            --muted: #aaa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            background-color: #111;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--secondary);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .logo-text h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+            display: block;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* ─── HERO ─── */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+                        url('https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=1600') center/cover no-repeat;
+            background-color: #0d0d0d;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-content h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .hero-content h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .hero-content h1 span {
+            color: var(--accent);
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 35px;
+            line-height: 1.7;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #a00000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139,0,0,0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: #111;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(192,160,96,0.3);
+        }
+
+        /* ─── TICKER ─── */
+        .ticker {
+            background: var(--secondary);
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: ticker 35s linear infinite;
+        }
+
+        .ticker-item {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            padding-right: 0;
+        }
+
+        .ticker-item span {
+            margin: 0 30px;
+            color: var(--accent);
+        }
+
+        @keyframes ticker {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ─── SECTIONS ─── */
+        section {
+            padding: 90px 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+        }
+
+        .section-title p {
+            color: var(--muted);
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: var(--secondary);
+            margin: 15px auto;
+        }
+
+        /* ─── SCROLL ANIMATIONS ─── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-delay-1 { transition-delay: 0.05s; }
+        .fade-in-delay-2 { transition-delay: 0.15s; }
+        .fade-in-delay-3 { transition-delay: 0.25s; }
+        .fade-in-delay-4 { transition-delay: 0.35s; }
+        .fade-in-delay-5 { transition-delay: 0.45s; }
+        .fade-in-delay-6 { transition-delay: 0.55s; }
+
+        /* ─── SERVICES ─── */
+        .services {
+            background: #111;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .service-card:hover {
+            border-bottom: 3px solid var(--secondary);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .service-card p {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* ─── INVENTORY ─── */
+        .inventory {
+            background: #1a1a1a;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .item-card {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+
+        .item-img {
+            width: 100%;
+            height: 200px;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .item-info {
+            padding: 20px;
+        }
+
+        .item-info h3 {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent);
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .item-info p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .item-badge {
+            display: inline-block;
+            padding: 5px 14px;
+            background: var(--secondary);
+            color: white;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ─── WHY US ─── */
+        .why-us {
+            background: #111;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .why-item .number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            line-height: 1;
+        }
+
+        .why-item h4 {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent);
+            margin: 10px 0 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+        }
+
+        .why-item p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ─── POLICIES ─── */
+        .policies {
+            background: #1a1a1a;
+        }
+
+        .policy-box {
+            background: #111;
+            border-left: 4px solid var(--secondary);
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: transform 0.2s;
+        }
+
+        .policy-box:hover {
+            transform: translateX(5px);
+        }
+
+        .policy-box h3 {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.15rem;
+        }
+
+        .policy-box p {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* ─── CONTACT ─── */
+        .contact {
+            background: #111;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .contact-info h3 {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .info-item h4 {
+            font-family: 'Oswald', sans-serif;
+            color: #fff;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-item p,
+        .info-item a {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .info-item a:hover {
+            color: var(--accent);
+        }
+
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .hours-table td {
+            padding: 7px 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+            border-bottom: 1px solid #222;
+        }
+
+        .hours-table td:first-child {
+            color: #fff;
+            font-weight: 600;
+            width: 150px;
+        }
+
+        .map-embed {
+            margin-top: 25px;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+
+        .map-embed iframe {
+            width: 100%;
+            height: 180px;
+            border: 0;
+            display: block;
+            filter: grayscale(60%) invert(85%) contrast(85%);
+        }
+
+        /* ─── CONTACT FORM ─── */
+        .contact-form h3 {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--muted);
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border 0.3s, box-shadow 0.3s;
+            border-radius: 2px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(192,160,96,0.15);
+        }
+
+        .form-group textarea {
+            height: 130px;
+            resize: vertical;
+        }
+
+        .form-group select option {
+            background: #1a1a1a;
+        }
+
+        .form-success {
+            display: none;
+            background: #1a3a1a;
+            border: 1px solid #2a5a2a;
+            color: #7ddc7d;
+            padding: 15px 20px;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            border-radius: 2px;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: #0a0a0a;
+            padding: 50px 40px 30px;
+            border-top: 3px solid var(--secondary);
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-brand .footer-logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            max-width: 320px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            color: var(--muted);
+        }
+
+        .social-link:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1a1a1a;
+            padding-top: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: #444;
+            font-size: 0.82rem;
+            line-height: 1.8;
+        }
+
+        .disclaimer {
+            background: #111;
+            border: 1px solid #222;
+            padding: 15px 20px;
+            margin: 20px auto 0;
+            max-width: 800px;
+            font-size: 0.78rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* ─── BACK TO TOP ─── */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 46px;
+            height: 46px;
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 999;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .back-to-top:hover {
+            background: #a00000;
+            transform: translateY(-3px);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: #111;
+                padding: 20px;
+                border-bottom: 2px solid var(--secondary);
+                gap: 15px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav role="navigation" aria-label="Main navigation">
+        <a href="#" class="logo" aria-label="West Coast Pawn & Gun — Home">
+            <div class="logo-icon" aria-hidden="true">⚙️</div>
+            <div class="logo-text">
+                <h1>West Coast Pawn & Gun</h1>
+                <p>Buy · Sell · Trade · Loan</p>
+            </div>
+        </a>
+        <ul class="nav-links" id="navLinks" role="list">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#inventory">Inventory</a></li>
+            <li><a href="#policies">Policies</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button
+            class="hamburger"
+            id="hamburger"
+            onclick="toggleNav()"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="navLinks">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero" aria-label="Hero banner">
+            <div class="hero-content">
+                <h2>⭐ Trusted Since Day One</h2>
+                <h1>West Coast<br><span>Pawn & Gun</span></h1>
+                <p>Your premier destination for buying, selling, and trading firearms, ammunition, and accessories on the West Coast. Fair prices. No hassle. Expert staff.</p>
+                <div class="btn-group">
+                    <a href="#inventory" class="btn btn-primary">View Inventory</a>
+                    <a href="#contact" class="btn btn-outline">Get In Touch</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- TICKER -->
+        <div class="ticker" aria-hidden="true">
+            <div class="ticker-track">
+                <div class="ticker-item">🔫 Handguns <span>★</span> Rifles <span>★</span> Shotguns <span>★</span> Ammo <span>★</span> Accessories <span>★</span> Scopes <span>★</span> Holsters <span>★</span> Pawn Loans <span>★</span> Free Appraisals <span>★</span> Layaway Available <span>★</span> FFL Transfers <span>★</span>&nbsp;&nbsp;&nbsp;</div>
+                <div class="ticker-item">🔫 Handguns <span>★</span> Rifles <span>★</span> Shotguns <span>★</span> Ammo <span>★</span> Accessories <span>★</span> Scopes <span>★</span> Holsters <span>★</span> Pawn Loans <span>★</span> Free Appraisals <span>★</span> Layaway Available <span>★</span> FFL Transfers <span>★</span>&nbsp;&nbsp;&nbsp;</div>
+            </div>
+        </div>
+
+        <!-- SERVICES -->
+        <section class="services" id="services" aria-labelledby="services-heading">
+            <div class="section-title">
+                <h2 id="services-heading">Our Services</h2>
+                <div class="divider"></div>
+                <p>Everything you need — under one roof</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in fade-in-delay-1">
+                    <div class="service-icon" aria-hidden="true">🔫</div>
+                    <h3>Buy Firearms</h3>
+                    <p>Browse our wide selection of handguns, rifles, and shotguns. New and used inventory updated regularly at competitive prices.</p>
+                </div>
+                <div class="service-card fade-in fade-in-delay-2">
+                    <div class="service-icon" aria-hidden="true">💰</div>
+                    <h3>Sell Your Guns</h3>
+                    <p>Get top dollar for your firearms. We offer fast, fair appraisals with no obligation. Walk in and walk out with cash.</p>
+                </div>
+                <div class="service-card fade-in fade-in-delay-3">
+                    <div class="service-icon" aria-hidden="true">🔄</div>
+                    <h3>Trade-Ins</h3>
+                    <p>Looking to upgrade? Trade in your current firearm and put the value toward something new. Easy and hassle-free.</p>
+                </div>
+                <div class="service-card fade-in fade-in-delay-4">
+                    <div class="service-icon" aria-hidden="true">🏦</div>
+                    <h3>Pawn Loans</h3>
+                    <p>Need quick cash? Use your firearm as collateral for a short-term pawn loan. Discreet, fast, and confidential.</p>
+                </div>
+                <div class="service-card fade-in fade-in-delay-5">
+                    <div class="service-icon" aria-hidden="true">📋</div>
+                    <h3>FFL Transfers</h3>
+                    <p>We are a licensed FFL dealer. Have a firearm shipped here from an online purchase and we'll handle all transfer paperwork.</p>
+                </div>
+                <div class="service-card fade-in fade-in-delay-6">
+                    <div class="service-icon" aria-hidden="true">🎯</div>
+                    <h3>Accessories & Ammo</h3>
+                    <p>Stock up on ammunition, optics, holsters, magazines, cleaning supplies, and more from trusted brands.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURED INVENTORY -->
+        <section class="inventory" id="inventory" aria-labelledby="inventory-heading">
+            <div class="section-title">
+                <h2 id="inventory-heading">Featured Inventory</h2>
+                <div class="divider"></div>
+                <p>A sample of what we currently have in stock — inventory changes daily</p>
+            </div>
+            <div class="inventory-grid">
+                <div class="item-card fade-in fade-in-delay-1">
+                    <div class="item-img" aria-label="Glock 19 Gen 5 handgun">🔫</div>
+                    <div class="item-info">
+                        <h3>Glock 19 Gen 5</h3>
+                        <p>9mm Semi-Auto Pistol — Excellent used condition. Night sights installed. 3 mags included.</p>
+                        <span class="item-badge">Used – $499</span>
+                    </div>
+                </div>
+                <div class="item-card fade-in fade-in-delay-2">
+                    <div class="item-img" aria-label="S&W M&P Shield pistol">🎯</div>
+                    <div class="item-info">
+                        <h3>S&W M&P Shield</h3>
+                        <p>9mm Compact Pistol — Perfect concealed carry option. Like new in box.</p>
+                        <span class="item-badge">Used – $379</span>
+                    </div>
+                </div>
+                <div class="item-card fade-in fade-in-delay-3">
+                    <div class="item-img" aria-label="Ruger 10/22 Carbine rifle">🔫</div>
+                    <div class="item-info">
+                        <h3>Ruger 10/22 Carbine</h3>
+                        <p>.22 LR Semi-Auto Rifle — Great for plinking and small game. Wood stock, classic look.</p>
+                        <span class="item-badge">Used – $249</span>
+                    </div>
+                </div>
+                <div class="item-card fade-in fade-in-delay-4">
+                    <div class="item-img" aria-label="Mossberg 500 shotgun">🎯</div>
+                    <div class="item-info">
+                        <h3>Mossberg 500</h3>
+                        <p>12 Gauge Pump Shotgun — Reliable home defense or field gun. 18.5" barrel.</p>
+                        <span class="item-badge">New – $419</span>
+                    </div>
+                </div>
+                <div class="item-card fade-in fade-in-delay-5">
+                    <div class="item-img" aria-label="AR-15 semi-automatic rifle">🔫</div>
+                    <div class="item-info">
+                        <h3>AR-15 Rifle</h3>
+                        <p>5.56/.223 Semi-Auto — M4 profile barrel, flat-top upper. Great condition.</p>
+                        <span class="item-badge">Used – $799</span>
+                    </div>
+                </div>
+                <div class="item-card fade-in fade-in-delay-6">
+                    <div class="item-img" aria-label="Layaway program">💰</div>
+                    <div class="item-info">
+                        <h3>Layaway Available</h3>
+                        <p>Don't have the full amount today? Ask us about our flexible layaway program on any firearm.</p>
+                        <span class="item-badge">Ask Us</span>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top: 50px;">
+                <p style="color:#888; margin-bottom:15px;">Inventory changes daily — call or visit for current availability</p>
+                <a href="#contact" class="btn btn-outline">Contact Us About Inventory</a>
+            </div>
+        </section>
+
+        <!-- WHY US -->
+        <section class="why-us" aria-labelledby="why-heading">
+            <div class="section-title">
+                <h2 id="why-heading">Why Choose Us</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="why-grid">
+                <div class="why-item fade-in fade-in-delay-1">
+                    <div class="number">10+</div>
+                    <h4>Years in Business</h4>
+                    <p>Serving our community with integrity and expertise for over a decade</p>
+                </div>
+                <div class="why-item fade-in fade-in-delay-2">
+                    <div class="number">500+</div>
+                    <h4>Firearms in Stock</h4>
+                    <p>One of the largest selections of new and used firearms in the area</p>
+                </div>
+                <div class="why-item fade-in fade-in-delay-3">
+                    <div class="number">FFL</div>
+                    <h4>Licensed Dealer</h4>
+                    <p>Fully licensed and compliant with all federal and state regulations</p>
+                </div>
+                <div class="why-item fade-in fade-in-delay-4">
+                    <div class="number">★★★★★</div>
+                    <h4>Top Rated</h4>
+                    <p>5-star rated by hundreds of satisfied customers in our community</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- POLICIES -->
+        <section class="policies" id="policies" aria-labelledby="policies-heading">
+            <div class="section-title">
+                <h2 id="policies-heading">Store Policies</h2>
+                <div class="divider"></div>
+                <p>We operate by the book — always</p>
+            </div>
+            <div class="policy-box fade-in">
+                <h3>🪪 Background Checks</h3>
+                <p>All firearm purchases require a completed ATF Form 4473 and a federal NICS background check. No exceptions. We follow all federal and state laws regarding firearm transfers.</p>
+            </div>
+            <div class="policy-box fade-in">
+                <h3>📋 Valid ID Required</h3>
+                <p>A valid government-issued photo ID is required for all purchases, pawn transactions, and FFL transfers. You must meet all legal age requirements for the firearm you wish to purchase.</p>
+            </div>
+            <div class="policy-box fade-in">
+                <h3>🔄 Returns & Exchanges</h3>
+                <p>All sales are final on used firearms. New firearms may be exchanged within 7 days if unfired and in original condition. We stand behind everything we sell.</p>
+            </div>
+            <div class="policy-box fade-in">
+                <h3>🏦 Pawn Loan Policy</h3>
+                <p>Pawn loans are short-term collateral loans. Items not redeemed within the loan period become property of the store. Loan terms and interest rates are clearly disclosed at time of transaction.</p>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="contact" id="contact" aria-labelledby="contact-heading">
+            <div class="section-title">
+                <h2 id="contact-heading">Find Us</h2>
+                <div class="divider"></div>
+                <p>Come visit us or get in touch</p>
+            </div>
+            <div class="contact-wrapper">
+
+                <div class="contact-info fade-in">
+                    <h3>Store Information</h3>
+                    <div class="info-item">
+                        <div class="info-icon" aria-hidden="true">📍</div>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 Main Street<br>Your City, CA 90000</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon" aria-hidden="true">📞</div>
+                        <div>
+                            <h4>Phone</h4>
+                            <a href="tel:+15551234567">(555) 123-4567</a>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon" aria-hidden="true">📧</div>
+                        <div>
+                            <h4>Email</h4>
+                            <a href="mailto:info@westcoastpawngun.com">info@westcoastpawngun.com</a>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon" aria-hidden="true">🕐</div>
+                        <div>
+                            <h4>Store Hours</h4>
+                            <table class="hours-table" aria-label="Store hours by day">
+                                <tr><td>Monday – Friday</td><td>9:00 AM – 6:00 PM</td></tr>
+                                <tr><td>Saturday</td><td>9:00 AM – 5:00 PM</td></tr>
+                                <tr><td>Sunday</td><td>11:00 AM – 4:00 PM</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Replace src with your real Google Maps embed URL -->
+                    <div class="map-embed">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423283.7155322634!2d-118.69193!3d34.0201613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA!5e0!3m2!1sen!2sus!4v1234567890"
+                            title="Store location on Google Maps"
+                            allowfullscreen
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="contact-form fade-in fade-in-delay-2">
+                    <h3>Send Us a Message</h3>
+                    <form id="contactForm" onsubmit="submitForm(event)" novalidate>
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" placeholder="John Smith" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" autocomplete="tel">
+                        </div>
+                        <div class="form-group">
+                            <label for="interest">I'm interested in...</label>
+                            <select id="interest" name="interest">
+                                <option>Buying a Firearm</option>
+                                <option>Selling a Firearm</option>
+                                <option>Trade-In</option>
+                                <option>Pawn Loan</option>
+                                <option>FFL Transfer</option>
+                                <option>Ammo / Accessories</option>
+                                <option>General Question</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us what you're looking for..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+                        <div class="form-success" id="formSuccess" role="alert" aria-live="polite">
+                            ✅ Message sent! We'll get back to you within 1 business day.
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="footer-logo">⚙️ West Coast Pawn & Gun</div>
+                <p>Your trusted local source for firearms, pawn loans, and accessories. Licensed FFL dealer proudly serving the West Coast community.</p>
+                <div class="social-links" aria-label="Social media links">
+                    <a href="#" class="social-link" aria-label="Facebook">📘</a>
+                    <a href="#" class="social-link" aria-label="Instagram">📸</a>
+                    <a href="#" class="social-link" aria-label="YouTube">📺</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#inventory">Inventory</a></li>
+                    <li><a href="#policies">Policies</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Hours</h4>
+                <ul>
+                    <li><a>Mon – Fri: 9am – 6pm</a></li>
+                    <li><a>Saturday: 9am – 5pm</a></li>
+                    <li><a>Sunday: 11am – 4pm</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="disclaimer">
+                ⚠️ All firearm sales are conducted in full compliance with federal, state, and local laws. A valid government-issued ID and completed ATF Form 4473 with NICS background check are required for all firearm purchases. We reserve the right to refuse service to anyone.
+            </div>
+            <p style="margin-top: 20px;">© 2026 West Coast Pawn & Gun. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
+
+    <script>
+        /* ── NAV TOGGLE ── */
+        function toggleNav() {
+            const navLinks = document.getElementById('navLinks');
+            const btn = document.getElementById('hamburger');
+            const isOpen = navLinks.classList.toggle('open');
+            btn.classList.toggle('open', isOpen);
+            btn.setAttribute('aria-expanded', String(isOpen));
+        }
+
+        // Close mobile nav when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('open');
+                const btn = document.getElementById('hamburger');
+                btn.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        /* ── FORM SUBMIT ── */
+        function submitForm(e) {
+            e.preventDefault();
+            const form = document.getElementById('contactForm');
+            const success = document.getElementById('formSuccess');
+            // TODO: Wire up a real handler (e.g. Formspree, EmailJS, or your own backend)
+            success.style.display = 'block';
+            form.reset();
+            setTimeout(() => { success.style.display = 'none'; }, 6000);
+        }
+
+        /* ── SCROLL FADE-IN ANIMATIONS ── */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // only animate once
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        /* ── BACK TO TOP ── */
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+</body>
+</html>
