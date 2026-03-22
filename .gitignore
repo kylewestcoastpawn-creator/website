@@ -1,5 +1,7 @@
 # Claude Code internal workspace
 .claude/
+!.claude/launch.json
+!.claude/server.pl
 
 # OS files
 .DS_Store
