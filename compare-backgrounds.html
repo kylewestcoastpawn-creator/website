@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Comparison | West Coast Pawn & Gun</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0d0d0d; color: #fff; font-family: 'Inter', sans-serif; padding: 20px; }
+        h1 { font-family: 'Oswald', sans-serif; text-align: center; color: #C0A060; font-size: 2rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        p.subtitle { text-align: center; color: #888; margin-bottom: 40px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1400px; margin: 0 auto; }
+        .card { border: 2px solid #333; border-radius: 12px; overflow: hidden; transition: border-color 0.3s; cursor: pointer; }
+        .card:hover { border-color: #C0A060; }
+        .card.selected { border-color: #C0A060; box-shadow: 0 0 20px rgba(192,160,96,0.3); }
+        .preview {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+        }
+        .preview .overlay-text {
+            position: relative;
+            z-index: 2;
+        }
+        .preview .overlay-text h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #C0A060;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        .preview .overlay-text p {
+            color: #ddd;
+            font-size: 1rem;
+            margin-top: 8px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+        }
+        .label {
+            background: #111;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .label span { color: #C0A060; font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .label small { color: #666; font-size: 0.8rem; }
+        .btn-use {
+            display: inline-block;
+            background: #8B0000;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.3s;
+        }
+        .btn-use:hover { background: #a00000; }
+        .current { border: 3px solid #4CAF50; }
+        .current .label span::after { content: ' (CURRENT)'; color: #4CAF50; font-size: 0.8rem; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <h1>Compare Background Images</h1>
+    <p class="subtitle">Click any image to see it larger. The green border marks your current background.</p>
+
+    <div class="grid">
+
+        <!-- 1: Current -->
+        <div class="card current">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=1600') center/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#1 — Firearms on Dark Surface</span><small>Current</small></div>
+        </div>
+
+        <!-- 2 -->
+        <div class="card">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1584281722313-0b8e88f4a947?w=1600') center/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#2 — Pistol Close-Up</span></div>
+        </div>
+
+        <!-- 3 -->
+        <div class="card">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=1600') center/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#3 — Ammunition Spread</span></div>
+        </div>
+
+        <!-- 4 -->
+        <div class="card">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1580127662929-62e9e6da2b5a?w=1600') center/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#4 — Rifle on Wood</span></div>
+        </div>
+
+        <!-- 5 -->
+        <div class="card">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1584863231364-2edc166de576?w=1600') center/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#5 — Handgun & Magazine</span></div>
+        </div>
+
+        <!-- 6 -->
+        <div class="card">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1566837945700-30057527ade0?w=1600') center/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#6 — Brass Shell Casings</span></div>
+        </div>
+
+        <!-- 7 -->
+        <div class="card">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1604135307399-86c6ce0aba8e?w=1600') center/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#7 — Tactical Rifle Setup</span></div>
+        </div>
+
+        <!-- 8 -->
+        <div class="card">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1542345307-bf854e262501?w=1600') center/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#8 — Revolver Detail</span></div>
+        </div>
+
+        <!-- 9 -->
+        <div class="card">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1622480375789-ca17a5b6e10b?w=1600') center/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#9 — Shooting Range Target</span></div>
+        </div>
+
+        <!-- 10 -->
+        <div class="card">
+            <div class="preview" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1584281722313-0b8e88f4a947?w=1600&crop=top') center 30%/cover no-repeat;">
+                <div class="overlay-text">
+                    <h2>West Coast<br>Pawn & Gun</h2>
+                    <p>Buy · Sell · Trade · Loan</p>
+                </div>
+            </div>
+            <div class="label"><span>#10 — Firearm Top-Down</span></div>
+        </div>
+
+    </div>
+
+    <p style="text-align:center; color:#555; margin-top:40px; font-size:0.85rem;">Tell me which number you like and I'll apply it to your site.</p>
+
+</body>
+</html>

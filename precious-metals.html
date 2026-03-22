@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precious Metals | West Coast Pawn & Gun</title>
+    <meta name="description" content="West Coast Pawn & Gun buys gold, silver, platinum, and other precious metals. Walk in for a free appraisal — no appointment needed.">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="logo" aria-label="West Coast Pawn & Gun — Home">
+            <div class="logo-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
+            <div class="logo-text">
+                <h1>West Coast Pawn & Gun</h1>
+                <p>Buy · Sell · Trade · Loan</p>
+            </div>
+        </a>
+        <ul class="nav-links" id="navLinks" role="list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="ccw.html">Conceal Carry Class</a></li>
+            <li><a href="pawn-loan.html">Pawn/Loan</a></li>
+            <li><a href="nfa.html">NFA</a></li>
+            <li><a href="precious-metals.html" class="active">Precious Metals</a></li>
+            <li><a href="policies.html">Policies</a></li>
+            <li><a href="about.html">Who We Are</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1>Precious Metals</h1>
+            <p>Turn your gold, silver, and platinum into cash</p>
+        </div>
+
+        <section class="services" aria-labelledby="metals-heading">
+            <div style="max-width:800px;margin:0 auto;padding:0 20px;">
+                <div class="fade-in" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;">
+                    <div style="background:#111;border:2px solid var(--accent);border-radius:12px;padding:25px 40px;text-align:center;min-width:200px;">
+                        <p style="color:#aaa;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;">Gold (per oz)</p>
+                        <p id="goldPrice" style="color:var(--accent);font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;">Loading...</p>
+                    </div>
+                    <div style="background:#111;border:2px solid #aaa;border-radius:12px;padding:25px 40px;text-align:center;min-width:200px;">
+                        <p style="color:#aaa;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;">Silver (per oz)</p>
+                        <p id="silverPrice" style="color:#ccc;font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;">Loading...</p>
+                    </div>
+                </div>
+                <p id="priceUpdated" style="text-align:center;color:#555;font-size:0.8rem;margin-bottom:30px;"></p>
+
+                <div class="ccw-info fade-in">
+                    <h3>What We Buy</h3>
+                    <ul class="ccw-list">
+                        <li>Gold — rings, chains, bracelets, coins, bars, and scrap</li>
+                        <li>Silver — coins, bars, and flatware</li>
+                        <li>Platinum — jewelry and bullion</li>
+                        <li>Other precious metals — palladium and more</li>
+                    </ul>
+
+                    <h3>How It Works</h3>
+                    <ul class="ccw-list">
+                        <li><strong>Step 1:</strong> Bring your items in — no appointment needed</li>
+                        <li><strong>Step 2:</strong> We test and weigh your metals on the spot</li>
+                        <li><strong>Step 3:</strong> Receive a fair cash offer based on current market prices</li>
+                        <li><strong>Step 4:</strong> Accept the offer and walk out with cash — same day</li>
+                    </ul>
+
+                    <h3>Why Sell to Us?</h3>
+                    <ul class="ccw-list">
+                        <li>We pay based on what the market says — not what we feel like</li>
+                        <li>No appointment needed — just walk in</li>
+                        <li>We'll tell you exactly what it's worth, no obligation to sell</li>
+                        <li>Cash in your hand the same day</li>
+                        <li>No pressure, no pushy sales tactics — just a straight deal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top: 40px;">
+                <a href="contact.html" class="btn btn-primary">Contact Us About Precious Metals</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="footer-logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="vertical-align:middle;margin-right:6px"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg> West Coast Pawn & Gun</div>
+                <p>Locally owned gun shop and pawn dealer in Lakeland, FL. Licensed FFL. Stop in and see us.</p>
+                <div class="social-links" aria-label="Social media links">
+                    <a href="#" class="social-link" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+                    <a href="#" class="social-link" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="#" class="social-link" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="ccw.html">Conceal Carry Class</a></li>
+                    <li><a href="pawn-loan.html">Pawn/Loan</a></li>
+                    <li><a href="nfa.html">NFA</a></li>
+                    <li><a href="precious-metals.html">Precious Metals</a></li>
+                    <li><a href="policies.html">Policies</a></li>
+                    <li><a href="about.html">Who We Are</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Hours</h4>
+                <ul>
+                    <li><a>Mon – Fri: 10am – 6pm</a></li>
+                    <li><a>Saturday: 9am – 6pm</a></li>
+                    <li><a>Sunday: Closed</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="disclaimer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> All firearm sales are conducted in full compliance with federal, state, and local laws. A valid government-issued ID and completed ATF Form 4473 with NICS background check are required for all firearm purchases. We reserve the right to refuse service to anyone.
+            </div>
+            <p style="margin-top: 20px;">&copy; 2026 West Coast Pawn & Gun. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</a>
+
+    <script>
+        function toggleNav() {
+            const navLinks = document.getElementById('navLinks');
+            const btn = document.getElementById('hamburger');
+            const isOpen = navLinks.classList.toggle('open');
+            btn.classList.toggle('open', isOpen);
+            btn.setAttribute('aria-expanded', String(isOpen));
+        }
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('open');
+                const btn = document.getElementById('hamburger');
+                btn.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+        });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        // Fetch live gold and silver prices
+        (async function() {
+            var apis = [
+                { url: 'https://api.metals.live/v1/spot', parse: function(data) {
+                    var g = data.find(function(m){return m.gold;});
+                    var s = data.find(function(m){return m.silver;});
+                    return { gold: g ? g.gold : null, silver: s ? s.silver : null };
+                }},
+                { url: 'https://api.metals.dev/v1/latest?api_key=demo&currency=USD&unit=toz', parse: function(data) {
+                    return { gold: data.metals && data.metals.gold, silver: data.metals && data.metals.silver };
+                }}
+            ];
+            for (var i = 0; i < apis.length; i++) {
+                try {
+                    var res = await fetch(apis[i].url);
+                    var data = await res.json();
+                    var prices = apis[i].parse(data);
+                    if (prices.gold) {
+                        document.getElementById('goldPrice').textContent = '$' + Number(prices.gold).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        document.getElementById('silverPrice').textContent = '$' + Number(prices.silver).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        document.getElementById('priceUpdated').textContent = 'Live spot prices \u2014 updated ' + new Date().toLocaleString();
+                        return;
+                    }
+                } catch(e) { continue; }
+            }
+            document.getElementById('goldPrice').textContent = '\u2014';
+            document.getElementById('silverPrice').textContent = '\u2014';
+            document.getElementById('priceUpdated').textContent = 'Prices unavailable \u2014 call for current rates';
+        })();
+
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
