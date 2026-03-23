@@ -326,7 +326,30 @@
         });
     </script>
 
-    <!-- Email Signup Popup (hidden for now) -->
+    <!-- Mailchimp Email Signup Popup -->
+    <div id="emailPopup" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99998;align-items:center;justify-content:center;">
+        <div style="background:#1a1a1a;border:2px solid #C0A060;border-radius:12px;padding:40px 35px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+            <button onclick="closePopup()" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;line-height:1;">&times;</button>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="margin-bottom:12px;"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg>
+            <h2 style="font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.6rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Be the First to Know</h2>
+            <p style="font-family:'Inter',sans-serif;color:#aaa;font-size:0.95rem;margin-bottom:20px;">Get our weekly deals and new arrivals before they hit the floor. Subscribers see it first.</p>
+            <form action="https://westcoastpawn.us12.list-manage.com/subscribe/post?u=734a9d157eec02c5218892b87&amp;id=efdddca3f9&amp;f_id=0051e8e1f0" method="post" target="_blank">
+                <input type="email" name="EMAIL" placeholder="Enter your email *" required style="width:100%;padding:12px 16px;border:1px solid #333;border-radius:6px;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:12px;box-sizing:border-box;outline:none;">
+                <input type="text" name="PHONE" placeholder="Phone number (optional)" style="width:100%;padding:12px 16px;border:1px solid #333;border-radius:6px;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:12px;box-sizing:border-box;outline:none;">
+                <div aria-hidden="true" style="position:absolute;left:-5000px;"><input type="text" name="b_734a9d157eec02c5218892b87_efdddca3f9" tabindex="-1" value=""></div>
+                <button type="submit" style="width:100%;padding:12px;background:#8B0000;color:#fff;border:none;border-radius:6px;font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:background 0.3s;">Subscribe</button>
+            </form>
+            <p style="color:#555;font-size:0.75rem;margin-top:12px;font-family:'Inter',sans-serif;">No spam. Unsubscribe anytime.</p>
+        </div>
+    </div>
+    <script>
+    function closePopup(){document.getElementById('emailPopup').style.display='none';sessionStorage.setItem('popupClosed','1');}
+    (function(){
+        if(!sessionStorage.getItem('popupClosed')){
+            setTimeout(function(){document.getElementById('emailPopup').style.display='flex';},3800);
+        }
+    })();
+    </script>
 
 </body>
 </html>
