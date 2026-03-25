@@ -12,6 +12,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- AGE VERIFICATION -->
+    <div id="ageGate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:999999;align-items:center;justify-content:center;">
+        <div style="background:#1a1a1a;border:2px solid #C0A060;border-radius:12px;padding:40px 50px;text-align:center;max-width:440px;width:90%;">
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="margin-bottom:15px;"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg>
+            <h2 style="font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.8rem;letter-spacing:3px;text-transform:uppercase;margin:0 0 10px;">Age Verification</h2>
+            <p style="font-family:'Inter',sans-serif;color:#ccc;font-size:1rem;margin:0 0 25px;line-height:1.5;">You must be 18 years or older to access this website.</p>
+            <p style="font-family:'Oswald',sans-serif;color:#fff;font-size:1.2rem;letter-spacing:2px;text-transform:uppercase;margin:0 0 20px;">Are you 18 or older?</p>
+            <div style="display:flex;gap:15px;justify-content:center;">
+                <button onclick="document.getElementById('ageGate').style.display='none';sessionStorage.setItem('ageVerified','true');" style="font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;padding:12px 40px;background:#8B0000;color:#fff;border:none;border-radius:6px;cursor:pointer;transition:background 0.2s;">Yes</button>
+                <button onclick="window.location.href='https://www.google.com';" style="font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;padding:12px 40px;background:#333;color:#fff;border:1px solid #555;border-radius:6px;cursor:pointer;transition:background 0.2s;">No</button>
+            </div>
+        </div>
+    </div>
+    <script>(function(){if(sessionStorage.getItem('ageVerified')==='true'){document.getElementById('ageGate').style.display='none';}else{document.getElementById('ageGate').style.display='flex';}})()</script>
     <nav role="navigation" aria-label="Main navigation">
         <a href="index.html" class="logo" aria-label="West Coast Pawn & Gun — Home">
             <div class="logo-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
