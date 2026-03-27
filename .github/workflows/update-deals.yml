@@ -1,0 +1,95 @@
+name: Update Weekly Deals from Mailchimp
+
+on:
+  schedule:
+    # Check every hour for new campaigns
+    - cron: '0 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-deals:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest Mailchimp campaign
+        env:
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+        run: |
+          # Get the data center from the API key
+          DC=$(echo "$MAILCHIMP_API_KEY" | cut -d'-' -f2)
+
+          # Fetch the latest SENT campaign for the list
+          CAMPAIGN=$(curl -sf \
+            --url "https://${DC}.api.mailchimp.com/3.0/campaigns?count=1&sort_field=send_time&sort_dir=DESC&status=sent&list_id=efdddca3f9" \
+            --user "anystring:${MAILCHIMP_API_KEY}")
+
+          # Check if we got a campaign
+          CAMPAIGN_ID=$(echo "$CAMPAIGN" | python3 -c "import sys,json; d=json.load(sys.stdin); cs=d['campaigns']; print(cs[0]['id'] if cs else '')")
+
+          if [ -z "$CAMPAIGN_ID" ]; then
+            echo "No sent campaigns found. Skipping update."
+            exit 0
+          fi
+
+          echo "Found campaign: $CAMPAIGN_ID"
+
+          # Get the campaign HTML content
+          CONTENT=$(curl -sf \
+            --url "https://${DC}.api.mailchimp.com/3.0/campaigns/${CAMPAIGN_ID}/content" \
+            --user "anystring:${MAILCHIMP_API_KEY}")
+
+          # Extract the HTML and save it
+          echo "$CONTENT" | python3 -c "
+          import sys, json
+          data = json.load(sys.stdin)
+          html = data.get('html', '')
+          if html:
+              with open('deals-content.html', 'w', encoding='utf-8') as f:
+                  f.write(html)
+              print('Saved campaign HTML')
+          else:
+              print('No HTML content found')
+              sys.exit(1)
+          "
+
+          # Get send date for display
+          SEND_DATE=$(echo "$CAMPAIGN" | python3 -c "
+          import sys, json
+          from datetime import datetime
+          d = json.load(sys.stdin)
+          cs = d['campaigns']
+          if cs and cs[0].get('send_time'):
+              dt = datetime.fromisoformat(cs[0]['send_time'].replace('Z','+00:00'))
+              print(dt.strftime('%B %d, %Y'))
+          else:
+              print('')
+          ")
+          echo "SEND_DATE=$SEND_DATE" >> $GITHUB_ENV
+
+      - name: Check for changes
+        id: check
+        run: |
+          if [ -f deals-content.html ]; then
+            if git diff --quiet deals-content.html 2>/dev/null; then
+              echo "changed=false" >> $GITHUB_OUTPUT
+              echo "No changes to deals content."
+            else
+              echo "changed=true" >> $GITHUB_OUTPUT
+              echo "Deals content has been updated!"
+            fi
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No deals content file generated."
+          fi
+
+      - name: Commit and push
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add deals-content.html
+          git commit -m "Update weekly deals from Mailchimp (${{ env.SEND_DATE }})"
+          git push

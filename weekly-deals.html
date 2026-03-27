@@ -49,7 +49,17 @@
                 <h2 id="deals-heading" class="fade-in" style="font-family:'Oswald',sans-serif;font-size:2rem;color:#C0A060;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;">This Week's Specials</h2>
                 <p class="fade-in" style="font-family:'Inter',sans-serif;color:#ccc;font-size:1.1rem;line-height:1.8;margin-bottom:40px;">We update our deals every week. Check back often or follow us on Facebook to stay in the loop. All deals are while supplies last — first come, first served.</p>
 
-                <div style="background:#1e1e1e;border:1px solid #333;border-radius:12px;padding:40px;margin-bottom:30px;" class="fade-in fade-in-delay-1">
+                <!-- Mailchimp campaign content loads here -->
+                <div id="mailchimp-deals" class="fade-in fade-in-delay-1" style="margin-bottom:30px;">
+                    <div id="deals-loading" style="background:#1e1e1e;border:1px solid #333;border-radius:12px;padding:40px;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="1.5" style="margin-bottom:16px;animation:spin 1.5s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                        <p style="font-family:'Inter',sans-serif;color:#aaa;font-size:1rem;">Loading this week's deals...</p>
+                    </div>
+                </div>
+                <style>@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}</style>
+
+                <!-- Fallback if no campaign found -->
+                <div id="deals-fallback" style="display:none;background:#1e1e1e;border:1px solid #333;border-radius:12px;padding:40px;margin-bottom:30px;">
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="1.5" style="margin-bottom:16px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
                     <h3 style="font-family:'Oswald',sans-serif;font-size:1.4rem;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Deals Coming Soon</h3>
                     <p style="font-family:'Inter',sans-serif;color:#aaa;font-size:1rem;line-height:1.7;">We're putting together this week's specials. Check back soon or give us a call at <a href="tel:+18638165830" style="color:#C0A060;text-decoration:none;">(863) 816-5830</a> to ask about current deals.</p>
@@ -119,6 +129,50 @@
                 btn.setAttribute('aria-expanded', 'false');
             });
         });
+        // Load latest Mailchimp campaign flyer
+        (function loadDeals() {
+            fetch('deals-content.html')
+                .then(r => {
+                    if (!r.ok) throw new Error('No deals file');
+                    return r.text();
+                })
+                .then(html => {
+                    const container = document.getElementById('mailchimp-deals');
+                    const loading = document.getElementById('deals-loading');
+                    loading.style.display = 'none';
+
+                    // Create iframe to display the email flyer
+                    const iframe = document.createElement('iframe');
+                    iframe.style.cssText = 'width:100%;border:1px solid #333;border-radius:12px;background:#1a1a1a;min-height:600px;';
+                    iframe.sandbox = 'allow-same-origin';
+                    iframe.title = 'This Week\'s Deals';
+                    container.appendChild(iframe);
+
+                    // Write the campaign HTML into the iframe
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    doc.open();
+                    doc.write(html);
+                    doc.close();
+
+                    // Auto-resize iframe to fit content
+                    function resizeIframe() {
+                        try {
+                            const h = doc.documentElement.scrollHeight || doc.body.scrollHeight;
+                            if (h > 100) iframe.style.height = h + 40 + 'px';
+                        } catch(e) {}
+                    }
+                    iframe.onload = resizeIframe;
+                    setTimeout(resizeIframe, 500);
+                    setTimeout(resizeIframe, 1500);
+                    setTimeout(resizeIframe, 3000);
+                })
+                .catch(() => {
+                    // No deals file yet — show fallback
+                    document.getElementById('deals-loading').style.display = 'none';
+                    document.getElementById('deals-fallback').style.display = 'block';
+                });
+        })();
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
