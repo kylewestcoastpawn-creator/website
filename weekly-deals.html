@@ -47,7 +47,7 @@
         <section class="services" aria-labelledby="deals-heading">
             <div style="max-width:900px;margin:0 auto;padding:60px 20px;text-align:center;">
                 <h2 id="deals-heading" class="fade-in" style="font-family:'Oswald',sans-serif;font-size:2rem;color:#C0A060;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;">This Week's Specials</h2>
-                <p class="fade-in" style="font-family:'Inter',sans-serif;color:#ccc;font-size:1.1rem;line-height:1.8;margin-bottom:40px;">We update our deals every week. Check back often or follow us on Facebook to stay in the loop. All deals are while supplies last — first come, first served.</p>
+                <p class="fade-in" style="font-family:'Inter',sans-serif;color:#ccc;font-size:1.1rem;line-height:1.8;margin-bottom:40px;">Fresh deals drop every week. All specials are while supplies last — first come, first served.</p>
 
                 <!-- Mailchimp campaign content loads here -->
                 <div id="mailchimp-deals" class="fade-in fade-in-delay-1" style="margin-bottom:30px;">
@@ -65,7 +65,21 @@
                     <p style="font-family:'Inter',sans-serif;color:#aaa;font-size:1rem;line-height:1.7;">We're putting together this week's specials. Check back soon or give us a call at <a href="tel:+18638165830" style="color:#C0A060;text-decoration:none;">(863) 816-5830</a> to ask about current deals.</p>
                 </div>
 
-                <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:40px;" class="fade-in fade-in-delay-2">
+                <!-- Email Subscribe Section -->
+                <div class="fade-in fade-in-delay-2" style="background:#1e1e1e;border:2px solid #C0A060;border-radius:12px;padding:40px 35px;max-width:480px;margin:40px auto 30px;text-align:center;">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="margin-bottom:12px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <h3 style="font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.4rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Never Miss a Deal</h3>
+                    <p style="font-family:'Inter',sans-serif;color:#aaa;font-size:0.95rem;margin-bottom:20px;line-height:1.6;">Sign up and get the weekly deals before everyone else. We'll send them straight to your inbox so you never miss out.</p>
+                    <form action="https://westcoastpawn.us12.list-manage.com/subscribe/post?u=734a9d157eec02c5218892b87&amp;id=efdddca3f9&amp;f_id=0051e8e1f0" method="post" target="_blank">
+                        <input type="email" name="EMAIL" placeholder="Enter your email *" required style="width:100%;padding:12px 16px;border:1px solid #333;border-radius:6px;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:12px;box-sizing:border-box;outline:none;">
+                        <input type="text" name="PHONE" placeholder="Phone number (optional)" style="width:100%;padding:12px 16px;border:1px solid #333;border-radius:6px;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:12px;box-sizing:border-box;outline:none;">
+                        <div aria-hidden="true" style="position:absolute;left:-5000px;"><input type="text" name="b_734a9d157eec02c5218892b87_efdddca3f9" tabindex="-1" value=""></div>
+                        <button type="submit" style="width:100%;padding:12px;background:#8B0000;color:#fff;border:none;border-radius:6px;font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:background 0.3s;">Subscribe</button>
+                    </form>
+                    <p style="color:#555;font-size:0.75rem;margin-top:12px;font-family:'Inter',sans-serif;">No spam. Unsubscribe anytime.</p>
+                </div>
+
+                <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:20px;" class="fade-in fade-in-delay-2">
                     <a href="https://www.facebook.com/lakeland.pawn.shop" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;color:#fff;background:#1877F2;font-family:'Oswald',sans-serif;font-size:1rem;text-transform:uppercase;letter-spacing:1px;text-decoration:none;padding:12px 24px;border-radius:8px;transition:background 0.2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> Follow on Facebook</a>
                 </div>
             </div>
@@ -112,6 +126,31 @@
     </footer>
 
     <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</a>
+
+    <!-- Mailchimp Email Signup Popup -->
+    <div id="emailPopup" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99998;align-items:center;justify-content:center;">
+        <div style="background:#1a1a1a;border:2px solid #C0A060;border-radius:12px;padding:40px 35px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+            <button onclick="closePopup()" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;line-height:1;">&times;</button>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="margin-bottom:12px;"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg>
+            <h2 style="font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.6rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Don't Miss a Deal</h2>
+            <p style="font-family:'Inter',sans-serif;color:#aaa;font-size:0.95rem;margin-bottom:20px;">Sign up and get the weekly deals before everyone else. New specials delivered straight to your inbox every week.</p>
+            <form action="https://westcoastpawn.us12.list-manage.com/subscribe/post?u=734a9d157eec02c5218892b87&amp;id=efdddca3f9&amp;f_id=0051e8e1f0" method="post" target="_blank">
+                <input type="email" name="EMAIL" placeholder="Enter your email *" required style="width:100%;padding:12px 16px;border:1px solid #333;border-radius:6px;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:12px;box-sizing:border-box;outline:none;">
+                <input type="text" name="PHONE" placeholder="Phone number (optional)" style="width:100%;padding:12px 16px;border:1px solid #333;border-radius:6px;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:12px;box-sizing:border-box;outline:none;">
+                <div aria-hidden="true" style="position:absolute;left:-5000px;"><input type="text" name="b_734a9d157eec02c5218892b87_efdddca3f9" tabindex="-1" value=""></div>
+                <button type="submit" style="width:100%;padding:12px;background:#8B0000;color:#fff;border:none;border-radius:6px;font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:background 0.3s;">Subscribe</button>
+            </form>
+            <p style="color:#555;font-size:0.75rem;margin-top:12px;font-family:'Inter',sans-serif;">No spam. Unsubscribe anytime.</p>
+        </div>
+    </div>
+    <script>
+    function closePopup(){document.getElementById('emailPopup').style.display='none';sessionStorage.setItem('popupClosed','1');}
+    (function(){
+        if(!sessionStorage.getItem('popupClosed')){
+            setTimeout(function(){document.getElementById('emailPopup').style.display='flex';},3800);
+        }
+    })();
+    </script>
 
     <script>
         function toggleNav() {
