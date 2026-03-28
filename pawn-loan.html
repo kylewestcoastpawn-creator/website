@@ -12,9 +12,23 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- AGE VERIFICATION -->
+    <div id="ageGate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:999999;align-items:center;justify-content:center;">
+        <div style="background:#1a1a1a;border:2px solid #C0A060;border-radius:12px;padding:40px 50px;text-align:center;max-width:440px;width:90%;">
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="margin-bottom:15px;"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg>
+            <h2 style="font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.8rem;letter-spacing:3px;text-transform:uppercase;margin:0 0 10px;">Age Verification</h2>
+            <p style="font-family:'Inter',sans-serif;color:#ccc;font-size:1rem;margin:0 0 25px;line-height:1.5;">You must be 18 years or older to access this website.</p>
+            <p style="font-family:'Oswald',sans-serif;color:#fff;font-size:1.2rem;letter-spacing:2px;text-transform:uppercase;margin:0 0 20px;">Are you 18 or older?</p>
+            <div style="display:flex;gap:15px;justify-content:center;">
+                <button onclick="document.getElementById('ageGate').style.display='none';sessionStorage.setItem('ageVerified','true');" style="font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;padding:12px 40px;background:#8B0000;color:#fff;border:none;border-radius:6px;cursor:pointer;transition:background 0.2s;">Yes</button>
+                <button onclick="window.location.href='https://www.google.com';" style="font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;padding:12px 40px;background:#333;color:#fff;border:1px solid #555;border-radius:6px;cursor:pointer;transition:background 0.2s;">No</button>
+            </div>
+        </div>
+    </div>
+    <script>(function(){if(sessionStorage.getItem('ageVerified')==='true'){document.getElementById('ageGate').style.display='none';}else{document.getElementById('ageGate').style.display='flex';}})()</script>
     <nav role="navigation" aria-label="Main navigation">
         <a href="index.html" class="logo" aria-label="West Coast Pawn & Gun — Home">
-            <div class="logo-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
+            <div class="logo-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
             <div class="logo-text">
                 <h1>West Coast Pawn & Gun</h1>
                 <p>Buy · Sell · Trade · Loan</p>
@@ -24,6 +38,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="inventory.html">Inventory</a></li>
+            <li><a href="weekly-deals.html">Weekly Deals</a></li>
             <li><a href="ccw.html">Conceal Carry Class</a></li>
             <li><a href="pawn-loan.html" class="active">Pawn/Loan</a></li>
             <li><a href="nfa.html">NFA</a></li>
@@ -83,7 +98,7 @@
     <footer>
         <div class="footer-top">
             <div class="footer-brand">
-                <div class="footer-logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="vertical-align:middle;margin-right:6px"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg> West Coast Pawn & Gun</div>
+                <div class="footer-logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="vertical-align:middle;margin-right:6px"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg> West Coast Pawn & Gun</div>
                 <p>Locally owned gun shop and pawn dealer in Lakeland, FL. Licensed FFL/SOT. Stop in and see us.</p>
                 <a href="https://www.facebook.com/lakeland.pawn.shop" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;color:#fff;background:#1877F2;font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;text-decoration:none;margin-top:16px;padding:12px 24px;border-radius:8px;transition:background 0.2s;"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> Like Us on Facebook!</a>
                 <a href="https://www.instagram.com/westcoastpawngun" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;color:#fff;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;text-decoration:none;margin-top:12px;padding:12px 24px;border-radius:8px;transition:opacity 0.2s;"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> Follow Us on Instagram!</a>
@@ -94,6 +109,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="inventory.html">Inventory</a></li>
+                    <li><a href="weekly-deals.html">Weekly Deals</a></li>
                     <li><a href="ccw.html">Conceal Carry Class</a></li>
                     <li><a href="pawn-loan.html">Pawn/Loan</a></li>
                     <li><a href="nfa.html">NFA</a></li>
@@ -108,7 +124,12 @@
                 <ul>
                     <li><a>Mon – Fri: 10am – 6pm</a></li>
                     <li><a>Saturday: 9am – 6pm</a></li>
-                    <li><a>Sunday: Closed (we're at the range 🎯)</a></li>
+                    <li><a>Sunday: Closed (we're at the range)</a></li>
+                </ul>
+                <h4 style="margin-top:20px;">Legal</h4>
+                <ul>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
                 </ul>
             </div>
         </div>
@@ -116,7 +137,7 @@
             <div class="disclaimer">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> All firearm sales are conducted in full compliance with federal, state, and local laws. A valid government-issued ID and completed ATF Form 4473 with NICS background check are required for all firearm purchases. We reserve the right to refuse service to anyone.
             </div>
-            <p style="margin-top: 20px;">&copy; 2026 West Coast Pawn & Gun. All rights reserved.</p>
+            <p style="margin-top: 20px;">&copy; 2026 West Coast Pawn & Gun. All rights reserved. | <a href="terms.html" style="color:#C0A060;">Terms & Conditions</a> | <a href="privacy.html" style="color:#C0A060;">Privacy Policy</a></p>
         </div>
     </footer>
 
