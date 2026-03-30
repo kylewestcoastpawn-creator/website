@@ -58,10 +58,11 @@ jobs:
           data = json.loads(resp2.read())
           items = data.get('data', [])
 
-          # Filter to in-stock firearms
+          # Filter to firearms (allowed types only)
+          allowed_types = {'Other Firearm','Semi-Auto Pistol','Rifle','Shotgun','Muzzleloader','Revolver','Specialty Handgun','NFA - Short Barrel Rifle','Fire Control Unit'}
           filtered = []
           for item in items:
-              if item.get('itemType') == 'Firearm':
+              if item.get('itemType') == 'Firearm' and item.get('type', '') in allowed_types:
                   filtered.append({
                       'model': item.get('model', ''),
                       'manufacturer': item.get('manufacturer', ''),
