@@ -29,7 +29,7 @@ jobs:
             -H "Content-Type: application/json" \
             -d "{\"Email\":\"${LIPSEYS_EMAIL}\",\"Password\":\"${LIPSEYS_PASSWORD}\"}")
 
-          TOKEN=$(echo "$AUTH_RESPONSE" | jq -r '.token')
+          TOKEN=$(echo "$AUTH_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('token',''))")
 
           if [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ]; then
             echo "Authentication failed"
