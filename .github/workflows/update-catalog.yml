@@ -19,36 +19,46 @@ jobs:
         env:
           LIPSEYS_EMAIL: ${{ secrets.LIPSEYS_EMAIL }}
           LIPSEYS_PASSWORD: ${{ secrets.LIPSEYS_PASSWORD }}
+        shell: python3 {0}
         run: |
-          set -e
+          import urllib.request, json, os, sys
+
+          email = os.environ.get('LIPSEYS_EMAIL', '')
+          password = os.environ.get('LIPSEYS_PASSWORD', '')
+
+          if not email or not password:
+              print('ERROR: Missing LIPSEYS_EMAIL or LIPSEYS_PASSWORD secrets')
+              sys.exit(1)
 
           # Authenticate
-          echo "Authenticating with Lipsey's API..."
-          TOKEN=$(python3 -c "
-          import urllib.request, json, os
-          payload = json.dumps({'Email': os.environ['LIPSEYS_EMAIL'], 'Password': os.environ['LIPSEYS_PASSWORD']}).encode()
-          req = urllib.request.Request('https://api.lipseys.com/api/Integration/Authentication/Login', data=payload, headers={'Content-Type': 'application/json'}, method='POST')
+          print('Authenticating with Lipseys API...')
+          payload = json.dumps({'Email': email, 'Password': password}).encode()
+          req = urllib.request.Request(
+              'https://api.lipseys.com/api/Integration/Authentication/Login',
+              data=payload,
+              headers={'Content-Type': 'application/json'},
+              method='POST'
+          )
           resp = urllib.request.urlopen(req)
-          data = json.loads(resp.read())
-          print(data.get('token', ''))
-          ")
+          token = json.loads(resp.read()).get('token', '')
 
-          if [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ]; then
-            echo "Authentication failed"
-            echo "$AUTH_RESPONSE"
-            exit 1
-          fi
+          if not token:
+              print('ERROR: Authentication failed')
+              sys.exit(1)
 
-          echo "Authentication successful"
+          print('Authentication successful')
 
-          # Fetch catalog and process in one step
-          echo "Fetching and processing catalog feed..."
-          curl -s -X GET \
-            "https://api.lipseys.com/api/Integration/Items/CatalogFeed" \
-            -H "Token: ${TOKEN}" | python3 -c "
-          import sys, json
-          data = json.load(sys.stdin)
+          # Fetch catalog
+          print('Fetching catalog feed...')
+          req2 = urllib.request.Request(
+              'https://api.lipseys.com/api/Integration/Items/CatalogFeed',
+              headers={'Token': token}
+          )
+          resp2 = urllib.request.urlopen(req2)
+          data = json.loads(resp2.read())
           items = data.get('data', [])
+
+          # Filter to in-stock firearms
           filtered = []
           for item in items:
               if item.get('quantity', 0) > 0 and item.get('itemType') == 'Firearm':
@@ -68,12 +78,11 @@ jobs:
                       'family': item.get('family', ''),
                       'inStock': True
                   })
+
           with open('catalog-data.json', 'w') as f:
               json.dump(filtered, f, separators=(',', ':'))
-          print(f'Processed {len(filtered)} in-stock firearms')
-          "
 
-          echo "Catalog data saved to catalog-data.json"
+          print(f'Saved {len(filtered)} in-stock firearms to catalog-data.json')
 
       - name: Commit and push if changed
         run: |
