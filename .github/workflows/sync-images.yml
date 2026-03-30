@@ -111,7 +111,11 @@ jobs:
               # Download image from Lipsey's CDN
               image_url = f'https://www.lipseyscloud.com/images/{image_name}'
               try:
-                  img_req = urllib.request.Request(image_url)
+                  img_req = urllib.request.Request(image_url, headers={
+                      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                      'Referer': 'https://www.lipseys.com/',
+                      'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8'
+                  })
                   img_resp = urllib.request.urlopen(img_req, timeout=30)
                   img_data = img_resp.read()
                   content_type = img_resp.headers.get('Content-Type', 'image/jpeg')
