@@ -25,8 +25,8 @@ jobs:
           # Authenticate
           echo "Authenticating with Lipsey's API..."
           TOKEN=$(python3 -c "
-          import urllib.request, json
-          payload = json.dumps({'Email': '${{ secrets.LIPSEYS_EMAIL }}', 'Password': '${{ secrets.LIPSEYS_PASSWORD }}'}).encode()
+          import urllib.request, json, os
+          payload = json.dumps({'Email': os.environ['LIPSEYS_EMAIL'], 'Password': os.environ['LIPSEYS_PASSWORD']}).encode()
           req = urllib.request.Request('https://api.lipseys.com/api/Integration/Authentication/Login', data=payload, headers={'Content-Type': 'application/json'}, method='POST')
           resp = urllib.request.urlopen(req)
           data = json.loads(resp.read())
