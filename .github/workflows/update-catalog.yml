@@ -68,6 +68,7 @@ jobs:
                       'caliberGauge': item.get('caliberGauge', ''),
                       'type': item.get('type', ''),
                       'msrp': item.get('msrp', 0),
+                      'cost': item.get('price', 0),
                       'barrelLength': item.get('barrelLength', ''),
                       'capacity': item.get('capacity', ''),
                       'finish': item.get('finish', ''),
