@@ -76,6 +76,7 @@ jobs:
                       'upc': item.get('upc', ''),
                       'description1': item.get('description1', ''),
                       'family': item.get('family', ''),
+                      'imageName': item.get('imageName', ''),
                       'inStock': True
                   })
 
