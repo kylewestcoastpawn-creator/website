@@ -126,6 +126,11 @@
                 <select id="filterCaliber" class="catalog-filter-select" aria-label="Filter by caliber">
                     <option value="">All Calibers</option>
                 </select>
+                <select id="filterStock" class="catalog-filter-select" aria-label="Filter by availability">
+                    <option value="">All Items</option>
+                    <option value="instock">In Stock Only</option>
+                    <option value="outofstock">Out of Stock Only</option>
+                </select>
                 <button class="catalog-clear-btn" id="clearFilters" onclick="clearAllFilters()">Clear Filters</button>
             </div>
         </div>
@@ -223,6 +228,7 @@
         const filterType=document.getElementById('filterType');
         const filterManufacturer=document.getElementById('filterManufacturer');
         const filterCaliber=document.getElementById('filterCaliber');
+        const filterStock=document.getElementById('filterStock');
         const catalogGrid=document.getElementById('catalogGrid');
         const catalogCount=document.getElementById('catalogCount');
         const catalogLoading=document.getElementById('catalogLoading');
@@ -260,11 +266,13 @@
         function fillSelect(sel,vals,def){sel.innerHTML='<option value="">'+def+'</option>';vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o)})}
 
         function applyFilters(){
-            const q=searchInput.value.toLowerCase().trim(),tv=filterType.value,mv=filterManufacturer.value,cv=filterCaliber.value;
+            const q=searchInput.value.toLowerCase().trim(),tv=filterType.value,mv=filterManufacturer.value,cv=filterCaliber.value,sv=filterStock.value;
             filteredItems=allItems.filter(i=>{
                 if(tv&&i.type!==tv)return false;
                 if(mv&&i.manufacturer!==mv)return false;
                 if(cv&&i.caliberGauge!==cv)return false;
+                if(sv==='instock'&&!i.inStock)return false;
+                if(sv==='outofstock'&&i.inStock)return false;
                 if(q){const s=[i.model,i.manufacturer,i.caliberGauge,i.upc,i.description1,i.family,i.action,i.type].filter(Boolean).join(' ').toLowerCase();if(!s.includes(q))return false}
                 return true;
             });
@@ -308,12 +316,13 @@
 
         function spec(label,val){if(!val)return '';return '<div class="catalog-spec"><span class="catalog-spec-label">'+label+'</span>'+esc(String(val))+'</div>'}
         function esc(s){const d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML}
-        function clearAllFilters(){searchInput.value='';filterType.value='';filterManufacturer.value='';filterCaliber.value='';applyFilters()}
+        function clearAllFilters(){searchInput.value='';filterType.value='';filterManufacturer.value='';filterCaliber.value='';filterStock.value='';applyFilters()}
 
         searchInput.addEventListener('input',debounce(applyFilters,250));
         filterType.addEventListener('change',applyFilters);
         filterManufacturer.addEventListener('change',applyFilters);
         filterCaliber.addEventListener('change',applyFilters);
+        filterStock.addEventListener('change',applyFilters);
         loadCatalog();
     </script>
 </body>
