@@ -3,13 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Featured Inventory | West Coast Pawn & Gun</title>
-    <meta name="description" content="Browse our featured inventory of handguns, rifles, shotguns, and more. New and used firearms at competitive prices.">
+    <title>Inventory | West Coast Pawn & Gun</title>
+    <meta name="description" content="Browse thousands of firearms available to order at West Coast Pawn & Gun. Handguns, rifles, shotguns and more from top manufacturers.">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .catalog-controls{background:#111;padding:30px 40px 20px;max-width:1400px;margin:0 auto}
+        .catalog-search-row{display:flex;gap:15px;margin-bottom:20px;flex-wrap:wrap}
+        .catalog-search-input{flex:1;min-width:280px;padding:14px 20px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:1rem;font-family:'Inter',sans-serif;border-radius:2px;transition:border-color 0.3s,box-shadow 0.3s}
+        .catalog-search-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(192,160,96,0.15)}
+        .catalog-search-input::placeholder{color:#666}
+        .catalog-filters{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+        .catalog-filter-select{padding:10px 14px;background:#1a1a1a;border:1px solid #333;color:#fff;font-size:0.9rem;font-family:'Inter',sans-serif;border-radius:2px;min-width:180px;cursor:pointer;transition:border-color 0.3s}
+        .catalog-filter-select:focus{outline:none;border-color:var(--accent)}
+        .catalog-filter-select option{background:#1a1a1a}
+        .catalog-clear-btn{padding:10px 20px;background:transparent;border:1px solid #555;color:var(--muted);font-family:'Oswald',sans-serif;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:all 0.3s;border-radius:2px}
+        .catalog-clear-btn:hover{border-color:var(--accent);color:var(--accent)}
+        .catalog-results-info{display:flex;justify-content:space-between;align-items:center;padding:15px 40px;max-width:1400px;margin:0 auto;background:#111;border-top:1px solid #222}
+        .catalog-count{font-family:'Oswald',sans-serif;font-size:1rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+        .catalog-count span{color:var(--accent);font-weight:600}
+        .catalog-section{background:#1a1a1a;padding:30px 40px 60px;min-height:400px}
+        .catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;max-width:1400px;margin:0 auto}
+        .catalog-card{background:#111;border:1px solid #2a2a2a;transition:all 0.3s;display:flex;flex-direction:column}
+        .catalog-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+        .catalog-card-header{padding:18px 20px 12px;border-bottom:1px solid #1e1e1e}
+        .catalog-card-manufacturer{font-family:'Oswald',sans-serif;font-size:0.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:2px}
+        .catalog-card-model{font-family:'Oswald',sans-serif;font-size:1.15rem;color:#fff;text-transform:uppercase;letter-spacing:0.5px;margin-top:4px;line-height:1.3}
+        .catalog-card-body{padding:14px 20px;flex:1}
+        .catalog-card-specs{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+        .catalog-spec{font-size:0.82rem;color:var(--muted);line-height:1.4}
+        .catalog-spec-label{color:#666;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;display:block}
+        .catalog-card-footer{padding:14px 20px;border-top:1px solid #1e1e1e;display:flex;justify-content:space-between;align-items:center}
+        .catalog-card-price{font-family:'Oswald',sans-serif;font-size:1.4rem;color:#fff;font-weight:700}
+        .catalog-card-price-label{font-size:0.65rem;color:#666;text-transform:uppercase;letter-spacing:1px;display:block}
+        .catalog-card-cta{padding:10px 16px;background:var(--secondary);color:#fff;font-family:'Oswald',sans-serif;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;text-decoration:none;transition:all 0.3s;display:inline-block;white-space:nowrap}
+        .catalog-card-cta:hover{background:#a00000;transform:translateY(-1px);box-shadow:0 4px 12px rgba(139,0,0,0.4)}
+        .catalog-loading{text-align:center;padding:80px 20px;max-width:1400px;margin:0 auto}
+        .catalog-spinner{width:48px;height:48px;border:4px solid #333;border-top:4px solid var(--accent);border-radius:50%;animation:catalogSpin 0.8s linear infinite;margin:0 auto 20px}
+        @keyframes catalogSpin{to{transform:rotate(360deg)}}
+        .catalog-loading-text{font-family:'Oswald',sans-serif;color:var(--muted);font-size:1rem;text-transform:uppercase;letter-spacing:2px}
+        .catalog-empty,.catalog-error{text-align:center;padding:60px 20px;max-width:1400px;margin:0 auto;display:none}
+        .catalog-empty h3,.catalog-error h3{font-family:'Oswald',sans-serif;font-size:1.3rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+        .catalog-empty h3{color:var(--accent)}
+        .catalog-error h3{color:var(--secondary)}
+        .catalog-empty p,.catalog-error p{color:var(--muted);font-size:0.95rem}
+        .catalog-load-more{text-align:center;padding:30px 20px 10px;max-width:1400px;margin:0 auto}
+        .catalog-load-more-btn{padding:14px 50px;background:var(--secondary);color:#fff;font-family:'Oswald',sans-serif;font-size:1rem;text-transform:uppercase;letter-spacing:2px;border:none;cursor:pointer;transition:all 0.3s}
+        .catalog-load-more-btn:hover{background:#a00000;transform:translateY(-2px);box-shadow:0 6px 20px rgba(139,0,0,0.4)}
+        @media(max-width:768px){.catalog-controls{padding:20px 20px 15px}.catalog-search-input{min-width:100%}.catalog-filter-select{min-width:calc(50% - 6px);flex:1}.catalog-section{padding:20px 20px 40px}.catalog-grid{grid-template-columns:1fr}.catalog-results-info{padding:12px 20px;flex-direction:column;gap:5px}.catalog-card-footer{flex-direction:column;gap:10px;align-items:flex-start}.catalog-card-cta{width:100%;text-align:center}}
+        @media(max-width:480px){.catalog-filter-select{min-width:100%}}
+    </style>
 </head>
 <body>
     <!-- AGE VERIFICATION -->
@@ -54,76 +100,57 @@
 
     <main>
         <div class="page-header">
-            <h1>Featured Inventory</h1>
-            <p>A sample of what we currently have in stock. Inventory changes daily.</p>
-            <p style="color:#ff6b6b; font-weight:600; margin-top:10px; font-size:1.5rem;">This is for testing and this inventory isn't accurate</p>
+            <h1>Inventory</h1>
+            <p>Browse thousands of firearms available to order. See something you like? Call us or stop by the shop.</p>
         </div>
 
-        <div class="testing-notice">This is for testing and this inventory isn't accurate</div>
-
-        <section class="inventory" aria-labelledby="inventory-heading">
-            <div class="inventory-grid">
-                <div class="item-card fade-in fade-in-delay-1">
-                    <div class="item-img" aria-label="Glock 19 Gen 5 handgun"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
-                    <div class="item-info">
-                        <h3>Glock 19 Gen 5</h3>
-                        <p>9mm Semi-Auto Pistol. Excellent used condition. Night sights installed. 3 mags included.</p>
-                        <span class="item-badge">Used – $499</span>
-                    </div>
-                </div>
-                <div class="item-card fade-in fade-in-delay-2">
-                    <div class="item-img" aria-label="S&W M&P Shield pistol"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="#C0A060"/></svg></div>
-                    <div class="item-info">
-                        <h3>S&W M&P Shield</h3>
-                        <p>9mm Compact Pistol. Perfect concealed carry option. Like new in box.</p>
-                        <span class="item-badge">Used – $379</span>
-                    </div>
-                </div>
-                <div class="item-card fade-in fade-in-delay-3">
-                    <div class="item-img" aria-label="Ruger 10/22 Carbine rifle"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
-                    <div class="item-info">
-                        <h3>Ruger 10/22 Carbine</h3>
-                        <p>.22 LR Semi-Auto Rifle. Great for plinking and small game. Wood stock, classic look.</p>
-                        <span class="item-badge">Used – $249</span>
-                    </div>
-                </div>
-                <div class="item-card fade-in fade-in-delay-4">
-                    <div class="item-img" aria-label="Mossberg 500 shotgun"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="#C0A060"/></svg></div>
-                    <div class="item-info">
-                        <h3>Mossberg 500</h3>
-                        <p>12 Gauge Pump Shotgun. Reliable home defense or field gun. 18.5" barrel.</p>
-                        <span class="item-badge">New – $419</span>
-                    </div>
-                </div>
-                <div class="item-card fade-in fade-in-delay-5">
-                    <div class="item-img" aria-label="AR-15 semi-automatic rifle"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
-                    <div class="item-info">
-                        <h3>AR-15 Rifle</h3>
-                        <p>5.56/.223 Semi-Auto. M4 profile barrel, flat-top upper. Great condition.</p>
-                        <span class="item-badge">Used – $1,299</span>
-                    </div>
-                </div>
-                <div class="item-card fade-in fade-in-delay-6">
-                    <div class="item-img" aria-label="Colt 1911 pistol"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
-                    <div class="item-info">
-                        <h3>Colt 1911</h3>
-                        <p>.45 ACP Semi-Auto Pistol. Classic American icon. Government model, blued finish. Excellent condition.</p>
-                        <span class="item-badge">Used – $1,299.99</span>
-                    </div>
-                </div>
-                <div class="item-card fade-in fade-in-delay-7">
-                    <div class="item-img" aria-label="Layaway program"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
-
-                    <div class="item-info">
-                        <h3>Layaway Available</h3>
-                        <p>Don't have the full amount today? Ask us about our flexible layaway program on any firearm.</p>
-                        <span class="item-badge">Ask Us</span>
-                    </div>
-                </div>
+        <!-- Search & Filters -->
+        <div class="catalog-controls">
+            <div class="catalog-search-row">
+                <input type="text" id="catalogSearch" class="catalog-search-input" placeholder="Search by model, manufacturer, caliber, or UPC..." autocomplete="off">
             </div>
-            <div style="text-align:center; margin-top: 50px;">
-                <p style="color:#888; margin-bottom:15px;">Inventory changes daily. Call or visit for current availability.</p>
-                <a href="contact.html" class="btn btn-outline">Contact Us About Inventory</a>
+            <div class="catalog-filters">
+                <select id="filterType" class="catalog-filter-select" aria-label="Filter by type">
+                    <option value="">All Types</option>
+                </select>
+                <select id="filterManufacturer" class="catalog-filter-select" aria-label="Filter by manufacturer">
+                    <option value="">All Manufacturers</option>
+                </select>
+                <select id="filterCaliber" class="catalog-filter-select" aria-label="Filter by caliber">
+                    <option value="">All Calibers</option>
+                </select>
+                <button class="catalog-clear-btn" id="clearFilters" onclick="clearAllFilters()">Clear Filters</button>
+            </div>
+        </div>
+
+        <!-- Results Count -->
+        <div class="catalog-results-info">
+            <div class="catalog-count" id="catalogCount">Loading catalog...</div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="catalog-loading" id="catalogLoading">
+            <div class="catalog-spinner"></div>
+            <div class="catalog-loading-text">Loading firearms catalog...</div>
+        </div>
+
+        <!-- Error State -->
+        <div class="catalog-error" id="catalogError">
+            <h3>Catalog Unavailable</h3>
+            <p>We're having trouble loading the catalog right now. Please try again later or call us at <a href="tel:8638165830" style="color:var(--accent);">(863) 816-5830</a>.</p>
+        </div>
+
+        <!-- Empty State -->
+        <div class="catalog-empty" id="catalogEmpty">
+            <h3>No Results Found</h3>
+            <p>Try adjusting your search or filters to find what you're looking for.</p>
+        </div>
+
+        <!-- Results Grid -->
+        <section class="catalog-section" id="catalogSection" style="display:none;">
+            <div class="catalog-grid" id="catalogGrid"></div>
+            <div class="catalog-load-more" id="catalogLoadMore" style="display:none;">
+                <button class="catalog-load-more-btn" id="loadMoreBtn" onclick="loadMore()">Load More</button>
             </div>
         </section>
     </main>
@@ -174,38 +201,98 @@
     <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
 
     <script>
-        function toggleNav() {
-            const navLinks = document.getElementById('navLinks');
-            const btn = document.getElementById('hamburger');
-            const isOpen = navLinks.classList.toggle('open');
-            btn.classList.toggle('open', isOpen);
-            btn.setAttribute('aria-expanded', String(isOpen));
+        function toggleNav(){const n=document.getElementById('navLinks'),b=document.getElementById('hamburger'),o=n.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',String(o))}
+        document.querySelectorAll('.nav-links a').forEach(l=>{l.addEventListener('click',()=>{document.getElementById('navLinks').classList.remove('open');const b=document.getElementById('hamburger');b.classList.remove('open');b.setAttribute('aria-expanded','false')})});
+        const observer=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');observer.unobserve(en.target)}})},{threshold:0.12});
+        document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+        const backToTop=document.getElementById('backToTop');
+        window.addEventListener('scroll',()=>{backToTop.classList.toggle('visible',window.scrollY>400)},{passive:true});
+        backToTop.addEventListener('click',e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})});
+
+        // ─── CATALOG LOGIC ───
+        let allItems=[],filteredItems=[],displayedCount=0;
+        const PAGE_SIZE=50;
+        const searchInput=document.getElementById('catalogSearch');
+        const filterType=document.getElementById('filterType');
+        const filterManufacturer=document.getElementById('filterManufacturer');
+        const filterCaliber=document.getElementById('filterCaliber');
+        const catalogGrid=document.getElementById('catalogGrid');
+        const catalogCount=document.getElementById('catalogCount');
+        const catalogLoading=document.getElementById('catalogLoading');
+        const catalogError=document.getElementById('catalogError');
+        const catalogEmpty=document.getElementById('catalogEmpty');
+        const catalogSection=document.getElementById('catalogSection');
+        const catalogLoadMore=document.getElementById('catalogLoadMore');
+
+        function debounce(fn,delay){let t;return function(...a){clearTimeout(t);t=setTimeout(()=>fn.apply(this,a),delay)}}
+
+        async function loadCatalog(){
+            try{
+                const r=await fetch('catalog-data.json');
+                if(!r.ok) throw new Error('Failed');
+                allItems=await r.json();
+                populateFilters();
+                applyFilters();
+                catalogLoading.style.display='none';
+            }catch(e){
+                console.error('Catalog load error:',e);
+                catalogLoading.style.display='none';
+                catalogError.style.display='block';
+            }
         }
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('open');
-                const btn = document.getElementById('hamburger');
-                btn.classList.remove('open');
-                btn.setAttribute('aria-expanded', 'false');
+
+        function populateFilters(){
+            const types=new Set(),mfgs=new Set(),cals=new Set();
+            allItems.forEach(i=>{if(i.type)types.add(i.type);if(i.manufacturer)mfgs.add(i.manufacturer);if(i.caliberGauge)cals.add(i.caliberGauge)});
+            fillSelect(filterType,sorted(types),'All Types');
+            fillSelect(filterManufacturer,sorted(mfgs),'All Manufacturers');
+            fillSelect(filterCaliber,sorted(cals),'All Calibers');
+        }
+
+        function sorted(s){return Array.from(s).sort((a,b)=>a.localeCompare(b))}
+        function fillSelect(sel,vals,def){sel.innerHTML='<option value="">'+def+'</option>';vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o)})}
+
+        function applyFilters(){
+            const q=searchInput.value.toLowerCase().trim(),tv=filterType.value,mv=filterManufacturer.value,cv=filterCaliber.value;
+            filteredItems=allItems.filter(i=>{
+                if(tv&&i.type!==tv)return false;
+                if(mv&&i.manufacturer!==mv)return false;
+                if(cv&&i.caliberGauge!==cv)return false;
+                if(q){const s=[i.model,i.manufacturer,i.caliberGauge,i.upc,i.description1,i.family,i.action,i.type].filter(Boolean).join(' ').toLowerCase();if(!s.includes(q))return false}
+                return true;
             });
-        });
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12 });
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            backToTop.classList.toggle('visible', window.scrollY > 400);
-        }, { passive: true });
-        backToTop.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+            displayedCount=0;catalogGrid.innerHTML='';renderPage();
+        }
+
+        function renderPage(){
+            const end=Math.min(displayedCount+PAGE_SIZE,filteredItems.length);
+            for(let i=displayedCount;i<end;i++)catalogGrid.appendChild(createCard(filteredItems[i]));
+            displayedCount=end;
+            catalogCount.innerHTML='Showing <span>'+displayedCount+'</span> of <span>'+filteredItems.length+'</span> firearms';
+            const has=filteredItems.length>0;
+            catalogSection.style.display=has?'block':'none';
+            catalogEmpty.style.display=has?'none':'block';
+            catalogLoadMore.style.display=(displayedCount<filteredItems.length)?'block':'none';
+        }
+
+        function loadMore(){renderPage()}
+
+        function createCard(item){
+            const card=document.createElement('div');card.className='catalog-card';
+            const msrp=item.msrp?'$'+Number(item.msrp).toFixed(2):'Call for Price';
+            card.innerHTML='<div class="catalog-card-header"><div class="catalog-card-manufacturer">'+esc(item.manufacturer||'')+'</div><div class="catalog-card-model">'+esc(item.model||item.description1||'')+'</div></div><div class="catalog-card-body"><div class="catalog-card-specs">'+spec('Type',item.type)+spec('Caliber',item.caliberGauge)+spec('Action',item.action)+spec('Barrel',item.barrelLength)+spec('Capacity',item.capacity)+spec('Finish',item.finish)+spec('Weight',item.weight)+spec('UPC',item.upc)+'</div></div><div class="catalog-card-footer"><div><span class="catalog-card-price-label">MSRP</span><span class="catalog-card-price">'+msrp+'</span></div><a href="tel:8638165830" class="catalog-card-cta">Call to Order</a></div>';
+            return card;
+        }
+
+        function spec(label,val){if(!val)return '';return '<div class="catalog-spec"><span class="catalog-spec-label">'+label+'</span>'+esc(String(val))+'</div>'}
+        function esc(s){const d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML}
+        function clearAllFilters(){searchInput.value='';filterType.value='';filterManufacturer.value='';filterCaliber.value='';applyFilters()}
+
+        searchInput.addEventListener('input',debounce(applyFilters,250));
+        filterType.addEventListener('change',applyFilters);
+        filterManufacturer.addEventListener('change',applyFilters);
+        filterCaliber.addEventListener('change',applyFilters);
+        loadCatalog();
     </script>
 </body>
 </html>
