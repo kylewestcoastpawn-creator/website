@@ -39,37 +39,39 @@ jobs:
 
           echo "Authentication successful"
 
-          # Fetch catalog
-          echo "Fetching catalog feed..."
-          CATALOG=$(curl -s -X GET \
+          # Fetch catalog and process in one step
+          echo "Fetching and processing catalog feed..."
+          curl -s -X GET \
             "https://api.lipseys.com/api/Integration/Items/CatalogFeed" \
-            -H "Token: ${TOKEN}")
+            -H "Token: ${TOKEN}" | python3 -c "
+          import sys, json
+          data = json.load(sys.stdin)
+          items = data.get('data', [])
+          filtered = []
+          for item in items:
+              if item.get('quantity', 0) > 0 and item.get('itemType') == 'Firearm':
+                  filtered.append({
+                      'model': item.get('model', ''),
+                      'manufacturer': item.get('manufacturer', ''),
+                      'caliberGauge': item.get('caliberGauge', ''),
+                      'type': item.get('type', ''),
+                      'msrp': item.get('msrp', 0),
+                      'barrelLength': item.get('barrelLength', ''),
+                      'capacity': item.get('capacity', ''),
+                      'finish': item.get('finish', ''),
+                      'action': item.get('action', ''),
+                      'weight': item.get('weight', ''),
+                      'upc': item.get('upc', ''),
+                      'description1': item.get('description1', ''),
+                      'family': item.get('family', ''),
+                      'inStock': True
+                  })
+          with open('catalog-data.json', 'w') as f:
+              json.dump(filtered, f, separators=(',', ':'))
+          print(f'Processed {len(filtered)} in-stock firearms')
+          "
 
-          # Filter and slim down the data
-          echo "Processing catalog data..."
-          echo "$CATALOG" | jq '[
-            .data[]
-            | select(.quantity > 0 and .itemType == "Firearm")
-            | {
-                model: .model,
-                manufacturer: .manufacturer,
-                caliberGauge: .caliberGauge,
-                type: .type,
-                msrp: .msrp,
-                barrelLength: .barrelLength,
-                capacity: .capacity,
-                finish: .finish,
-                action: .action,
-                weight: .weight,
-                upc: .upc,
-                description1: .description1,
-                family: .family,
-                inStock: true
-              }
-          ]' > catalog-data.json
-
-          ITEM_COUNT=$(jq 'length' catalog-data.json)
-          echo "Processed ${ITEM_COUNT} in-stock firearms"
+          echo "Catalog data saved to catalog-data.json"
 
       - name: Commit and push if changed
         run: |
