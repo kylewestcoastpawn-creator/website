@@ -24,12 +24,14 @@ jobs:
 
           # Authenticate
           echo "Authenticating with Lipsey's API..."
-          AUTH_RESPONSE=$(curl -s -X POST \
-            "https://api.lipseys.com/api/Integration/Authentication/Login" \
-            -H "Content-Type: application/json" \
-            -d "{\"Email\":\"${LIPSEYS_EMAIL}\",\"Password\":\"${LIPSEYS_PASSWORD}\"}")
-
-          TOKEN=$(echo "$AUTH_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('token',''))")
+          TOKEN=$(python3 -c "
+          import urllib.request, json
+          payload = json.dumps({'Email': '${{ secrets.LIPSEYS_EMAIL }}', 'Password': '${{ secrets.LIPSEYS_PASSWORD }}'}).encode()
+          req = urllib.request.Request('https://api.lipseys.com/api/Integration/Authentication/Login', data=payload, headers={'Content-Type': 'application/json'}, method='POST')
+          resp = urllib.request.urlopen(req)
+          data = json.loads(resp.read())
+          print(data.get('token', ''))
+          ")
 
           if [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ]; then
             echo "Authentication failed"
