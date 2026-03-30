@@ -69,27 +69,19 @@ jobs:
           ")
           echo "SEND_DATE=$SEND_DATE" >> $GITHUB_ENV
 
-      - name: Check for changes
-        id: check
+      - name: Commit and push if changed
         run: |
-          if [ -f deals-content.html ]; then
-            if git diff --quiet deals-content.html 2>/dev/null; then
-              echo "changed=false" >> $GITHUB_OUTPUT
-              echo "No changes to deals content."
-            else
-              echo "changed=true" >> $GITHUB_OUTPUT
-              echo "Deals content has been updated!"
-            fi
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No deals content file generated."
+          if [ ! -f deals-content.html ]; then
+            echo "No deals content file generated. Skipping."
+            exit 0
           fi
-
-      - name: Commit and push
-        if: steps.check.outputs.changed == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add deals-content.html
-          git commit -m "Update weekly deals from Mailchimp (${{ env.SEND_DATE }})"
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes to deals content."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "Update weekly deals from Mailchimp (${{ env.SEND_DATE }})"
+            git push
+            echo "Deals content updated and pushed!"
+          fi
