@@ -32,6 +32,8 @@
         .catalog-stock-badge{position:absolute;top:12px;right:12px;padding:4px 10px;font-family:'Oswald',sans-serif;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;border-radius:2px}
         .catalog-stock-badge.in-stock{background:rgba(34,139,34,0.2);color:#4CAF50;border:1px solid #4CAF50}
         .catalog-stock-badge.out-of-stock-badge{background:rgba(139,0,0,0.2);color:#ff6b6b;border:1px solid #ff6b6b}
+        .catalog-card-img{width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#0d0d0d;overflow:hidden}
+        .catalog-card-img img{max-width:90%;max-height:180px;object-fit:contain}
         .catalog-card-icon{text-align:center;padding:20px 20px 10px;color:var(--accent);opacity:0.4}
         .catalog-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
         .catalog-card-header{padding:18px 20px 12px;border-bottom:1px solid #1e1e1e}
@@ -297,7 +299,10 @@
             const msrp=item.msrp?'$'+Number(item.msrp).toFixed(2):'Call for Price';
             const stockBadge=item.inStock?'<span class="catalog-stock-badge in-stock">In Stock</span>':'<span class="catalog-stock-badge out-of-stock-badge">Out of Stock</span>';
             const ctaText=item.inStock?'Call to Order':'Call to Inquire';
-            card.innerHTML=stockBadge+'<div class="catalog-card-icon">'+getTypeIcon(item.type)+'</div><div class="catalog-card-header"><div class="catalog-card-manufacturer">'+esc(item.manufacturer||'')+'</div><div class="catalog-card-model">'+esc(item.model||item.description1||'')+'</div></div><div class="catalog-card-body"><div class="catalog-card-specs">'+spec('Type',item.type)+spec('Caliber',item.caliberGauge)+spec('Action',item.action)+spec('Barrel',item.barrelLength)+spec('Capacity',item.capacity)+spec('Finish',item.finish)+spec('Weight',item.weight)+spec('UPC',item.upc)+'</div></div><div class="catalog-card-footer"><div><span class="catalog-card-price-label">MSRP</span><span class="catalog-card-price">'+msrp+'</span></div><a href="tel:8638165830" class="catalog-card-cta">'+ctaText+'</a></div>';
+            const imgHtml=item.imageName?'<div class="catalog-card-img" data-img="'+esc(item.imageName)+'"><img src="https://pub-cc1b27af42d14162a8bae46ab504e974.r2.dev/lipseys/'+encodeURIComponent(item.imageName)+'" alt="'+esc((item.manufacturer||'')+' '+(item.model||''))+'" loading="lazy"></div>':'<div class="catalog-card-icon">'+getTypeIcon(item.type)+'</div>';
+            card.innerHTML=stockBadge+imgHtml+'<div class="catalog-card-header"><div class="catalog-card-manufacturer">'+esc(item.manufacturer||'')+'</div><div class="catalog-card-model">'+esc(item.model||item.description1||'')+'</div></div><div class="catalog-card-body"><div class="catalog-card-specs">'+spec('Type',item.type)+spec('Caliber',item.caliberGauge)+spec('Action',item.action)+spec('Barrel',item.barrelLength)+spec('Capacity',item.capacity)+spec('Finish',item.finish)+spec('Weight',item.weight)+spec('UPC',item.upc)+'</div></div><div class="catalog-card-footer"><div><span class="catalog-card-price-label">MSRP</span><span class="catalog-card-price">'+msrp+'</span></div><a href="tel:8638165830" class="catalog-card-cta">'+ctaText+'</a></div>';
+            const imgEl=card.querySelector('.catalog-card-img img');
+            if(imgEl){imgEl.onerror=function(){const p=this.parentElement;p.className='catalog-card-icon';p.innerHTML=getTypeIcon(item.type||'');}}
             return card;
         }
 

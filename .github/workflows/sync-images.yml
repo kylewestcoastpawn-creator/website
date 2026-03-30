@@ -1,0 +1,144 @@
+name: Sync Lipsey's Images to R2
+
+on:
+  schedule:
+    - cron: '0 12 * * 0'  # Weekly on Sunday at noon UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install boto3
+        run: pip install boto3
+
+      - name: Fetch catalog and sync images to R2
+        env:
+          LIPSEYS_EMAIL: ${{ secrets.LIPSEYS_EMAIL }}
+          LIPSEYS_PASSWORD: ${{ secrets.LIPSEYS_PASSWORD }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+        shell: python3 {0}
+        run: |
+          import urllib.request, json, os, sys, time
+          import boto3
+          from botocore.exceptions import ClientError
+
+          # --- Authenticate with Lipsey's API ---
+          email = os.environ.get('LIPSEYS_EMAIL', '')
+          password = os.environ.get('LIPSEYS_PASSWORD', '')
+
+          if not email or not password:
+              print('ERROR: Missing LIPSEYS_EMAIL or LIPSEYS_PASSWORD secrets')
+              sys.exit(1)
+
+          print('Authenticating with Lipseys API...')
+          payload = json.dumps({'Email': email, 'Password': password}).encode()
+          req = urllib.request.Request(
+              'https://api.lipseys.com/api/Integration/Authentication/Login',
+              data=payload,
+              headers={'Content-Type': 'application/json'},
+              method='POST'
+          )
+          resp = urllib.request.urlopen(req)
+          token = json.loads(resp.read()).get('token', '')
+
+          if not token:
+              print('ERROR: Authentication failed')
+              sys.exit(1)
+
+          print('Authentication successful')
+
+          # --- Fetch catalog ---
+          print('Fetching catalog feed...')
+          req2 = urllib.request.Request(
+              'https://api.lipseys.com/api/Integration/Items/CatalogFeed',
+              headers={'Token': token}
+          )
+          resp2 = urllib.request.urlopen(req2)
+          data = json.loads(resp2.read())
+          items = data.get('data', [])
+
+          # Collect unique image names from firearms
+          image_names = set()
+          for item in items:
+              if item.get('itemType') == 'Firearm':
+                  name = item.get('imageName', '').strip()
+                  if name:
+                      image_names.add(name)
+
+          image_list = sorted(image_names)
+          print(f'Found {len(image_list)} unique firearm images in catalog')
+
+          # --- Set up R2 client ---
+          account_id = os.environ.get('R2_ACCOUNT_ID', '')
+          s3 = boto3.client(
+              's3',
+              endpoint_url=f'https://{account_id}.r2.cloudflarestorage.com',
+              aws_access_key_id=os.environ.get('R2_ACCESS_KEY_ID', ''),
+              aws_secret_access_key=os.environ.get('R2_SECRET_ACCESS_KEY', ''),
+              region_name='auto'
+          )
+
+          bucket = 'westcoast-images'
+          uploaded = 0
+          skipped = 0
+          failed = 0
+          total = len(image_list)
+
+          BATCH_SIZE = 50
+
+          for i, image_name in enumerate(image_list):
+              r2_key = f'lipseys/{image_name}'
+
+              # Check if image already exists in R2
+              try:
+                  s3.head_object(Bucket=bucket, Key=r2_key)
+                  skipped += 1
+                  if (i + 1) % 100 == 0:
+                      print(f'Progress: {i + 1}/{total} | Uploaded: {uploaded} | Skipped: {skipped} | Failed: {failed}')
+                  continue
+              except ClientError as e:
+                  if e.response['Error']['Code'] != '404':
+                      print(f'Error checking {image_name}: {e}')
+                      failed += 1
+                      continue
+
+              # Download image from Lipsey's CDN
+              image_url = f'https://www.lipseyscloud.com/images/{image_name}'
+              try:
+                  img_req = urllib.request.Request(image_url)
+                  img_resp = urllib.request.urlopen(img_req, timeout=30)
+                  img_data = img_resp.read()
+                  content_type = img_resp.headers.get('Content-Type', 'image/jpeg')
+              except Exception as e:
+                  print(f'Failed to download {image_name}: {e}')
+                  failed += 1
+                  continue
+
+              # Upload to R2
+              try:
+                  s3.put_object(
+                      Bucket=bucket,
+                      Key=r2_key,
+                      Body=img_data,
+                      ContentType=content_type
+                  )
+                  uploaded += 1
+              except Exception as e:
+                  print(f'Failed to upload {image_name} to R2: {e}')
+                  failed += 1
+
+              # Progress update every 100 images
+              if (i + 1) % 100 == 0:
+                  print(f'Progress: {i + 1}/{total} | Uploaded: {uploaded} | Skipped: {skipped} | Failed: {failed}')
+
+              # Brief pause between batches to avoid rate limits
+              if uploaded > 0 and uploaded % BATCH_SIZE == 0:
+                  time.sleep(1)
+
+          print(f'Sync complete: {uploaded} uploaded, {skipped} already existed, {failed} failed out of {total} total')
