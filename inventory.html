@@ -273,7 +273,7 @@
                 if(cv&&i.caliberGauge!==cv)return false;
                 if(sv==='instock'&&!i.inStock)return false;
                 if(sv==='outofstock'&&i.inStock)return false;
-                if(q){const s=[i.model,i.manufacturer,i.caliberGauge,i.upc,i.description1,i.family,i.action,i.type].filter(Boolean).join(' ').toLowerCase();if(!s.includes(q))return false}
+                if(q){const s=[i.model,i.manufacturer,i.caliberGauge,i.upc,i.description1,i.family,i.action,i.type].filter(Boolean).join(' ').toLowerCase();const words=q.split(/\s+/);if(!words.every(w=>s.includes(w)))return false}
                 return true;
             });
             displayedCount=0;catalogGrid.innerHTML='';renderPage();
