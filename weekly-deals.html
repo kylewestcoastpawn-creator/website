@@ -10,6 +10,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .deals-wrapper{max-width:900px;margin:0 auto;padding:60px 20px;text-align:center}
+        .deals-title{font-family:'Oswald',sans-serif;font-size:2rem;color:#C0A060;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
+        .deals-intro{font-family:'Inter',sans-serif;color:#ccc;font-size:1.1rem;line-height:1.8;margin-bottom:16px}
+        .deals-warning{font-family:'Inter',sans-serif;color:#8B0000;font-size:1.4rem;font-weight:bold;margin-bottom:12px}
+        .deals-subscribe-pitch{font-family:'Inter',sans-serif;color:#ccc;font-size:1.05rem;line-height:1.7;margin-bottom:40px}
+        .deals-subscribe-pitch a{color:#C0A060;text-decoration:underline}
+        .deals-iframe{width:100%;border:1px solid #333;border-radius:12px;background:#1a1a1a;min-height:600px}
+        .deals-subscribe-box{background:#1e1e1e;border:2px solid #C0A060;border-radius:12px;padding:40px 35px;max-width:480px;margin:40px auto 30px;text-align:center}
+        .deals-subscribe-box h3{font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.4rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+        .deals-subscribe-box p{font-family:'Inter',sans-serif;color:#aaa;font-size:0.95rem;margin-bottom:20px;line-height:1.6}
+        .deals-subscribe-box input{width:100%;padding:12px 16px;border:1px solid #333;border-radius:6px;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:12px;box-sizing:border-box;outline:none}
+        .deals-subscribe-box button{width:100%;padding:12px;background:#8B0000;color:#fff;border:none;border-radius:6px;font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:background 0.3s}
+        @media(max-width:600px){
+            .deals-wrapper{padding:30px 12px}
+            .deals-title{font-size:1.5rem;letter-spacing:1px}
+            .deals-intro{font-size:0.95rem;line-height:1.6}
+            .deals-warning{font-size:1.1rem}
+            .deals-subscribe-pitch{font-size:0.9rem;margin-bottom:24px}
+            .deals-iframe{min-height:400px;border-radius:8px}
+            .deals-subscribe-box{padding:24px 16px;margin:24px auto 20px}
+            .deals-subscribe-box h3{font-size:1.2rem}
+            .deals-subscribe-box p{font-size:0.85rem}
+            .page-header{padding:140px 20px 100px !important}
+            .page-header h1{font-size:2rem !important}
+            .page-header p{font-size:0.95rem !important}
+        }
+    </style>
 </head>
 <body>
     <nav role="navigation" aria-label="Main navigation">
@@ -45,11 +73,11 @@
         </div>
 
         <section class="services" aria-labelledby="deals-heading">
-            <div style="max-width:900px;margin:0 auto;padding:60px 20px;text-align:center;">
-                <h2 id="deals-heading" class="fade-in" style="font-family:'Oswald',sans-serif;font-size:2rem;color:#C0A060;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;">This Week's Specials</h2>
-                <p class="fade-in" style="font-family:'Inter',sans-serif;color:#ccc;font-size:1.1rem;line-height:1.8;margin-bottom:16px;">Fresh deals drop every week. All specials are while supplies last. First come, first served. Due to the super low prices, we are not able to offer layaway on these deals. Must be paid in full.</p>
-                <p class="fade-in" style="font-family:'Inter',sans-serif;color:#8B0000;font-size:1.4rem;font-weight:bold;margin-bottom:12px;">Sale prices are only valid until the next sales letter goes out.</p>
-                <p class="fade-in" style="font-family:'Inter',sans-serif;color:#ccc;font-size:1.05rem;line-height:1.7;margin-bottom:40px;">Want to be the first to know? <a href="#subscribe-section" style="color:#C0A060;text-decoration:underline;">Subscribe to our email list</a> and get exclusive weekly deals delivered straight to your inbox before they hit the website.</p>
+            <div class="deals-wrapper">
+                <h2 id="deals-heading" class="fade-in deals-title">This Weeks Specials</h2>
+                <p class="fade-in deals-intro">Fresh deals drop every week. All specials are while supplies last. First come, first served. Due to the super low prices, we are not able to offer layaway on these deals. Must be paid in full.</p>
+                <p class="fade-in deals-warning">Sale prices are only valid until the next sales letter goes out.</p>
+                <p class="fade-in deals-subscribe-pitch">Want to be the first to know? <a href="#subscribe-section">Subscribe to our email list</a> and get exclusive weekly deals delivered straight to your inbox before they hit the website.</p>
 
                 <!-- Mailchimp campaign content loads here -->
                 <div id="mailchimp-deals" class="fade-in fade-in-delay-1" style="margin-bottom:30px;">
@@ -68,15 +96,15 @@
                 </div>
 
                 <!-- Email Subscribe Section -->
-                <div id="subscribe-section" class="fade-in fade-in-delay-2" style="background:#1e1e1e;border:2px solid #C0A060;border-radius:12px;padding:40px 35px;max-width:480px;margin:40px auto 30px;text-align:center;">
+                <div id="subscribe-section" class="fade-in fade-in-delay-2 deals-subscribe-box">
                     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="margin-bottom:12px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    <h3 style="font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.4rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Never Miss a Deal</h3>
-                    <p style="font-family:'Inter',sans-serif;color:#aaa;font-size:0.95rem;margin-bottom:20px;line-height:1.6;">Sign up and get the weekly deals before everyone else. We'll send them straight to your inbox so you never miss out.</p>
+                    <h3>Never Miss a Deal</h3>
+                    <p>Sign up and get the weekly deals before everyone else. We'll send them straight to your inbox so you never miss out.</p>
                     <form action="https://westcoastpawn.us12.list-manage.com/subscribe/post?u=734a9d157eec02c5218892b87&amp;id=efdddca3f9&amp;f_id=0051e8e1f0" method="post" target="_blank">
-                        <input type="email" name="EMAIL" placeholder="Enter your email *" required style="width:100%;padding:12px 16px;border:1px solid #333;border-radius:6px;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:12px;box-sizing:border-box;outline:none;">
-                        <input type="text" name="PHONE" placeholder="Phone number (optional)" style="width:100%;padding:12px 16px;border:1px solid #333;border-radius:6px;background:#111;color:#fff;font-family:'Inter',sans-serif;font-size:1rem;margin-bottom:12px;box-sizing:border-box;outline:none;">
+                        <input type="email" name="EMAIL" placeholder="Enter your email *" required>
+                        <input type="text" name="PHONE" placeholder="Phone number (optional)">
                         <div aria-hidden="true" style="position:absolute;left:-5000px;"><input type="text" name="b_734a9d157eec02c5218892b87_efdddca3f9" tabindex="-1" value=""></div>
-                        <button type="submit" style="width:100%;padding:12px;background:#8B0000;color:#fff;border:none;border-radius:6px;font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:background 0.3s;">Subscribe</button>
+                        <button type="submit">Subscribe</button>
                     </form>
                     <p style="color:#555;font-size:0.75rem;margin-top:12px;font-family:'Inter',sans-serif;">No spam. Unsubscribe anytime.</p>
                 </div>
@@ -184,9 +212,9 @@
 
                     // Create iframe to display the email flyer
                     const iframe = document.createElement('iframe');
-                    iframe.style.cssText = 'width:100%;border:1px solid #333;border-radius:12px;background:#1a1a1a;min-height:600px;';
+                    iframe.className = 'deals-iframe';
                     iframe.sandbox = 'allow-same-origin';
-                    iframe.title = 'This Week\'s Deals';
+                    iframe.title = 'This Weeks Deals';
                     container.appendChild(iframe);
 
                     // Write the campaign HTML into the iframe
