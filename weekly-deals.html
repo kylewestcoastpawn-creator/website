@@ -18,7 +18,7 @@
         .deals-subscribe-pitch{font-family:'Inter',sans-serif;color:#ccc;font-size:1.05rem;line-height:1.7;margin-bottom:40px}
         .deals-subscribe-pitch a{color:#C0A060;text-decoration:underline}
         .deals-hero{padding:220px 40px 180px}
-        .deals-iframe{width:100%;border:1px solid #333;border-radius:12px;background:#1a1a1a;min-height:600px}
+        .deals-iframe{width:100%;border:1px solid #333;border-radius:12px;background:#1a1a1a;min-height:600px;overflow:hidden}
         .deals-subscribe-box{background:#1e1e1e;border:2px solid #C0A060;border-radius:12px;padding:40px 35px;max-width:480px;margin:40px auto 30px;text-align:center}
         .deals-subscribe-box h3{font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.4rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
         .deals-subscribe-box p{font-family:'Inter',sans-serif;color:#aaa;font-size:0.95rem;margin-bottom:20px;line-height:1.6}
@@ -215,6 +215,7 @@
                     const iframe = document.createElement('iframe');
                     iframe.className = 'deals-iframe';
                     iframe.sandbox = 'allow-same-origin';
+                    iframe.scrolling = 'no';
                     iframe.title = 'This Weeks Deals';
                     container.appendChild(iframe);
 
