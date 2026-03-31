@@ -225,6 +225,11 @@
                     doc.write(html);
                     doc.close();
 
+                    // Hide Mailchimp email footer (unsubscribe links, merge tags)
+                    var hideStyle = doc.createElement('style');
+                    hideStyle.textContent = '#canspamBar, #canspamBar *{display:none!important;height:0!important;overflow:hidden!important}';
+                    doc.head.appendChild(hideStyle);
+
                     // Auto-resize and scale iframe to fit content
                     function resizeIframe() {
                         try {
