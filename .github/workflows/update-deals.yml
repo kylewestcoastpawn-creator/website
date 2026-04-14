@@ -23,7 +23,7 @@ jobs:
 
           # Fetch the latest SENT campaign for the list
           CAMPAIGN=$(curl -sf \
-            --url "https://${DC}.api.mailchimp.com/3.0/campaigns?count=1&sort_field=send_time&sort_dir=DESC&status=sent&list_id=efdddca3f9" \
+            --url "https://${DC}.api.mailchimp.com/3.0/campaigns?count=1&sort_field=send_time&sort_dir=DESC&status=sent" \
             --user "anystring:${MAILCHIMP_API_KEY}")
 
           # Check if we got a campaign
