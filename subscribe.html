@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe | West Coast Pawn & Gun</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #f4f4f4;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .subscribe-box {
+            background: #111;
+            border: 2px solid #C0A060;
+            border-radius: 12px;
+            padding: 50px 45px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: #8B0000;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .logo-text h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.15rem;
+            color: #C0A060;
+            letter-spacing: 1px;
+            text-align: left;
+        }
+        .logo-text p {
+            font-size: 0.7rem;
+            color: #aaa;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: left;
+        }
+        h2 {
+            font-family: 'Oswald', sans-serif;
+            color: #C0A060;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        p.subtitle {
+            color: #aaa;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        form input[type="email"],
+        form input[type="text"] {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #1a1a1a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        form input:focus {
+            border-color: #C0A060;
+        }
+        form input::placeholder { color: #555; }
+        form button {
+            width: 100%;
+            padding: 14px;
+            background: #8B0000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        form button:hover { background: #a00000; }
+        .fine-print {
+            color: #444;
+            font-size: 0.75rem;
+            margin-top: 14px;
+        }
+        @media(max-width: 480px) {
+            .subscribe-box { padding: 35px 20px; }
+            h2 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="subscribe-box">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg>
+            </div>
+            <div class="logo-text">
+                <h1>West Coast Pawn & Gun</h1>
+                <p>Buy · Sell · Trade · Loan</p>
+            </div>
+        </a>
+
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="margin-bottom:16px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+
+        <h2>Never Miss a Deal</h2>
+        <p class="subtitle">Sign up and get our exclusive weekly deals delivered straight to your inbox before they hit the website. First come, first served.</p>
+
+        <form action="https://westcoastpawn.us12.list-manage.com/subscribe/post?u=734a9d157eec02c5218892b87&id=efdddca3f9&f_id=0051e8e1f0" method="post" target="_blank">
+            <input type="email" name="EMAIL" placeholder="Email address *" required>
+            <input type="text" name="PHONE" placeholder="Phone number (optional)">
+            <div aria-hidden="true" style="position:absolute;left:-5000px;">
+                <input type="text" name="b_734a9d157eec02c5218892b87_efdddca3f9" tabindex="-1" value="">
+            </div>
+            <button type="submit">Subscribe Now</button>
+        </form>
+        <p class="fine-print">No spam. Unsubscribe anytime.</p>
+    </div>
+</body>
+</html>
