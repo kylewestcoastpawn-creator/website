@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/subscribe", "destination": "/subscribe.html", "permanent": true }
+  ]
+}
