@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -17,8 +18,15 @@
             color: #f4f4f4;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        main {
+            display: flex;
             align-items: center;
             justify-content: center;
+            flex: 1;
+            width: 100%;
             padding: 40px 20px;
         }
         .subscribe-box {
@@ -123,17 +131,34 @@
     </style>
 </head>
 <body>
-    <div class="subscribe-box">
-        <a href="index.html" class="logo">
-            <div class="logo-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg>
-            </div>
+    <nav role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="logo" aria-label="West Coast Pawn & Gun — Home">
+            <div class="logo-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
             <div class="logo-text">
                 <h1>West Coast Pawn & Gun</h1>
                 <p>Buy · Sell · Trade · Loan</p>
             </div>
         </a>
+        <ul class="nav-links" id="navLinks" role="list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="inventory.html">Inventory</a></li>
+            <li><a href="weekly-deals.html">Weekly Deals</a></li>
+            <li><a href="ccw.html">Conceal Carry Class</a></li>
+            <li><a href="pawn-loan.html">Pawn/Loan</a></li>
+            <li><a href="nfa.html">NFA</a></li>
+            <li><a href="precious-metals.html">Precious Metals</a></li>
+            <li><a href="policies.html">Policies</a></li>
+            <li><a href="about.html">Who We Are</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
 
+    <main>
+    <div class="subscribe-box">
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="margin-bottom:16px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
 
         <h2>Never Miss a Deal</h2>
@@ -149,5 +174,24 @@
         </form>
         <p class="fine-print">No spam. Unsubscribe anytime.</p>
     </div>
+    </main>
+
+    <script>
+        function toggleNav() {
+            const navLinks = document.getElementById('navLinks');
+            const btn = document.getElementById('hamburger');
+            const isOpen = navLinks.classList.toggle('open');
+            btn.classList.toggle('open', isOpen);
+            btn.setAttribute('aria-expanded', String(isOpen));
+        }
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('open');
+                const btn = document.getElementById('hamburger');
+                btn.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
 </body>
 </html>
