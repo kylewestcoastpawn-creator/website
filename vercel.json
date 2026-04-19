@@ -1,5 +1,6 @@
 {
   "redirects": [
-    { "source": "/subscribe", "destination": "/subscribe.html", "permanent": true }
+    { "source": "/subscribe", "destination": "/subscribe.html", "permanent": true },
+    { "source": "/gun-tags", "destination": "/gun-tag-printer.html", "permanent": true }
   ]
 }

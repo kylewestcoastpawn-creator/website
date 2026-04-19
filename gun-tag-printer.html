@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Firearm Price Tag Printer</title>
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #fafaf7;
+    --accent: #b91c1c;
+    --muted: #6b6b6b;
+    --border: #d4d4d0;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ===== FORM PANEL ===== */
+  .form-panel {
+    background: #fff;
+    border-right: 2px solid var(--ink);
+    padding: 28px 32px;
+    overflow-y: auto;
+  }
+
+  .brand {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .brand h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+  }
+  .brand p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .field label .req { color: var(--accent); }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    font-family: inherit;
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+  }
+  .field input.field-error, .field select.field-error {
+    border-color: var(--accent);
+    background: #fef2f2;
+  }
+  .field input.field-error:focus, .field select.field-error:focus {
+    box-shadow: 0 0 0 3px rgba(185,28,28,0.15);
+  }
+  .field textarea { resize: vertical; min-height: 60px; }
+  .field .hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .price-field input { font-size: 18px; font-weight: 700; }
+
+  /* Stacked bullet point inputs */
+  .bullet-input {
+    margin-bottom: 6px;
+  }
+  .bullet-input:last-of-type {
+    margin-bottom: 0;
+  }
+
+  /* Quick Fill preset selector */
+  .preset-field {
+    background: #f5f4ef;
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+  }
+  .preset-field label {
+    margin-bottom: 6px !important;
+  }
+  .preset-field select {
+    background: #fff;
+  }
+  .optional-note {
+    font-weight: 400;
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 10px;
+    margin-left: 4px;
+  }
+  .upc-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .upc-row input {
+    flex: 1;
+    background: #fff;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+  }
+  .upc-status {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 60px;
+    text-align: right;
+  }
+  .upc-status.found { color: #0a7d2e; }
+  .upc-status.not-found { color: var(--accent); }
+
+  /* Catalog status + actions row */
+  .catalog-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+    gap: 8px;
+  }
+  .catalog-status {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .catalog-status.loaded { color: #0a7d2e; }
+  .catalog-status.loading { color: var(--accent); }
+  .catalog-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .btn-mini {
+    display: inline-block;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .btn-mini:hover {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  /* Toggle + percentage */
+  .toggle-label {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 8px !important;
+  }
+  .toggle-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--ink);
+    cursor: pointer;
+    margin: 0;
+  }
+  .layaway-pct-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 24px;
+  }
+  .layaway-pct-row input {
+    width: 70px;
+    padding: 8px 10px;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    font-family: inherit;
+    text-align: center;
+  }
+  .layaway-pct-row input:focus {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+  }
+  .layaway-pct-row.disabled { opacity: 0.4; pointer-events: none; }
+  .pct-suffix {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 2px solid var(--ink);
+  }
+  .btn {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--ink); color: #fff; }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-secondary { background: #fff; color: var(--ink); }
+  .btn-secondary:hover { background: var(--ink); color: #fff; }
+  .btn-save { font-size: 12px; }
+
+  /* ===== MODAL DIALOGS ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal {
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    padding: 24px 28px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-wide { max-width: 560px; }
+  .modal h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 10px;
+  }
+  .modal-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 18px;
+    line-height: 1.5;
+  }
+  .modal-field { margin-bottom: 14px; }
+  .modal-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .modal-field input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    font-family: inherit;
+    box-sizing: border-box;
+  }
+  .modal-field input:focus {
+    outline: none;
+    border-color: var(--ink);
+  }
+  .modal-field .hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1.5px solid var(--border);
+  }
+  .modal-actions .btn { flex: 0 0 auto; padding: 10px 20px; }
+
+  .custom-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .custom-list:empty::before {
+    content: "No custom guns saved yet.";
+    display: block;
+    padding: 30px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .custom-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .custom-item:last-child { border-bottom: none; }
+  .custom-item-info { flex: 1; min-width: 0; }
+  .custom-item-name { font-weight: 700; font-size: 13px; }
+  .custom-item-meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-family: 'Courier New', monospace;
+  }
+  .custom-item-actions { display: flex; gap: 6px; }
+
+  /* ===== PREVIEW PANEL ===== */
+  .preview-panel {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    background:
+      linear-gradient(var(--paper), var(--paper)),
+      repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(0,0,0,0.02) 20px, rgba(0,0,0,0.02) 21px);
+  }
+  .preview-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  /* Force all elements to print exactly as they appear on screen.
+     Without this, browsers strip backgrounds/colors to save ink. */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* ===== THE TAG — 2.25" × 4" PORTRAIT — THERMAL OPTIMIZED ===== */
+  .tag-wrapper { background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+
+  .tag {
+    width: 2.25in;
+    height: 4in;
+    box-sizing: border-box;
+    background: #fff;
+    color: #000;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    position: relative;
+    border: 1.5pt solid #000;
+    overflow: hidden;
+  }
+
+  /* 1. Manufacturer — text only */
+  .tag-header {
+    padding: 7pt 10pt 8pt;
+    text-align: center;
+    position: relative;
+  }
+  .tag-header::before {
+    /* Thin rule above the manufacturer name */
+    content: "";
+    position: absolute;
+    left: 8pt;
+    right: 8pt;
+    top: 3pt;
+    border-top: 1.25pt solid #000;
+  }
+  .tag-make {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2pt;
+    line-height: 1;
+    margin-top: 3pt;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+  }
+  /* Short centered divider shown AFTER the manufacturer name */
+  .tag-header .divider {
+    display: block;
+    width: 60%;
+    height: 0;
+    border-top: 1.25pt solid #000;
+    margin: 5pt auto 0;
+  }
+
+  /* 2. Model + caliber */
+  .tag-model-block {
+    padding: 7pt 10pt 8pt;
+    text-align: center;
+  }
+  .tag-model {
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.5pt;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+  }
+  .tag-caliber {
+    margin-top: 4pt;
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5pt;
+    color: #000;
+  }
+  .tag-model-block .divider {
+    display: block;
+    width: 60%;
+    height: 0;
+    border-top: 1.25pt solid #000;
+    margin: 5pt auto 0;
+  }
+
+  /* 3. Middle: bullets + condition */
+  .tag-middle {
+    padding: 6pt 10pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 6pt;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .tag-bullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 9pt;
+    line-height: 1.3;
+  }
+  .tag-bullets li {
+    padding-left: 10pt;
+    position: relative;
+  }
+  .tag-bullets li::before {
+    content: "\25AA";
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+
+  /* Condition — outlined badge, no fill */
+  .condition-row {
+    text-align: center;
+  }
+  .condition-row .divider {
+    display: block;
+    width: 60%;
+    height: 0;
+    border-top: 1.25pt solid #000;
+    margin: 6pt auto 0;
+  }
+  .condition-badge {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    padding: 2.5pt 10pt;
+    font-weight: 900;
+    letter-spacing: 2pt;
+    font-size: 9pt;
+    text-transform: uppercase;
+    border: 1.25pt solid #000;
+  }
+  .condition-badge.used {
+    color: #000;
+    border-color: #000;
+    border-width: 1.25pt;
+    border-style: double;
+  }
+
+  /* 4. Price — no black fill */
+  .tag-price {
+    padding: 7pt 10pt 8pt;
+    text-align: center;
+    position: relative;
+  }
+  .price-label {
+    font-size: 9pt;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2.5pt;
+    color: #000;
+    margin-top: 2pt;
+  }
+  .price-amount {
+    font-weight: 900;
+    line-height: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2pt;
+    margin-top: 2pt;
+  }
+  .price-amount .dollar { font-size: 14pt; margin-top: 3pt; }
+  .price-amount .whole { font-size: 36pt; letter-spacing: -1pt; }
+  .price-amount .cents { font-size: 14pt; margin-top: 3pt; }
+
+  /* Layaway line — small, separated by thin rule */
+  .layaway {
+    margin-top: 4pt;
+    padding-top: 3pt;
+    border-top: 0.5pt solid #000;
+    font-size: 8pt;
+    color: #000;
+  }
+  .layaway .layaway-label {
+    font-size: 8pt;
+    font-weight: 900;
+    letter-spacing: 1.5pt;
+    text-transform: uppercase;
+    margin-right: 3pt;
+  }
+  .layaway .layaway-value {
+    font-weight: 900;
+    font-size: 10pt;
+  }
+  .layaway .layaway-terms {
+    font-size: 6.5pt;
+    letter-spacing: 1pt;
+    text-transform: uppercase;
+    margin-top: 1pt;
+    opacity: 0.75;
+  }
+
+  /* 5. Barcode footer */
+  .tag-footer {
+    padding: 6pt 10pt 8pt;
+    text-align: center;
+  }
+  .barcode-bars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22pt;
+    gap: 1pt;
+    margin-bottom: 2pt;
+  }
+  .barcode-bars span {
+    display: block;
+    height: 100%;
+    background: #000;
+  }
+  .barcode-num {
+    font-family: 'Courier New', monospace;
+    font-size: 7pt;
+    letter-spacing: 1pt;
+  }
+
+  @media print {
+    @page { size: 2.25in 4in; margin: 0; }
+
+    /* Hide everything completely — not just visibility, but remove from layout */
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 2.25in !important;
+      height: 4in !important;
+      overflow: hidden !important;
+    }
+    .form-panel, .preview-label, .preview-panel > *:not(.tag-wrapper) {
+      display: none !important;
+    }
+    .app {
+      display: block !important;
+      width: 2.25in !important;
+      height: 4in !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .preview-panel {
+      display: block !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: none !important;
+      width: 2.25in !important;
+      height: 4in !important;
+    }
+    .tag-wrapper {
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    .tag {
+      border: none !important;
+      width: 2.25in !important;
+      height: 4in !important;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .form-panel { border-right: none; border-bottom: 2px solid var(--ink); }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="form-panel">
+    <div class="brand">
+      <h1>Firearm Tag Printer</h1>
+      <p>2.25" × 4" labels • Preview updates live</p>
+    </div>
+
+    <div class="field preset-field">
+      <label>UPC Scan <span class="optional-note">— scan barcode or type UPC to auto-fill</span></label>
+      <div class="upc-row">
+        <input type="text" id="f-upc" placeholder="Scan or type UPC" inputmode="numeric" autocomplete="off">
+        <span class="upc-status" id="upc-status"></span>
+      </div>
+      <div class="catalog-row">
+        <span class="catalog-status" id="catalog-status">No catalog loaded</span>
+        <div class="catalog-actions">
+          <label for="f-catalog-file" class="btn-mini" id="btn-load-catalog">Load Lipsey's CSV</label>
+          <input type="file" id="f-catalog-file" accept=".csv" style="display:none;">
+          <button type="button" class="btn-mini" id="btn-clear-catalog" style="display:none;">Clear</button>
+        </div>
+      </div>
+      <div class="catalog-row" id="custom-row" style="display:none;">
+        <span class="catalog-status" id="custom-status">0 custom guns saved</span>
+        <div class="catalog-actions">
+          <button type="button" class="btn-mini" id="btn-manage-custom">Manage</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Manufacturer <span class="req">*</span></label>
+      <input type="text" id="f-make" placeholder="e.g. GLOCK, SMITH &amp; WESSON">
+    </div>
+
+    <div class="field">
+      <label>Model <span class="req">*</span></label>
+      <input type="text" id="f-model" placeholder="e.g. G19 Gen 5">
+    </div>
+
+    <div class="row-2">
+      <div class="field">
+        <label>Caliber <span class="req">*</span></label>
+        <input type="text" id="f-caliber" placeholder="e.g. 9mm">
+      </div>
+      <div class="field">
+        <label>Condition <span class="req">*</span></label>
+        <select id="f-condition">
+          <option value="">— Select —</option>
+          <option value="NEW">New</option>
+          <option value="PRE-OWNED">Pre-Owned</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field price-field">
+      <label>Price <span class="req">*</span></label>
+      <input type="text" id="f-price" placeholder="549.99" inputmode="decimal">
+    </div>
+
+    <div class="field">
+      <label class="toggle-label">
+        <input type="checkbox" id="f-layaway-enabled" checked>
+        <span>Show Layaway Amount</span>
+      </label>
+      <div class="layaway-pct-row" id="layaway-pct-row">
+        <input type="number" id="f-layaway-pct" min="1" max="99" step="1" value="25">
+        <span class="pct-suffix">% of price</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Barrel Length</label>
+      <input type="text" id="f-bullet-1" placeholder="e.g. 4.02" class="bullet-input" inputmode="decimal">
+
+      <label class="toggle-label" style="margin-top: 14px;">
+        <input type="checkbox" id="f-single-shot">
+        <span>Single Shot / Revolver</span>
+      </label>
+      <div class="hint" style="margin-top: -4px; margin-bottom: 10px;">Skips +1 on capacity, and hides mags included</div>
+
+      <label>Capacity</label>
+      <input type="text" id="f-bullet-2" placeholder="e.g. 15" class="bullet-input" inputmode="numeric">
+      <label style="margin-top: 14px;">Mags Included</label>
+      <input type="text" id="f-bullet-3" placeholder="e.g. 2" class="bullet-input" inputmode="numeric">
+      <label style="margin-top: 14px;">Optic Ready</label>
+      <select id="f-bullet-4" class="bullet-input">
+        <option value="">— Not shown —</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <label style="margin-top: 14px;">Extra Detail</label>
+      <input type="text" id="f-bullet-5" placeholder="Detail #5 (optional)" class="bullet-input">
+      <div class="hint">Dedicated fields auto-format on the tag.</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="resetForm()">Clear</button>
+      <button class="btn btn-secondary btn-save" onclick="openSaveDialog()" title="Save this gun so its UPC scans instantly next time">Save Gun</button>
+      <button class="btn btn-primary" id="btn-print" onclick="validatePrint()">Print Tag</button>
+    </div>
+  </aside>
+
+  <!-- Modal: Save Gun -->
+  <div class="modal-overlay" id="save-modal" style="display:none;">
+    <div class="modal">
+      <h2>Save Gun</h2>
+      <p class="modal-desc">Save this gun's info so you can recall it later. If you add a UPC, scanning it will auto-fill the form.</p>
+      <div class="modal-field">
+        <label>UPC (optional)</label>
+        <input type="text" id="save-upc" placeholder="Leave blank if no UPC" inputmode="numeric" autocomplete="off">
+        <div class="hint">If this gun has a box UPC, add it here for scan-to-fill.</div>
+      </div>
+      <div class="modal-field">
+        <label>Save Label</label>
+        <input type="text" id="save-label" placeholder="Auto-filled from manufacturer + model" autocomplete="off">
+        <div class="hint">Shown in the Manage list. Leave blank to use Make + Model.</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeSaveDialog()">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmSaveGun()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Manage Custom Saves -->
+  <div class="modal-overlay" id="manage-modal" style="display:none;">
+    <div class="modal modal-wide">
+      <h2>Manage Custom Guns</h2>
+      <p class="modal-desc">Saved guns are stored on this computer only. UPCs scan instantly when matched.</p>
+      <div class="custom-list" id="custom-list"></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeManageDialog()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="preview-panel">
+    <div class="preview-label">Live Preview — 2.25" × 4"</div>
+
+    <div class="tag-wrapper">
+      <div class="tag" id="tag">
+
+        <div class="tag-header">
+          <div class="tag-make" id="tag-make">GLOCK</div>
+          <span class="divider"></span>
+        </div>
+
+        <div class="tag-model-block">
+          <div class="tag-model" id="tag-model">G19 Gen 5</div>
+          <div class="tag-caliber" id="tag-caliber">9MM LUGER</div>
+          <span class="divider"></span>
+        </div>
+
+        <div class="tag-middle">
+          <ul class="tag-bullets" id="tag-bullets"></ul>
+          <div class="condition-row">
+            <span class="condition-badge" id="tag-condition">NEW</span>
+            <span class="divider"></span>
+          </div>
+        </div>
+
+        <div class="tag-price">
+          <div class="price-label">Our Price</div>
+          <div class="price-amount">
+            <span class="dollar">$</span>
+            <span class="whole" id="price-whole">549</span>
+            <span class="cents" id="price-cents">99</span>
+          </div>
+          <div class="layaway" id="layaway-block">
+            <div>
+              <span class="layaway-label">Layaway</span>
+              <span class="layaway-value" id="layaway-value">$137.50</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="preview-label" style="max-width:400px;text-align:center;line-height:1.5;">
+      Thermal-optimized design • No large black fills<br>Set paper size to <strong>2.25 × 4 in</strong> and margins to <strong>None</strong>. Works great with Dymo, Zebra, and Rollo thermal printers.
+    </div>
+  </main>
+
+</div>
+
+<script>
+  function $(id) { return document.getElementById(id); }
+
+  // =========================================================================
+  // QUICK FILL PRESETS
+  // =========================================================================
+  // To add more guns: copy one entry below, give it a unique `id`, fill in
+  // the fields, and add a matching <option> to the <select id="f-preset">
+  // element above. Keep the `id` lowercase with hyphens (e.g. "sig-p365xl").
+  //
+  // The `upc` field enables scanning — employees can scan the UPC barcode
+  // and the form auto-fills. You can list multiple UPCs if a gun has different
+  // variants that should share the same tag info.
+  //
+  // Any field can be omitted — only the fields you specify will auto-fill.
+  // =========================================================================
+  // =========================================================================
+  // FIREARM CATALOG — 13,850 guns from Lipsey's catalog
+  // =========================================================================
+  // FIREARM CATALOG
+  // =========================================================================
+  // This tool ships with an EMPTY catalog. To auto-fill tags by UPC, each
+  // shop must upload their own Lipsey's CSV (downloaded from their Lipsey's
+  // dealer account). The "Load Catalog" button in the form handles this.
+  //
+  // The uploaded catalog is stored in the browser's localStorage, so it only
+  // needs to be loaded once per computer.
+  //
+  // NOTE: Lipsey's catalog data is for individual company use only. Do not
+  // share your catalog file with other shops — they must download their own.
+  // =========================================================================
+  let PRESETS = {};
+  let UPC_INDEX = {};
+
+  // Rebuild UPC index from current PRESETS. Call after catalog is loaded.
+  function rebuildUpcIndex() {
+    UPC_INDEX = {};
+    for (const id in PRESETS) {
+      const upcs = PRESETS[id].upc;
+      if (!upcs) continue;
+      const list = Array.isArray(upcs) ? upcs : [upcs];
+      list.forEach(u => {
+        const clean = String(u).replace(/\D/g, '');
+        if (clean) UPC_INDEX[clean] = id;
+      });
+    }
+  }
+
+  // =========================================================================
+  // CATALOG LOADING — parses a Lipsey's CSV and converts it to PRESETS format
+  // =========================================================================
+
+  const CATALOG_STORAGE_KEY = 'gunTagPrinter.catalog.v1';
+
+  function updateCatalogStatus() {
+    const statusEl = $('catalog-status');
+    const clearBtn = $('btn-clear-catalog');
+    const loadBtn = $('btn-load-catalog');
+    const count = Object.keys(PRESETS).length;
+    if (count > 0) {
+      statusEl.textContent = count.toLocaleString() + ' guns loaded';
+      statusEl.className = 'catalog-status loaded';
+      clearBtn.style.display = '';
+      loadBtn.textContent = 'Replace Catalog';
+    } else {
+      statusEl.textContent = 'No catalog loaded — UPC scan disabled';
+      statusEl.className = 'catalog-status';
+      clearBtn.style.display = 'none';
+      loadBtn.textContent = "Load Lipsey's CSV";
+    }
+  }
+
+  // Parse a single line of CSV, respecting quoted fields that may contain commas
+  function parseCsvLine(line) {
+    const fields = [];
+    let cur = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (inQuotes) {
+        if (c === '"') {
+          if (line[i + 1] === '"') { cur += '"'; i++; }
+          else { inQuotes = false; }
+        } else { cur += c; }
+      } else {
+        if (c === ',') { fields.push(cur); cur = ''; }
+        else if (c === '"' && cur === '') { inQuotes = true; }
+        else { cur += c; }
+      }
+    }
+    fields.push(cur);
+    return fields;
+  }
+
+  // Clean up a barrel length raw value: '4.02"' -> '4.02'
+  function cleanBarrel(raw) {
+    if (!raw) return '';
+    const m = raw.match(/(\d+(?:\.\d+)?)/);
+    return m ? m[1] : '';
+  }
+  // '15 + 1' -> '15'
+  function cleanCapacity(raw) {
+    if (!raw) return '';
+    const m = raw.match(/^\s*(\d+)\s*\+?\s*1?\s*$/);
+    if (m) return m[1];
+    const m2 = raw.match(/(\d+)/);
+    return m2 ? m2[1] : '';
+  }
+  // '3 15 rd.' -> '3'
+  function magsIncluded(raw) {
+    if (!raw) return '';
+    const m = raw.match(/^\s*(\d+)\s+\d/);
+    if (m) return m[1];
+    const m2 = raw.match(/^\s*(\d+)\s*$/);
+    return m2 ? m2[1] : '';
+  }
+  const OPTIC_KEYWORDS = [
+    'optic ready', 'optics ready', 'optic cut',
+    ' mos ', ' mos,', ' mos-', 'mos pistol',
+    'rmr cut', 'rmsc cut', 'pro cut',
+    'romeo ready', 'red dot ready', 'slide cut for optic',
+  ];
+  function detectOpticReady(row) {
+    const text = ' ' + [
+      row.DESCRIPTION1, row.DESCRIPTION2,
+      row.ADDITIONALFEATURE1, row.ADDITIONALFEATURE2, row.ADDITIONALFEATURE3,
+      row.SIGHTS, row.MODEL,
+    ].map(s => s || '').join(' ').toLowerCase() + ' ';
+    return OPTIC_KEYWORDS.some(kw => text.includes(kw)) ? 'yes' : '';
+  }
+  function cleanMfr(raw) {
+    if (!raw) return '';
+    const fixes = {
+      'Smith and Wesson': 'Smith & Wesson',
+      'GLOCK': 'Glock',
+      'SIG SAUER': 'Sig Sauer',
+    };
+    return fixes[raw] || raw;
+  }
+  function makePresetId(row) {
+    const mfr = (row.MANUFACTURER || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const model = (row.MODEL || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const tail = (row.UPC || '').slice(-5);
+    return [mfr, model, tail].filter(Boolean).join('-').replace(/-+/g, '-');
+  }
+
+  // Parse a full CSV file (string) from Lipsey's into PRESETS format
+  function parseLipseysCsv(csvText) {
+    // Handle BOM
+    if (csvText.charCodeAt(0) === 0xFEFF) csvText = csvText.slice(1);
+    const lines = csvText.split(/\r?\n/);
+    if (lines.length < 2) throw new Error('CSV appears empty');
+
+    const headers = parseCsvLine(lines[0]);
+    // Validate this is a Lipsey's catalog by checking for required columns
+    const required = ['UPC', 'MANUFACTURER', 'MODEL', 'ITEMTYPE'];
+    for (const h of required) {
+      if (!headers.includes(h)) {
+        throw new Error(`This doesn't look like a Lipsey's catalog CSV. Missing column: ${h}`);
+      }
+    }
+
+    const result = {};
+    const seenUpcs = new Set();
+    let skippedNonFirearm = 0;
+    let skippedNoUpc = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i];
+      if (!line.trim()) continue;
+      const fields = parseCsvLine(line);
+      const row = {};
+      headers.forEach((h, idx) => { row[h] = fields[idx] || ''; });
+
+      if (row.ITEMTYPE !== 'Firearm') { skippedNonFirearm++; continue; }
+      const upc = (row.UPC || '').trim();
+      if (!upc || !/^\d+$/.test(upc)) { skippedNoUpc++; continue; }
+      if (seenUpcs.has(upc)) continue;
+      seenUpcs.add(upc);
+
+      let pid = makePresetId(row);
+      if (result[pid]) pid = pid + '-' + upc.slice(0, 4);
+
+      result[pid] = {
+        upc: upc,
+        make: cleanMfr(row.MANUFACTURER || ''),
+        model: (row.MODEL || '').trim(),
+        caliber: (row.CALIBERGAUGE || '').trim(),
+        type: (row.TYPE || '').trim(),
+        action: (row.ACTION || '').trim(),
+        condition: 'NEW',
+        bullets: [
+          cleanBarrel(row.BARRELLENGTH || ''),
+          cleanCapacity(row.CAPACITY || ''),
+          magsIncluded(row.MAGAZINE || ''),
+          detectOpticReady(row),
+          '',
+        ],
+      };
+    }
+    return result;
+  }
+
+  async function handleCatalogFile(file) {
+    const statusEl = $('catalog-status');
+    statusEl.textContent = 'Reading ' + file.name + '...';
+    statusEl.className = 'catalog-status loading';
+
+    try {
+      const text = await file.text();
+      statusEl.textContent = 'Parsing catalog...';
+      // Let the UI update before the heavy parse
+      await new Promise(r => setTimeout(r, 50));
+
+      const parsed = parseLipseysCsv(text);
+      const count = Object.keys(parsed).length;
+      if (count === 0) {
+        throw new Error('No firearms found in the CSV.');
+      }
+
+      PRESETS = parsed;
+      rebuildUpcIndex();
+
+      // Save to localStorage for next time
+      try {
+        localStorage.setItem(CATALOG_STORAGE_KEY, JSON.stringify(PRESETS));
+      } catch (e) {
+        alert('Catalog loaded, but couldn\'t save to this computer (it may be too large for browser storage). You\'ll need to re-load it next session. Error: ' + e.message);
+      }
+
+      updateCatalogStatus();
+      alert('Catalog loaded successfully: ' + count.toLocaleString() + ' firearms ready for UPC scanning.');
+    } catch (e) {
+      statusEl.textContent = 'Load failed';
+      statusEl.className = 'catalog-status';
+      alert('Failed to load catalog:\n\n' + e.message);
+    }
+  }
+
+  function clearCatalog() {
+    if (!confirm('Remove the loaded catalog? You\'ll need to re-upload your Lipsey\'s CSV to scan UPCs again.')) return;
+    PRESETS = {};
+    UPC_INDEX = {};
+    localStorage.removeItem(CATALOG_STORAGE_KEY);
+    updateCatalogStatus();
+  }
+
+  // Load catalog from localStorage on startup (if previously saved)
+  function loadCatalogFromStorage() {
+    try {
+      const raw = localStorage.getItem(CATALOG_STORAGE_KEY);
+      if (raw) {
+        PRESETS = JSON.parse(raw);
+        rebuildUpcIndex();
+      }
+    } catch (e) {
+      console.warn('Failed to load saved catalog:', e);
+    }
+  }
+  loadCatalogFromStorage();
+
+  // =========================================================================
+  // CUSTOM SAVED GUNS — for items without UPCs, used guns, consignments, etc.
+  // Kept in a separate localStorage key so they survive catalog refreshes.
+  // Merged into PRESETS at startup so UPC scan + internal ID lookup both work.
+  // =========================================================================
+
+  const CUSTOM_STORAGE_KEY = 'gunTagPrinter.customGuns.v1';
+  let CUSTOM_GUNS = {};
+
+  function loadCustomFromStorage() {
+    try {
+      const raw = localStorage.getItem(CUSTOM_STORAGE_KEY);
+      if (raw) CUSTOM_GUNS = JSON.parse(raw) || {};
+    } catch (e) {
+      console.warn('Failed to load custom guns:', e);
+      CUSTOM_GUNS = {};
+    }
+    // Merge into PRESETS so UPC scan and applyPreset both see them
+    Object.assign(PRESETS, CUSTOM_GUNS);
+    rebuildUpcIndex();
+    updateCustomStatus();
+  }
+
+  function saveCustomToStorage() {
+    try {
+      localStorage.setItem(CUSTOM_STORAGE_KEY, JSON.stringify(CUSTOM_GUNS));
+    } catch (e) {
+      alert("Couldn't save to this computer's storage: " + e.message);
+    }
+  }
+
+  function updateCustomStatus() {
+    const row = $('custom-row');
+    const status = $('custom-status');
+    const count = Object.keys(CUSTOM_GUNS).length;
+    if (count === 0) {
+      row.style.display = 'none';
+    } else {
+      row.style.display = '';
+      status.textContent = count + ' custom gun' + (count === 1 ? '' : 's') + ' saved';
+      status.className = 'catalog-status loaded';
+    }
+  }
+
+  function openSaveDialog() {
+    // Require the basics before saving — save is only meaningful with real data
+    const make = $('f-make').value.trim();
+    const model = $('f-model').value.trim();
+    if (!make || !model) {
+      alert('Fill in at least Manufacturer and Model before saving.');
+      return;
+    }
+    $('save-upc').value = '';
+    $('save-label').value = '';
+    $('save-label').placeholder = make + ' ' + model;
+    $('save-modal').style.display = 'flex';
+    setTimeout(() => $('save-upc').focus(), 50);
+  }
+
+  function closeSaveDialog() {
+    $('save-modal').style.display = 'none';
+  }
+
+  function confirmSaveGun() {
+    const make = $('f-make').value.trim();
+    const model = $('f-model').value.trim();
+    const caliber = $('f-caliber').value.trim();
+    const price = $('f-price').value.trim();
+
+    if (!make || !model) {
+      alert('Manufacturer and Model are required.');
+      return;
+    }
+
+    const rawUpc = $('save-upc').value.trim().replace(/\D/g, '');
+    const label = $('save-label').value.trim() || (make + ' ' + model);
+
+    // Check for UPC conflict — if this UPC is already in Lipsey's catalog, warn
+    if (rawUpc) {
+      const existingId = UPC_INDEX[rawUpc];
+      if (existingId && !CUSTOM_GUNS[existingId]) {
+        if (!confirm('This UPC is already in the loaded catalog. Your saved gun will override it when scanning. Continue?')) return;
+      }
+    }
+
+    // Build a preset ID. If UPC provided, use it as the suffix. Otherwise, timestamp.
+    const safeMake = make.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const safeModel = model.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const suffix = rawUpc ? rawUpc.slice(-5) : ('custom-' + Date.now().toString(36));
+    const id = [safeMake, safeModel, suffix].filter(Boolean).join('-').replace(/-+/g, '-');
+
+    const preset = {
+      upc: rawUpc || undefined,
+      make: make,
+      model: model,
+      caliber: caliber,
+      label: label,
+      custom: true,  // marker so we can tell customs apart later
+      savedAt: Date.now(),
+      bullets: [
+        $('f-bullet-1').value.trim(),
+        $('f-bullet-2').value.trim(),
+        $('f-bullet-3').value.trim(),
+        $('f-bullet-4').value,
+        $('f-bullet-5').value.trim(),
+      ],
+    };
+    // Include single-shot flag indirectly via a field we'll read on load
+    preset.singleShot = $('f-single-shot').checked;
+    // Include price if set (employee may want it remembered, though tags often vary)
+    if (price) preset.price = price;
+
+    CUSTOM_GUNS[id] = preset;
+    PRESETS[id] = preset;
+    saveCustomToStorage();
+    rebuildUpcIndex();
+    updateCustomStatus();
+    closeSaveDialog();
+
+    // Brief confirmation
+    const status = $('upc-status');
+    status.textContent = '✓ Saved';
+    status.className = 'upc-status found';
+    setTimeout(() => { status.textContent = ''; status.className = 'upc-status'; }, 2000);
+  }
+
+  function openManageDialog() {
+    renderCustomList();
+    $('manage-modal').style.display = 'flex';
+  }
+
+  function closeManageDialog() {
+    $('manage-modal').style.display = 'none';
+  }
+
+  function renderCustomList() {
+    const list = $('custom-list');
+    list.innerHTML = '';
+    const ids = Object.keys(CUSTOM_GUNS).sort((a, b) => {
+      return (CUSTOM_GUNS[b].savedAt || 0) - (CUSTOM_GUNS[a].savedAt || 0);
+    });
+    ids.forEach(id => {
+      const g = CUSTOM_GUNS[id];
+      const item = document.createElement('div');
+      item.className = 'custom-item';
+      const name = (g.label || ((g.make || '') + ' ' + (g.model || ''))).trim();
+      const metaBits = [];
+      if (g.upc) metaBits.push('UPC ' + g.upc);
+      if (g.caliber) metaBits.push(g.caliber);
+      if (!g.upc) metaBits.push('no UPC');
+      item.innerHTML = `
+        <div class="custom-item-info">
+          <div class="custom-item-name"></div>
+          <div class="custom-item-meta"></div>
+        </div>
+        <div class="custom-item-actions">
+          <button type="button" class="btn-mini btn-load">Load</button>
+          <button type="button" class="btn-mini btn-delete">Delete</button>
+        </div>
+      `;
+      item.querySelector('.custom-item-name').textContent = name;
+      item.querySelector('.custom-item-meta').textContent = metaBits.join(' · ');
+      item.querySelector('.btn-load').addEventListener('click', () => {
+        applyPreset(id);
+        closeManageDialog();
+      });
+      item.querySelector('.btn-delete').addEventListener('click', () => {
+        if (!confirm('Delete "' + name + '" from saved guns?')) return;
+        delete CUSTOM_GUNS[id];
+        delete PRESETS[id];
+        saveCustomToStorage();
+        rebuildUpcIndex();
+        updateCustomStatus();
+        renderCustomList();
+      });
+      list.appendChild(item);
+    });
+  }
+
+  // Make save/manage functions callable from inline onclick handlers
+  window.openSaveDialog = openSaveDialog;
+  window.closeSaveDialog = closeSaveDialog;
+  window.confirmSaveGun = confirmSaveGun;
+  window.closeManageDialog = closeManageDialog;
+
+  loadCustomFromStorage();
+
+
+  function applyPreset(id) {
+    const preset = PRESETS[id];
+    if (!preset) return;
+
+    if (preset.make !== undefined)      $('f-make').value = preset.make;
+    if (preset.model !== undefined)     $('f-model').value = preset.model;
+    if (preset.caliber !== undefined)   $('f-caliber').value = preset.caliber;
+    // Condition is intentionally NOT auto-filled — employee must always select
+    // it manually to confirm whether the gun is new or pre-owned.
+    if (preset.price !== undefined)     $('f-price').value = preset.price;
+
+    // Auto-detect revolvers and single-shot guns from the preset's model/caliber/type.
+    // Custom saves have an explicit singleShot flag — use that if present.
+    if (preset.custom && typeof preset.singleShot === 'boolean') {
+      $('f-single-shot').checked = preset.singleShot;
+    } else {
+      const typeText = `${preset.type || ''} ${preset.model || ''} ${preset.caliber || ''}`.toLowerCase();
+      const isRevolver = typeText.includes('revolver');
+      const isSingleShot = /single[\s-]?shot|break[\s-]?action|muzzleloader|\bbolt\b/i.test(typeText);
+      $('f-single-shot').checked = isRevolver || isSingleShot;
+    }
+
+    if (Array.isArray(preset.bullets)) {
+      const ids = ['f-bullet-1','f-bullet-2','f-bullet-3','f-bullet-4','f-bullet-5'];
+      ids.forEach((fid, i) => {
+        const val = preset.bullets[i] || '';
+        // Bullet 4 is a dropdown with specific values: 'yes', 'no', or ''
+        if (fid === 'f-bullet-4') {
+          const v = String(val).toLowerCase().trim();
+          if (v === 'yes' || v === 'y' || v === 'optic ready') $(fid).value = 'yes';
+          else if (v === 'no' || v === 'n' || v === 'not optic ready') $(fid).value = 'no';
+          else $(fid).value = '';
+        } else {
+          $(fid).value = val;
+        }
+      });
+    }
+
+    // Dispatch input events on each field — this triggers the same code path
+    // as typing, which is known to produce correct auto-sizing.
+    ['f-make','f-model','f-caliber','f-condition','f-price','f-bullet-1','f-bullet-2','f-bullet-3','f-bullet-4','f-bullet-5']
+      .forEach(fid => {
+        const el = $(fid);
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    render();
+  }
+
+  function lookupUpc() {
+    const raw = $('f-upc').value.trim();
+    const status = $('upc-status');
+    const cleaned = raw.replace(/\D/g, '');
+
+    if (!cleaned) {
+      status.textContent = '';
+      status.className = 'upc-status';
+      return;
+    }
+
+    // No catalog loaded yet
+    if (Object.keys(UPC_INDEX).length === 0) {
+      status.textContent = 'Load catalog first';
+      status.className = 'upc-status not-found';
+      return;
+    }
+
+    const presetId = UPC_INDEX[cleaned];
+    if (presetId) {
+      status.textContent = '✓ Found';
+      status.className = 'upc-status found';
+      applyPreset(presetId);
+      setTimeout(() => { $('f-upc').value = ''; status.textContent = ''; status.className = 'upc-status'; }, 2000);
+    } else {
+      status.textContent = 'Not in catalog';
+      status.className = 'upc-status not-found';
+    }
+  }
+
+  function formatPriceParts(val) {
+    const num = parseFloat(String(val).replace(/[^0-9.]/g, ''));
+    if (isNaN(num)) return { whole: '0', cents: '00' };
+    const fixed = num.toFixed(2);
+    const [w, c] = fixed.split('.');
+    const whole = Number(w).toLocaleString('en-US');
+    return { whole, cents: c };
+  }
+
+  // Shrink text until it fits within its container width.
+  // Starts at the largest size and steps down only when the text actually overflows.
+  function fitText(el, sizes) {
+    const parent = el.parentElement;
+    const parentStyle = getComputedStyle(parent);
+    const padLeft = parseFloat(parentStyle.paddingLeft) || 0;
+    const padRight = parseFloat(parentStyle.paddingRight) || 0;
+    const maxWidth = parent.clientWidth - padLeft - padRight - 4;
+
+    // If parent hasn't been laid out yet (width 0), default to largest and retry
+    if (maxWidth <= 0) {
+      el.style.fontSize = sizes[0] + 'pt';
+      requestAnimationFrame(() => fitText(el, sizes));
+      return;
+    }
+
+    // Temporarily make the element shrink-wrap its content so we can measure
+    // the REAL text width (not just the clipped parent width).
+    const originalDisplay = el.style.display;
+    el.style.display = 'inline-block';
+
+    for (const size of sizes) {
+      el.style.fontSize = size + 'pt';
+      if (el.classList.contains('tag-make')) {
+        if (size >= 16) el.style.letterSpacing = '2pt';
+        else if (size >= 12) el.style.letterSpacing = '1pt';
+        else el.style.letterSpacing = '0.5pt';
+      }
+      if (el.getBoundingClientRect().width <= maxWidth) {
+        el.style.display = originalDisplay;
+        return;
+      }
+    }
+    // Fell through with the smallest size still too wide — leave it
+    el.style.display = originalDisplay;
+  }
+
+  function render() {
+    const make = $('f-make').value.trim() || '—';
+    const model = $('f-model').value.trim() || '—';
+    const caliber = $('f-caliber').value.trim();
+    const condition = $('f-condition').value;
+    const price = $('f-price').value;
+    // Bullet 1 is a dedicated Barrel Length field — auto-format as 'X" Barrel'
+    const barrelRaw = $('f-bullet-1').value.trim();
+    let bullet1 = '';
+    if (barrelRaw) {
+      const numMatch = barrelRaw.match(/^(\d+(?:\.\d+)?)\s*["']?\s*$/);
+      if (numMatch) {
+        bullet1 = numMatch[1] + '" Barrel';
+      } else {
+        bullet1 = barrelRaw;
+      }
+    }
+
+    const singleShot = $('f-single-shot').checked;
+
+    // Disable mags-included field when single shot / revolver (they don't use mags)
+    const bullet3Input = $('f-bullet-3');
+    bullet3Input.disabled = singleShot;
+    bullet3Input.parentElement.querySelector('label[for]') || null;
+    // Visually grey out the mags label too
+    const magsLabels = document.querySelectorAll('.field label');
+    magsLabels.forEach(l => {
+      if (l.textContent.trim() === 'Mags Included') {
+        l.style.opacity = singleShot ? '0.4' : '';
+      }
+    });
+    bullet3Input.style.opacity = singleShot ? '0.4' : '';
+
+    // Bullet 2 is a dedicated Capacity field — auto-format based on gun type
+    const capRaw = $('f-bullet-2').value.trim();
+    let bullet2 = '';
+    if (capRaw) {
+      const numMatch = capRaw.match(/^(\d+)\s*(?:\+\s*1)?\s*$/i);
+      if (numMatch) {
+        if (singleShot) {
+          // Revolvers and single-shot firearms don't carry a round in the chamber
+          // separate from the cylinder/breech, so no "+1"
+          bullet2 = numMatch[1] + ' Capacity';
+        } else {
+          bullet2 = numMatch[1] + '+1 Capacity';
+        }
+      } else {
+        bullet2 = capRaw;
+      }
+    }
+
+    // Bullet 3 is a dedicated Mags Included field — auto-format as 'Includes N Mags' (or Mag for 1)
+    // Skip entirely for single shot / revolvers
+    let bullet3 = '';
+    if (!singleShot) {
+      const magsRaw = $('f-bullet-3').value.trim();
+      if (magsRaw) {
+        const numMatch = magsRaw.match(/^(\d+)\s*$/);
+        if (numMatch) {
+          const n = parseInt(numMatch[1], 10);
+          bullet3 = 'Includes ' + n + (n === 1 ? ' Mag' : ' Mags');
+        } else {
+          bullet3 = magsRaw;
+        }
+      }
+    }
+
+    // Bullet 4 is a dedicated Optic Ready dropdown
+    const opticVal = $('f-bullet-4').value;
+    let bullet4 = '';
+    if (opticVal === 'yes') bullet4 = 'Optic Ready';
+    else if (opticVal === 'no') bullet4 = 'Not Optic Ready';
+    // empty string = "Not shown" — omit from tag entirely
+
+    const bullets = [
+      bullet1,
+      bullet2,
+      bullet3,
+      bullet4,
+      $('f-bullet-5').value.trim()
+    ].filter(Boolean);
+
+    $('tag-make').textContent = make.toUpperCase();
+    $('tag-model').textContent = model;
+    $('tag-caliber').textContent = caliber ? caliber.toUpperCase() : '';
+
+    // Force browser to flush pending layout. Reading offsetWidth triggers a
+    // synchronous reflow so fitText can measure against real, final dimensions.
+    void $('tag').offsetWidth;
+
+    // Auto-fit manufacturer and model to never overflow the tag width
+    fitText($('tag-make'), [20, 18, 16, 14, 12, 10, 9, 8, 7]);
+    fitText($('tag-model'), [22, 20, 18, 16, 14, 12, 11, 10, 9, 8]);
+
+    const ul = $('tag-bullets');
+    ul.innerHTML = '';
+    bullets.forEach(b => {
+      const li = document.createElement('li');
+      li.textContent = b;
+      ul.appendChild(li);
+    });
+    // Auto-shrink bullet text if there are many so everything fits in 4in
+    if (bullets.length >= 5) {
+      ul.style.fontSize = '9pt';
+      ul.style.lineHeight = '1.25';
+    } else if (bullets.length === 4) {
+      ul.style.fontSize = '10pt';
+      ul.style.lineHeight = '1.3';
+    } else {
+      ul.style.fontSize = '11pt';
+      ul.style.lineHeight = '1.35';
+    }
+
+    const p = formatPriceParts(price);
+    $('price-whole').textContent = p.whole;
+    $('price-cents').textContent = p.cents;
+
+    // Layaway — configurable percentage of (price + 7% sales tax), can be toggled off
+    const layawayEnabled = $('f-layaway-enabled').checked;
+    const pctRow = $('layaway-pct-row');
+    pctRow.classList.toggle('disabled', !layawayEnabled);
+
+    const priceNum = parseFloat(String(price).replace(/[^0-9.]/g, ''));
+    let pct = parseFloat($('f-layaway-pct').value);
+    if (isNaN(pct) || pct <= 0) pct = 25;
+    if (pct > 99) pct = 99;
+
+    if (layawayEnabled && !isNaN(priceNum) && priceNum > 0) {
+      const priceWithTax = priceNum * 1.07;
+      const layawayAmt = priceWithTax * (pct / 100);
+      $('layaway-value').textContent = '$' + layawayAmt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      $('layaway-block').style.display = 'block';
+    } else {
+      $('layaway-block').style.display = 'none';
+    }
+
+    const badge = $('tag-condition');
+    if (!condition) {
+      // No condition picked yet — hide badge and its divider for a cleaner preview
+      badge.style.display = 'none';
+      const row = badge.closest('.condition-row');
+      if (row) row.style.visibility = 'hidden';
+    } else {
+      badge.style.display = '';
+      const row = badge.closest('.condition-row');
+      if (row) row.style.visibility = '';
+      badge.textContent = condition;
+      badge.className = 'condition-badge' + (condition === 'NEW' ? '' : ' used');
+    }
+  }
+
+  function resetForm() {
+    ['f-make','f-model','f-caliber','f-price','f-bullet-1','f-bullet-2','f-bullet-3','f-bullet-4','f-bullet-5','f-upc']
+      .forEach(id => $(id).value = '');
+    $('f-condition').value = '';
+    $('f-layaway-enabled').checked = true;
+    $('f-layaway-pct').value = 25;
+    $('f-single-shot').checked = false;
+    $('upc-status').textContent = '';
+    $('upc-status').className = 'upc-status';
+    // Clear any validation highlighting
+    document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+    render();
+  }
+
+  // Validate required fields before printing. Highlights missing fields in red.
+  function validatePrint() {
+    const required = [
+      { id: 'f-make',      label: 'Manufacturer' },
+      { id: 'f-model',     label: 'Model' },
+      { id: 'f-caliber',   label: 'Caliber' },
+      { id: 'f-condition', label: 'Condition' },
+      { id: 'f-price',     label: 'Price' },
+    ];
+    const missing = [];
+
+    // Clear previous error highlights
+    document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+
+    required.forEach(({ id, label }) => {
+      const el = $(id);
+      const val = (el.value || '').trim();
+      if (!val) {
+        missing.push(label);
+        el.classList.add('field-error');
+      }
+    });
+
+    if (missing.length) {
+      alert('Please fill in before printing:\n\n• ' + missing.join('\n• '));
+      // Focus the first missing field
+      const firstMissingId = required.find(r => missing.includes(r.label)).id;
+      $(firstMissingId).focus();
+      return;
+    }
+
+    // All required fields filled — print
+    window.print();
+  }
+
+  // Clear error highlight as user types into a previously-missing field
+  ['f-make','f-model','f-caliber','f-condition','f-price'].forEach(id => {
+    $(id).addEventListener('input', () => $(id).classList.remove('field-error'));
+    $(id).addEventListener('change', () => $(id).classList.remove('field-error'));
+  });
+
+  document.querySelectorAll('#f-make, #f-model, #f-caliber, #f-condition, #f-price, #f-bullet-1, #f-bullet-2, #f-bullet-3, #f-bullet-4, #f-bullet-5, #f-layaway-enabled, #f-layaway-pct, #f-single-shot')
+    .forEach(el => {
+      el.addEventListener('input', render);
+      el.addEventListener('change', render);
+    });
+
+  // UPC scanner / manual entry: trigger lookup on input (scanners often paste
+  // and press Enter, but we also handle gradual typing by checking on input
+  // for complete UPC lengths)
+  const upcInput = $('f-upc');
+  upcInput.addEventListener('input', () => {
+    const cleaned = upcInput.value.replace(/\D/g, '');
+    // Auto-lookup when a full UPC is entered (UPC-A is 12 digits, EAN-13 is 13)
+    if (cleaned.length >= 12) lookupUpc();
+  });
+  upcInput.addEventListener('keydown', (e) => {
+    // Enter key is what barcode scanners typically send after a scan
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      lookupUpc();
+    }
+  });
+
+  // Catalog: load CSV file when user picks one
+  $('f-catalog-file').addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) handleCatalogFile(file);
+    // Clear the file input so the same file can be loaded again if they want
+    e.target.value = '';
+  });
+  $('btn-clear-catalog').addEventListener('click', clearCatalog);
+  $('btn-manage-custom').addEventListener('click', openManageDialog);
+
+  // Click outside the modal to close it (clicking the overlay, not the modal itself)
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.style.display = 'none';
+    });
+  });
+  // Escape key closes any open modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay').forEach(o => o.style.display = 'none');
+    }
+  });
+
+  // Initialize catalog status display on load
+  updateCatalogStatus();
+
+  render();
+</script>
+</body>
+</html>
