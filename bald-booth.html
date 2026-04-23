@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Bald Booth | West Coast Pawn &amp; Gun</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .booth-wrap {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 50px 20px 90px;
+        }
+
+        .booth-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .bb {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+        }
+        .bb:active:not(:disabled) { transform: scale(0.96); }
+        .bb:disabled { opacity: 0.35; cursor: not-allowed; }
+        .bb-red  { background: var(--secondary); color: #fff; }
+        .bb-red:hover:not(:disabled)  { background: #a00000; box-shadow: 0 4px 18px rgba(139,0,0,0.4); }
+        .bb-gold { background: var(--accent); color: #111; }
+        .bb-gold:hover:not(:disabled) { background: #d4b870; box-shadow: 0 4px 18px rgba(192,160,96,0.4); }
+        .bb-dark { background: #2a2a2a; color: #ccc; border: 1px solid #444; }
+        .bb-dark:hover:not(:disabled) { background: #353535; }
+
+        .drop-zone {
+            position: relative;
+            background: #0d0d0d;
+            border: 2px dashed #2e2e2e;
+            border-radius: 12px;
+            min-height: 340px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+            overflow: hidden;
+            transition: border-color 0.2s, background 0.2s;
+            cursor: pointer;
+        }
+        .drop-zone.drag-over { border-color: var(--accent); background: #141208; }
+        .drop-zone.has-image { cursor: default; border-style: solid; border-color: #2e2e2e; }
+
+        #boothCanvas { max-width: 100%; max-height: 600px; display: none; }
+
+        .booth-placeholder {
+            text-align: center;
+            padding: 40px 30px;
+            pointer-events: none;
+            user-select: none;
+        }
+        .booth-placeholder .ph-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 18px;
+            opacity: 0.18;
+        }
+        .booth-placeholder p {
+            font-family: 'Oswald', sans-serif;
+            color: #4a4a4a;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .booth-placeholder span { color: #3a3a3a; font-size: 0.78rem; }
+
+        .booth-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        #boothStatus {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.88rem;
+            min-height: 22px;
+            color: var(--muted);
+            transition: color 0.3s;
+        }
+        #boothStatus.loading { color: var(--accent); }
+        #boothStatus.error   { color: #e55; }
+        #boothStatus.ok      { color: #6c6; }
+
+        .dot-pulse::after {
+            content: '';
+            animation: dotpulse 1.3s steps(4, end) infinite;
+        }
+        @keyframes dotpulse {
+            0%,20%   { content: ''; }
+            40%      { content: '.'; }
+            60%      { content: '..'; }
+            80%,100% { content: '...'; }
+        }
+
+        /* Webcam modal */
+        #webcamModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.93);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+        #webcamVideo {
+            max-width: min(90vw, 640px);
+            max-height: 65vh;
+            border-radius: 10px;
+            border: 2px solid var(--accent);
+            transform: scaleX(-1);
+        }
+        .webcam-btns { display: flex; gap: 14px; }
+    </style>
+</head>
+<body>
+
+    <!-- AGE VERIFICATION -->
+    <div id="ageGate" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:999999;align-items:center;justify-content:center;">
+        <div style="background:#1a1a1a;border:2px solid #C0A060;border-radius:12px;padding:40px 50px;text-align:center;max-width:440px;width:90%;">
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" style="margin-bottom:15px;"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg>
+            <h2 style="font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.8rem;letter-spacing:3px;text-transform:uppercase;margin:0 0 10px;">Age Verification</h2>
+            <p style="font-family:'Inter',sans-serif;color:#ccc;font-size:1rem;margin:0 0 25px;line-height:1.5;">You must be 18 years or older to access this website.</p>
+            <p style="font-family:'Oswald',sans-serif;color:#fff;font-size:1.2rem;letter-spacing:2px;text-transform:uppercase;margin:0 0 20px;">Are you 18 or older?</p>
+            <div style="display:flex;gap:15px;justify-content:center;">
+                <button onclick="document.getElementById('ageGate').style.display='none';sessionStorage.setItem('ageVerified','true');" style="font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;padding:12px 40px;background:#8B0000;color:#fff;border:none;border-radius:6px;cursor:pointer;">Yes</button>
+                <button onclick="window.location.href='https://www.google.com';" style="font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;padding:12px 40px;background:#333;color:#fff;border:1px solid #555;border-radius:6px;cursor:pointer;">No</button>
+            </div>
+        </div>
+    </div>
+    <script>(function(){if(sessionStorage.getItem('ageVerified')!=='true'){document.getElementById('ageGate').style.display='flex';}})()</script>
+
+    <!-- WEBCAM MODAL -->
+    <div id="webcamModal">
+        <video id="webcamVideo" autoplay playsinline muted></video>
+        <div class="webcam-btns">
+            <button class="bb bb-red"  onclick="snapPhoto()">Snap Photo</button>
+            <button class="bb bb-dark" onclick="closeWebcam()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="logo" aria-label="West Coast Pawn &amp; Gun — Home">
+            <div class="logo-icon" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2">
+                    <circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1" fill="#C0A060"/>
+                    <line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/>
+                    <line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <h1>West Coast Pawn &amp; Gun</h1>
+                <p>Buy · Sell · Trade · Loan</p>
+            </div>
+        </a>
+        <ul class="nav-links" id="navLinks" role="list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="inventory.html">Inventory</a></li>
+            <li><a href="weekly-deals.html">Weekly Deals</a></li>
+            <li><a href="ccw.html">Conceal Carry Class</a></li>
+            <li><a href="pawn-loan.html">Pawn/Loan</a></li>
+            <li><a href="nfa.html">NFA</a></li>
+            <li><a href="precious-metals.html">Precious Metals</a></li>
+            <li><a href="policies.html">Policies</a></li>
+            <li><a href="about.html">Who We Are</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1>Bald Booth</h1>
+            <p>Experience Kyle's signature look — AI-powered bald filter</p>
+        </div>
+
+        <section class="services" style="padding:60px 20px 80px;">
+            <div class="booth-wrap">
+
+                <!-- Upload / Selfie controls -->
+                <div class="booth-controls">
+                    <button class="bb bb-red"  id="uploadBtn" onclick="document.getElementById('fileInput').click()">Upload Photo</button>
+                    <button class="bb bb-dark" id="webcamBtn" onclick="openWebcam()">Take Selfie</button>
+                </div>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+
+                <!-- Drop zone + canvas -->
+                <div class="drop-zone" id="dropZone">
+                    <div class="booth-placeholder" id="boothPlaceholder">
+                        <!-- Bald head icon -->
+                        <svg class="ph-icon" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="50" cy="42" rx="32" ry="38" fill="#C0A060"/>
+                            <ellipse cx="42" cy="28" rx="12" ry="7" fill="white" opacity="0.35"/>
+                            <rect x="20" y="76" width="60" height="12" rx="6" fill="#C0A060" opacity="0.5"/>
+                            <ellipse cx="50" cy="88" rx="34" ry="8" fill="#C0A060" opacity="0.25"/>
+                        </svg>
+                        <p>Drop a photo here</p>
+                        <p>or click Upload Photo above</p>
+                        <span>Supports JPG · PNG · WEBP · GIF</span>
+                    </div>
+                    <canvas id="boothCanvas"></canvas>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="booth-actions">
+                    <button class="bb bb-gold" id="baldBtn"     onclick="applyBald()"      disabled>Make Me Bald!</button>
+                    <button class="bb bb-dark" id="downloadBtn" onclick="downloadResult()" disabled>Download</button>
+                    <button class="bb bb-dark" id="resetBtn"    onclick="resetBooth()"     disabled>New Photo</button>
+                </div>
+
+                <div id="boothStatus" class="loading">
+                    Loading face detection AI<span class="dot-pulse"></span>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Face API (maintained fork with models bundled in npm package) -->
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <script>
+    'use strict';
+
+    const MODEL_URL    = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model';
+    let   originalPx   = null;
+    let   webcamStream = null;
+    let   modelsReady  = false;
+
+    // ── Bootstrap ───────────────────────────────────────────────────────────
+    (async function boot() {
+        try {
+            await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+            modelsReady = true;
+            status('Upload a photo or take a selfie to get started.');
+        } catch (e) {
+            status('Could not load AI models — check your connection and refresh.', 'error');
+        }
+    })();
+
+    // ── Nav hamburger ───────────────────────────────────────────────────────
+    function toggleNav() {
+        const links = document.getElementById('navLinks');
+        const btn   = document.getElementById('hamburger');
+        const open  = links.classList.toggle('open');
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open);
+    }
+
+    // ── File input ──────────────────────────────────────────────────────────
+    document.getElementById('fileInput').addEventListener('change', e => {
+        if (e.target.files[0]) loadFile(e.target.files[0]);
+    });
+
+    // ── Drag and drop ───────────────────────────────────────────────────────
+    const dropZone = document.getElementById('dropZone');
+    dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', e => {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        const f = e.dataTransfer.files[0];
+        if (f && f.type.startsWith('image/')) loadFile(f);
+    });
+    dropZone.addEventListener('click', () => {
+        if (!dropZone.classList.contains('has-image'))
+            document.getElementById('fileInput').click();
+    });
+
+    // ── Webcam ──────────────────────────────────────────────────────────────
+    async function openWebcam() {
+        try {
+            webcamStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'user', width: { ideal: 1280 } }
+            });
+            document.getElementById('webcamVideo').srcObject = webcamStream;
+            document.getElementById('webcamModal').style.display = 'flex';
+        } catch (e) {
+            status('Camera access denied or not available.', 'error');
+        }
+    }
+
+    function snapPhoto() {
+        const video = document.getElementById('webcamVideo');
+        const tmp   = document.createElement('canvas');
+        tmp.width   = video.videoWidth;
+        tmp.height  = video.videoHeight;
+        tmp.getContext('2d').drawImage(video, 0, 0);
+        closeWebcam();
+        const img = new Image();
+        img.onload = () => setupCanvas(img);
+        img.src = tmp.toDataURL('image/jpeg', 0.95);
+    }
+
+    function closeWebcam() {
+        if (webcamStream) { webcamStream.getTracks().forEach(t => t.stop()); webcamStream = null; }
+        document.getElementById('webcamModal').style.display = 'none';
+    }
+
+    // ── Load image ──────────────────────────────────────────────────────────
+    function loadFile(file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const img = new Image();
+            img.onload = () => setupCanvas(img);
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function setupCanvas(img) {
+        const canvas = document.getElementById('boothCanvas');
+        const MAX_W = 760, MAX_H = 600;
+        let w = img.naturalWidth, h = img.naturalHeight;
+        if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
+        if (h > MAX_H) { w = Math.round(w * MAX_H / h); h = MAX_H; }
+
+        canvas.width  = w;
+        canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        originalPx = canvas.getContext('2d').getImageData(0, 0, w, h);
+
+        document.getElementById('boothPlaceholder').style.display = 'none';
+        canvas.style.display = 'block';
+        dropZone.classList.add('has-image');
+
+        setEnabled(true);
+        status('Photo loaded — click "Make Me Bald!" to apply the filter.');
+    }
+
+    // ── Apply bald filter ───────────────────────────────────────────────────
+    async function applyBald() {
+        if (!modelsReady) { status('Still loading AI — please wait a moment.', 'error'); return; }
+
+        const canvas = document.getElementById('boothCanvas');
+        if (!canvas.width) return;
+
+        const ctx = canvas.getContext('2d');
+        if (originalPx) ctx.putImageData(originalPx, 0, 0);
+
+        status('Detecting faces<span class="dot-pulse"></span>', 'loading');
+
+        try {
+            const detections = await faceapi.detectAllFaces(
+                canvas,
+                new faceapi.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.38 })
+            );
+
+            if (!detections.length) {
+                status('No faces detected — try a well-lit photo facing the camera.', 'error');
+                return;
+            }
+
+            const cw = canvas.width, ch = canvas.height;
+            for (const d of detections) baldify(ctx, d.box, cw, ch);
+
+            const n = detections.length;
+            status(n === 1
+                ? 'Looking smooth! Hit Download to save your new look.'
+                : `${n} faces found — everybody&rsquo;s bald now! Hit Download to save.`,
+                'ok');
+        } catch (err) {
+            status('Detection error: ' + err.message, 'error');
+        }
+    }
+
+    // ── Core bald painting ──────────────────────────────────────────────────
+    function baldify(ctx, box, cw, ch) {
+        const { x, y, width: w, height: h } = box;
+        const cx = x + w / 2;
+
+        // Sample skin color from the nose-bridge region (reliably skin-toned)
+        const sx = clamp(Math.round(cx - 12), 1, cw - 25);
+        const sy = clamp(Math.round(y + h * 0.38), 1, ch - 25);
+        const px = ctx.getImageData(sx, sy, 24, 24).data;
+        let tr = 0, tg = 0, tb = 0;
+        for (let i = 0; i < px.length; i += 4) { tr += px[i]; tg += px[i+1]; tb += px[i+2]; }
+        const n  = px.length / 4;
+        const r  = Math.round(tr / n);
+        const g  = Math.round(tg / n);
+        const b  = Math.round(tb / n);
+
+        // Lighter variant for highlight; darker for shadowed edges
+        const rH = clamp(r + 48, 0, 255), gH = clamp(g + 42, 0, 255), bH = clamp(b + 36, 0, 255);
+        const rS = clamp(r - 22, 0, 255), gS = clamp(g - 22, 0, 255), bS = clamp(b - 22, 0, 255);
+
+        // Geometry: TinyFaceDetector box runs roughly hairline-to-chin
+        const eyebrowY = y + h * 0.22;                   // ~22% from top of face box
+        const crownY   = Math.max(0, y - h * 0.45);      // estimated crown above box
+        const headCY   = (crownY + eyebrowY) / 2;
+        const headRX   = w * 0.55;
+        const headRY   = (eyebrowY - crownY) / 2 + 6;
+
+        ctx.save();
+
+        // Clip to the crown-to-eyebrow band so we don't paint over the face
+        ctx.beginPath();
+        ctx.rect(
+            cx - headRX - 10,
+            Math.max(0, crownY - 8),
+            (headRX + 10) * 2,
+            eyebrowY - Math.max(0, crownY - 8) + 10
+        );
+        ctx.clip();
+
+        // Main skin fill — radial gradient gives the dome illusion
+        const grad = ctx.createRadialGradient(cx, headCY - headRY * 0.15, 4, cx, headCY, headRX * 1.08);
+        grad.addColorStop(0,    `rgb(${rH},${gH},${bH})`);
+        grad.addColorStop(0.65, `rgb(${r},${g},${b})`);
+        grad.addColorStop(1,    `rgba(${rS},${gS},${bS},0.5)`);
+
+        ctx.beginPath();
+        ctx.ellipse(cx, headCY, headRX, headRY, 0, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Specular highlight — the key to a convincing bald look
+        const shX = cx - headRX * 0.12;
+        const shY = crownY + (eyebrowY - crownY) * 0.26;
+        const shG = ctx.createRadialGradient(shX, shY, 0, shX, shY, headRX * 0.32);
+        shG.addColorStop(0,    'rgba(255,255,255,0.65)');
+        shG.addColorStop(0.5,  'rgba(255,255,255,0.14)');
+        shG.addColorStop(1,    'rgba(255,255,255,0)');
+
+        ctx.beginPath();
+        ctx.ellipse(shX, shY, headRX * 0.32, headRY * 0.21, -0.25, 0, Math.PI * 2);
+        ctx.fillStyle = shG;
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    // ── Download ────────────────────────────────────────────────────────────
+    function downloadResult() {
+        const canvas = document.getElementById('boothCanvas');
+        const a = document.createElement('a');
+        a.download = 'bald-booth.jpg';
+        a.href     = canvas.toDataURL('image/jpeg', 0.93);
+        a.click();
+    }
+
+    // ── Reset ───────────────────────────────────────────────────────────────
+    function resetBooth() {
+        const canvas = document.getElementById('boothCanvas');
+        canvas.style.display = 'none';
+        canvas.width  = 0;
+        canvas.height = 0;
+        originalPx    = null;
+        document.getElementById('boothPlaceholder').style.display = 'block';
+        dropZone.classList.remove('has-image');
+        document.getElementById('fileInput').value = '';
+        setEnabled(false);
+        status('Upload a photo or take a selfie to start.');
+    }
+
+    // ── Helpers ─────────────────────────────────────────────────────────────
+    function setEnabled(on) {
+        ['baldBtn', 'downloadBtn', 'resetBtn'].forEach(id => {
+            document.getElementById(id).disabled = !on;
+        });
+    }
+
+    function status(html, type = '') {
+        const el = document.getElementById('boothStatus');
+        el.innerHTML  = html;
+        el.className  = type;
+    }
+
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+    // ── Fade-in observer ────────────────────────────────────────────────────
+    const io = new IntersectionObserver(entries =>
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+        { threshold: 0.1 }
+    );
+    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+    </script>
+</body>
+</html>
