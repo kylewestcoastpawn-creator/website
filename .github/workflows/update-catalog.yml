@@ -1,0 +1,100 @@
+name: Update Firearms Catalog
+
+on:
+  schedule:
+    - cron: '0 11 * * *'  # 6am EST daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch and process Lipsey's catalog
+        env:
+          LIPSEYS_EMAIL: ${{ secrets.LIPSEYS_EMAIL }}
+          LIPSEYS_PASSWORD: ${{ secrets.LIPSEYS_PASSWORD }}
+        shell: python3 {0}
+        run: |
+          import urllib.request, json, os, sys
+
+          email = os.environ.get('LIPSEYS_EMAIL', '')
+          password = os.environ.get('LIPSEYS_PASSWORD', '')
+
+          if not email or not password:
+              print('ERROR: Missing LIPSEYS_EMAIL or LIPSEYS_PASSWORD secrets')
+              sys.exit(1)
+
+          # Authenticate
+          print('Authenticating with Lipseys API...')
+          payload = json.dumps({'Email': email, 'Password': password}).encode()
+          req = urllib.request.Request(
+              'https://api.lipseys.com/api/Integration/Authentication/Login',
+              data=payload,
+              headers={'Content-Type': 'application/json'},
+              method='POST'
+          )
+          resp = urllib.request.urlopen(req)
+          token = json.loads(resp.read()).get('token', '')
+
+          if not token:
+              print('ERROR: Authentication failed')
+              sys.exit(1)
+
+          print('Authentication successful')
+
+          # Fetch catalog
+          print('Fetching catalog feed...')
+          req2 = urllib.request.Request(
+              'https://api.lipseys.com/api/Integration/Items/CatalogFeed',
+              headers={'Token': token}
+          )
+          resp2 = urllib.request.urlopen(req2)
+          data = json.loads(resp2.read())
+          items = data.get('data', [])
+
+          # Filter to firearms (allowed types only)
+          allowed_types = {'Other Firearm','Semi-Auto Pistol','Rifle','Shotgun','Muzzleloader','Revolver','Specialty Handgun','NFA - Short Barrel Rifle','Fire Control Unit'}
+          filtered = []
+          for item in items:
+              if item.get('itemType') == 'Firearm' and item.get('type', '') in allowed_types:
+                  filtered.append({
+                      'model': item.get('model', ''),
+                      'manufacturer': item.get('manufacturer', ''),
+                      'caliberGauge': item.get('caliberGauge', ''),
+                      'type': item.get('type', ''),
+                      'msrp': item.get('msrp', 0),
+                      'cost': item.get('price', 0),
+                      'barrelLength': item.get('barrelLength', ''),
+                      'capacity': item.get('capacity', ''),
+                      'finish': item.get('finish', ''),
+                      'action': item.get('action', ''),
+                      'weight': item.get('weight', ''),
+                      'upc': item.get('upc', ''),
+                      'description1': item.get('description1', ''),
+                      'family': item.get('family', ''),
+                      'imageName': item.get('imageName', ''),
+                      'inStock': (item.get('quantity', 0) or 0) > 0
+                  })
+
+          with open('catalog-data.json', 'w') as f:
+              json.dump(filtered, f, separators=(',', ':'))
+
+          print(f'Saved {len(filtered)} in-stock firearms to catalog-data.json')
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add catalog-data.json
+          if git diff --cached --quiet; then
+            echo "No changes to catalog data"
+          else
+            git commit -m "Update firearms catalog data"
+            git push
+          fi
