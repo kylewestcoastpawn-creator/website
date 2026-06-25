@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /subscribe.html
+Disallow: /deals-content.html
+Disallow: /gun-tag-printer.html
+Disallow: /compare-backgrounds.html
+
+Sitemap: https://westcoastpawngun.com/sitemap.xml
