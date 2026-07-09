@@ -16,7 +16,7 @@
         .shop-card{background:#111;border:1px solid #333;border-radius:12px;overflow:hidden;transition:border-color 0.3s,transform 0.2s;}
         .shop-card:hover{border-color:#C0A060;transform:translateY(-3px);}
         .shop-card-img{position:relative;width:100%;padding-top:75%;overflow:hidden;background:#0a0a0a;}
-        .shop-card-img img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;padding:15px;transition:opacity 0.3s;}
+        .shop-card-img img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;padding:15px;transition:opacity 0.3s;cursor:pointer;}
         .shop-card-badge{position:absolute;top:12px;left:12px;background:#8B0000;color:#fff;font-family:'Oswald',sans-serif;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;z-index:2;}
         .shop-card-body{padding:20px;}
         .shop-card-title{font-family:'Oswald',sans-serif;color:#fff;font-size:1.3rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
@@ -30,6 +30,18 @@
         .shop-card-thumbs img:hover,.shop-card-thumbs img.active{border-color:#C0A060;}
         .btn-buy{display:block;text-align:center;background:#8B0000;color:#fff;font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:2px;text-decoration:none;padding:14px;border-radius:6px;transition:background 0.2s;}
         .btn-buy:hover{background:#a00000;}
+        .lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:100000;align-items:center;justify-content:center;flex-direction:column;}
+        .lightbox.open{display:flex;}
+        .lightbox-close{position:absolute;top:15px;right:25px;color:#fff;font-size:2.5rem;cursor:pointer;z-index:100001;font-family:'Inter',sans-serif;line-height:1;transition:color 0.2s;}
+        .lightbox-close:hover{color:#C0A060;}
+        .lightbox-img{max-width:90vw;max-height:80vh;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,0.5);}
+        .lightbox-thumbs{display:flex;gap:10px;margin-top:20px;justify-content:center;flex-wrap:wrap;}
+        .lightbox-thumbs img{width:70px;height:70px;object-fit:cover;border-radius:6px;border:2px solid #555;cursor:pointer;transition:border-color 0.2s,transform 0.2s;}
+        .lightbox-thumbs img:hover,.lightbox-thumbs img.lb-active{border-color:#C0A060;transform:scale(1.08);}
+        .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:3rem;cursor:pointer;padding:10px 18px;user-select:none;transition:color 0.2s;}
+        .lightbox-nav:hover{color:#C0A060;}
+        .lightbox-prev{left:10px;}
+        .lightbox-next{right:10px;}
     </style>
 </head>
 <body>
@@ -84,14 +96,13 @@
                 <div class="shop-card">
                     <div class="shop-card-img">
                         <span class="shop-card-badge">Used — Excellent</span>
-                        <img id="mainImg1" src="https://images.guns.com/prod/2026/06/10/6a298d0d1fd5bf2f522de2edc358628e928f3882ea37e.JPG?imwidth=1200" alt="Heckler & Koch P7 M8 9mm semi-automatic pistol for sale at West Coast Pawn & Gun Lakeland FL">
+                        <img id="mainImg1" src="https://images.guns.com/prod/2026/06/10/6a298d0d1fd5bf2f522de2edc358628e928f3882ea37e.JPG?imwidth=1200" alt="Heckler & Koch P7 M8 9mm semi-automatic pistol for sale at West Coast Pawn & Gun Lakeland FL" onclick="openLightbox(this.src,this.closest('.shop-card'))">
                     </div>
                     <div class="shop-card-body">
                         <div class="shop-card-thumbs">
-                            <img src="https://images.guns.com/prod/2026/06/10/6a298d0d1fd5bf2f522de2edc358628e928f3882ea37e.JPG?imwidth=1200" alt="HK P7 M8 side view" class="active" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
-                            <img src="https://images.guns.com/prod/DrDVDJQM2VsVYrpPQEK8fo3fhEr98cogfvQUtvoE.jpeg" alt="HK P7 M8 with box" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
-                            <img src="https://images.guns.com/prod/xh36zNSGkckcTnMmFC381AyIQnylTCuHXkzSm4F2.jpeg" alt="HK P7 M8 in case" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
-                            <img src="https://images.guns.com/prod/DSAueMqIyYehMzvq3U5khGT41G49Jo0MTxzDOHJz.jpeg" alt="HK P7 M8 with magazine" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
+                            <img src="https://images.guns.com/prod/2026/06/10/6a298d0d1fd5bf2f522de2edc358628e928f3882ea37e.JPG?imwidth=1200" alt="HK P7 M8 side view" class="active" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');openLightbox(this.src,this.closest('.shop-card'));">
+                            <img src="https://images.guns.com/prod/2026/06/10/6a298d0f4953b4bc4ac08deea883156173f0ca273fa0e.JPG?imwidth=1200" alt="HK P7 M8 in case" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');openLightbox(this.src,this.closest('.shop-card'));">
+                            <img src="https://images.guns.com/prod/2026/06/10/6a298d11a6f94f4580321a7f8a3fa04d5730eda364ed3.JPG?imwidth=1200" alt="HK P7 M8 alternate angle" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');openLightbox(this.src,this.closest('.shop-card'));">
                         </div>
                         <h3 class="shop-card-title">Heckler & Koch P7 M8</h3>
                         <div class="shop-card-price">$3,800.99</div>
@@ -157,7 +168,58 @@
         </div>
     </footer>
 
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <span class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">&#8249;</span>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="Enlarged photo">
+        <span class="lightbox-nav lightbox-next" onclick="navLightbox(1)">&#8250;</span>
+        <div class="lightbox-thumbs" id="lightboxThumbs"></div>
+    </div>
+
     <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</a>
+
+    <script>
+        var lbImages = [];
+        var lbIndex = 0;
+        function openLightbox(src, card) {
+            lbImages = [];
+            card.querySelectorAll('.shop-card-thumbs img').forEach(function(img) { lbImages.push(img.src); });
+            if (lbImages.length === 0) lbImages.push(src);
+            lbIndex = lbImages.indexOf(src);
+            if (lbIndex < 0) lbIndex = 0;
+            showLightboxImage();
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function navLightbox(dir) {
+            lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+            showLightboxImage();
+        }
+        function showLightboxImage() {
+            document.getElementById('lightboxImg').src = lbImages[lbIndex];
+            var thumbsEl = document.getElementById('lightboxThumbs');
+            thumbsEl.innerHTML = '';
+            lbImages.forEach(function(src, i) {
+                var t = document.createElement('img');
+                t.src = src;
+                t.alt = 'Thumbnail ' + (i + 1);
+                if (i === lbIndex) t.classList.add('lb-active');
+                t.onclick = function() { lbIndex = i; showLightboxImage(); };
+                thumbsEl.appendChild(t);
+            });
+        }
+        document.addEventListener('keydown', function(e) {
+            if (!document.getElementById('lightbox').classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navLightbox(-1);
+            if (e.key === 'ArrowRight') navLightbox(1);
+        });
+    </script>
 
     <script>
         function toggleNav() {
