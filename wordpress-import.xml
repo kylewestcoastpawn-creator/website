@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+    xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:wp="http://wordpress.org/export/1.2/"
+>
+<channel>
+    <title>West Coast Pawn &amp; Gun</title>
+    <link>https://westcoastpawngun.com</link>
+    <description>Lakeland's trusted source for firearms, ammo, pawn loans, and precious metals since 2009.</description>
+    <language>en-US</language>
+    <wp:wxr_version>1.2</wp:wxr_version>
+    <wp:base_site_url>https://westcoastpawngun.com</wp:base_site_url>
+    <wp:base_blog_url>https://westcoastpawngun.com</wp:base_blog_url>
+
+    <!-- Categories -->
+    <wp:category>
+        <wp:term_id>1</wp:term_id>
+        <wp:category_nicename>uncategorized</wp:category_nicename>
+        <wp:category_parent></wp:category_parent>
+        <wp:cat_name><![CDATA[Uncategorized]]></wp:cat_name>
+    </wp:category>
+
+    <!-- Navigation Menu -->
+    <wp:term>
+        <wp:term_id>2</wp:term_id>
+        <wp:term_taxonomy>nav_menu</wp:term_taxonomy>
+        <wp:term_slug>primary-menu</wp:term_slug>
+        <wp:term_name><![CDATA[Primary Menu]]></wp:term_name>
+    </wp:term>
+    <wp:term>
+        <wp:term_id>3</wp:term_id>
+        <wp:term_taxonomy>nav_menu</wp:term_taxonomy>
+        <wp:term_slug>footer-menu</wp:term_slug>
+        <wp:term_name><![CDATA[Footer Menu]]></wp:term_name>
+    </wp:term>
+
+    <!-- ==================== PAGES ==================== -->
+
+    <!-- Home Page (uses front-page.php automatically) -->
+    <item>
+        <title>Home</title>
+        <link>https://westcoastpawngun.com/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<!-- Homepage content is handled by front-page.php template -->]]></content:encoded>
+        <wp:post_id>10</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>home</wp:post_name>
+        <wp:menu_order>0</wp:menu_order>
+    </item>
+
+    <!-- Services Page -->
+    <item>
+        <title>Services</title>
+        <link>https://westcoastpawngun.com/services/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<!-- Content handled by template-services.php -->]]></content:encoded>
+        <wp:post_id>11</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>services</wp:post_name>
+        <wp:menu_order>1</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-services.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- About Page -->
+    <item>
+        <title>About</title>
+        <link>https://westcoastpawngun.com/about/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<!-- Content handled by template-about.php -->]]></content:encoded>
+        <wp:post_id>12</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>about</wp:post_name>
+        <wp:menu_order>2</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-about.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- CCW Page -->
+    <item>
+        <title>CCW Class</title>
+        <link>https://westcoastpawngun.com/ccw/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<!-- Content handled by template-ccw.php -->]]></content:encoded>
+        <wp:post_id>13</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>ccw</wp:post_name>
+        <wp:menu_order>3</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-ccw.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- NFA Items Page -->
+    <item>
+        <title>NFA Items</title>
+        <link>https://westcoastpawngun.com/nfa/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<!-- Content handled by template-nfa.php -->]]></content:encoded>
+        <wp:post_id>14</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>nfa</wp:post_name>
+        <wp:menu_order>4</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-nfa.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- Pawn & Loan Page -->
+    <item>
+        <title>Pawn &amp; Loan</title>
+        <link>https://westcoastpawngun.com/pawn-loan/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<!-- Content handled by template-pawn-loan.php -->]]></content:encoded>
+        <wp:post_id>15</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>pawn-loan</wp:post_name>
+        <wp:menu_order>5</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-pawn-loan.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- Precious Metals Page -->
+    <item>
+        <title>Precious Metals</title>
+        <link>https://westcoastpawngun.com/precious-metals/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<!-- Content handled by template-precious-metals.php -->]]></content:encoded>
+        <wp:post_id>16</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>precious-metals</wp:post_name>
+        <wp:menu_order>6</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-precious-metals.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- Weekly Deals Page -->
+    <item>
+        <title>Weekly Deals</title>
+        <link>https://westcoastpawngun.com/weekly-deals/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<p>Check back every week for our latest deals. Sale prices are only valid until the next sales letter drops.</p>
+<p><strong>All items must be paid in full — no layaway on sale items.</strong></p>
+<!-- Add your current deals content here via the WordPress editor -->]]></content:encoded>
+        <wp:post_id>17</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>weekly-deals</wp:post_name>
+        <wp:menu_order>7</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-weekly-deals.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- Contact Page -->
+    <item>
+        <title>Contact</title>
+        <link>https://westcoastpawngun.com/contact/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<!-- Content handled by template-contact.php -->]]></content:encoded>
+        <wp:post_id>18</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>contact</wp:post_name>
+        <wp:menu_order>8</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-contact.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- Policies Page -->
+    <item>
+        <title>Store Policies</title>
+        <link>https://westcoastpawngun.com/policies/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<!-- Content handled by template-policies.php -->]]></content:encoded>
+        <wp:post_id>19</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>policies</wp:post_name>
+        <wp:menu_order>9</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-policies.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- Privacy Policy Page -->
+    <item>
+        <title>Privacy Policy</title>
+        <link>https://westcoastpawngun.com/privacy-policy/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<h3>Information We Collect</h3>
+<p>We collect information you provide directly to us, such as when you make a purchase, fill out a form, or contact us. This may include your name, email address, phone number, and payment information.</p>
+
+<h3>How We Use Your Information</h3>
+<p>We use the information we collect to process transactions, send you order confirmations, respond to your inquiries, and improve our services. We may also use your email address to send promotional offers if you have opted in to our mailing list.</p>
+
+<h3>Information Sharing</h3>
+<p>We do not sell, trade, or otherwise transfer your personal information to third parties. This does not include trusted third parties who assist us in operating our website, conducting our business, or servicing you, so long as those parties agree to keep this information confidential.</p>
+
+<h3>Data Security</h3>
+<p>We implement a variety of security measures to maintain the safety of your personal information. All payment transactions are processed through a secure payment gateway and are not stored or processed on our servers.</p>
+
+<h3>Cookies</h3>
+<p>We use cookies to enhance your experience on our website. Cookies are small files that a site or its service provider transfers to your computer's hard drive through your web browser that enables the site to recognize your browser and capture and remember certain information.</p>
+
+<h3>Third-Party Links</h3>
+<p>Occasionally, at our discretion, we may include or offer third-party products or services on our website. These third-party sites have separate and independent privacy policies. We have no responsibility or liability for the content and activities of these linked sites.</p>
+
+<h3>Your Consent</h3>
+<p>By using our site, you consent to our privacy policy.</p>
+
+<h3>Changes to This Policy</h3>
+<p>If we decide to change our privacy policy, we will post those changes on this page. This policy was last modified on January 1, 2024.</p>
+
+<h3>Contact Us</h3>
+<p>If you have any questions regarding this privacy policy, you may contact us at:<br>
+West Coast Pawn &amp; Gun<br>
+5619 US Hwy 98 N, Lakeland, FL 33809<br>
+(863) 816-5830<br>
+westcoastpawn@gmail.com</p>]]></content:encoded>
+        <wp:post_id>20</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>privacy-policy</wp:post_name>
+        <wp:menu_order>10</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-privacy.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- Terms & Conditions Page -->
+    <item>
+        <title>Terms &amp; Conditions</title>
+        <link>https://westcoastpawngun.com/terms/</link>
+        <dc:creator><![CDATA[admin]]></dc:creator>
+        <content:encoded><![CDATA[<h3>Use of This Website</h3>
+<p>By accessing this website, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms, you must not use this website.</p>
+
+<h3>Age Requirement</h3>
+<p>You must be at least 18 years of age to use this website. By using this website, you represent and warrant that you are at least 18 years old.</p>
+
+<h3>Products and Services</h3>
+<p>All firearm purchases are subject to federal, state, and local laws. All buyers must pass a NICS background check and complete ATF Form 4473. We reserve the right to refuse any sale for any reason.</p>
+
+<h3>Pricing</h3>
+<p>All prices are subject to change without notice. Sale prices are valid only until the next sales letter is published. We are not responsible for typographical errors in pricing.</p>
+
+<h3>Returns and Refunds</h3>
+<p>All sales are final. We do not offer refunds or exchanges on firearms or ammunition. Please inspect your purchase carefully before completing the transaction.</p>
+
+<h3>Layaway Policy</h3>
+<p>Layaway requires a 25% non-refundable down payment. Balance must be paid within 4 months. Payments are non-refundable. Items not paid in full within the layaway period will result in forfeiture of all payments made.</p>
+
+<h3>Pawn Loan Terms</h3>
+<p>Pawn loan terms, interest rates, and redemption periods are disclosed at the time of the transaction and are subject to Florida state law. Items not redeemed by the due date become property of the store.</p>
+
+<h3>Limitation of Liability</h3>
+<p>West Coast Pawn &amp; Gun shall not be liable for any indirect, incidental, special, or consequential damages arising from the use of this website or our services.</p>
+
+<h3>Governing Law</h3>
+<p>These terms shall be governed by and construed in accordance with the laws of the State of Florida.</p>
+
+<h3>Contact</h3>
+<p>Questions about these terms should be directed to:<br>
+West Coast Pawn &amp; Gun<br>
+5619 US Hwy 98 N, Lakeland, FL 33809<br>
+(863) 816-5830<br>
+westcoastpawn@gmail.com</p>]]></content:encoded>
+        <wp:post_id>21</wp:post_id>
+        <wp:post_date>2024-01-01 00:00:00</wp:post_date>
+        <wp:post_type>page</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:post_name>terms</wp:post_name>
+        <wp:menu_order>11</wp:menu_order>
+        <wp:postmeta>
+            <wp:meta_key>_wp_page_template</wp:meta_key>
+            <wp:meta_value><![CDATA[templates/template-terms.php]]></wp:meta_value>
+        </wp:postmeta>
+    </item>
+
+    <!-- ==================== NAV MENU ITEMS ==================== -->
+
+    <!-- Primary Menu Items -->
+    <item>
+        <title>Home</title>
+        <wp:post_id>100</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>1</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>10</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="primary-menu"><![CDATA[Primary Menu]]></category>
+    </item>
+
+    <item>
+        <title>Shop</title>
+        <wp:post_id>101</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>2</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>custom</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_url</wp:meta_key><wp:meta_value>/shop/</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="primary-menu"><![CDATA[Primary Menu]]></category>
+    </item>
+
+    <item>
+        <title>Services</title>
+        <wp:post_id>102</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>3</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>11</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="primary-menu"><![CDATA[Primary Menu]]></category>
+    </item>
+
+    <item>
+        <title>CCW Class</title>
+        <wp:post_id>103</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>4</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>13</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="primary-menu"><![CDATA[Primary Menu]]></category>
+    </item>
+
+    <item>
+        <title>Deals</title>
+        <wp:post_id>104</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>5</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>17</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="primary-menu"><![CDATA[Primary Menu]]></category>
+    </item>
+
+    <item>
+        <title>About</title>
+        <wp:post_id>105</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>6</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>12</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="primary-menu"><![CDATA[Primary Menu]]></category>
+    </item>
+
+    <item>
+        <title>Contact</title>
+        <wp:post_id>106</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>7</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>18</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="primary-menu"><![CDATA[Primary Menu]]></category>
+    </item>
+
+    <!-- Footer Menu Items -->
+    <item>
+        <title>NFA Items</title>
+        <wp:post_id>110</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>1</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>14</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="footer-menu"><![CDATA[Footer Menu]]></category>
+    </item>
+
+    <item>
+        <title>Pawn &amp; Loan</title>
+        <wp:post_id>111</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>2</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>15</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="footer-menu"><![CDATA[Footer Menu]]></category>
+    </item>
+
+    <item>
+        <title>Precious Metals</title>
+        <wp:post_id>112</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>3</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>16</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="footer-menu"><![CDATA[Footer Menu]]></category>
+    </item>
+
+    <item>
+        <title>Store Policies</title>
+        <wp:post_id>113</wp:post_id>
+        <wp:post_type>nav_menu_item</wp:post_type>
+        <wp:status>publish</wp:status>
+        <wp:menu_order>4</wp:menu_order>
+        <wp:postmeta><wp:meta_key>_menu_item_type</wp:meta_key><wp:meta_value>post_type</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object</wp:meta_key><wp:meta_value>page</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_object_id</wp:meta_key><wp:meta_value>19</wp:meta_value></wp:postmeta>
+        <wp:postmeta><wp:meta_key>_menu_item_menu_item_parent</wp:meta_key><wp:meta_value>0</wp:meta_value></wp:postmeta>
+        <category domain="nav_menu" nicename="footer-menu"><![CDATA[Footer Menu]]></category>
+    </item>
+
+</channel>
+</rss>

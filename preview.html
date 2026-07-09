@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West Coast Pawn & Gun — Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #1a1a1a; --secondary: #8B0000; --accent: #C0A060; --light: #f4f4f4; --muted: #aaa; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--primary); color: var(--light); }
+        a { color: var(--accent); text-decoration: none; transition: color 0.3s; }
+        a:hover { color: #fff; }
+        img { max-width: 100%; height: auto; }
+
+        /* NAV */
+        nav { background-color: #111; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--secondary); }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 48px; height: 48px; background: var(--secondary); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .logo-text h1 { font-family: 'Oswald', sans-serif; font-size: 1.4rem; color: var(--accent); letter-spacing: 1px; }
+        .logo-text p { font-size: 0.7rem; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { color: var(--light); text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 0.95rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 400; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* HERO */
+        .hero { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('honey.jpg') center/cover no-repeat; background-color: #0d0d0d; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+        .hero-content h2 { font-family: 'Oswald', sans-serif; font-size: 1rem; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); margin-bottom: 15px; }
+        .hero-content h1 { font-family: 'Oswald', sans-serif; font-size: 4.5rem; font-weight: 700; text-transform: uppercase; line-height: 1.05; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        .hero-content h1 span { color: var(--accent); }
+        .hero-content p { font-size: 1.1rem; color: #ccc; max-width: 600px; margin: 0 auto 35px; line-height: 1.7; }
+        .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 14px 35px; font-family: 'Oswald', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 2px; border: none; cursor: pointer; text-decoration: none; transition: all 0.3s; font-weight: 600; display: inline-block; }
+        .btn-primary { background: var(--secondary); color: white; }
+        .btn-primary:hover { background: #a00000; color: white; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(139,0,0,0.4); }
+        .btn-outline { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+        .btn-outline:hover { background: var(--accent); color: #111; transform: translateY(-2px); }
+
+        /* TICKER */
+        .ticker { background: var(--secondary); padding: 10px 0; overflow: hidden; white-space: nowrap; }
+        .ticker-track { display: flex; width: max-content; animation: ticker 35s linear infinite; }
+        .ticker-item { font-family: 'Oswald', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
+        .ticker-item span { margin: 0 30px; color: var(--accent); }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* SECTIONS */
+        section { padding: 90px 40px; }
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 { font-family: 'Oswald', sans-serif; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); }
+        .section-title p { color: var(--muted); margin-top: 10px; font-size: 1rem; }
+        .divider { width: 60px; height: 4px; background: var(--secondary); margin: 15px auto; }
+
+        /* SERVICES */
+        .services, .home-services { background: #111; }
+        .home-services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1100px; margin: 0 auto; }
+        .home-service-card { background: #1a1a1a; border: 1px solid #2a2a2a; padding: 40px 30px; text-align: center; transition: all 0.3s; border-bottom: 3px solid transparent; }
+        .home-service-card:hover { border-bottom-color: var(--secondary); transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+        .home-service-card .icon { font-size: 2.8rem; margin-bottom: 18px; }
+        .home-service-card h3 { font-family: 'Oswald', sans-serif; font-size: 1.15rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .home-service-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+        /* CCW BANNER */
+        .home-ccw-banner { background: linear-gradient(135deg, #1a0000 0%, #111 50%, #1a1a00 100%); border-top: 3px solid var(--secondary); border-bottom: 3px solid var(--secondary); padding: 70px 40px; text-align: center; }
+        .home-ccw-banner h2 { font-family: 'Oswald', sans-serif; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 15px; }
+        .home-ccw-banner p { color: var(--muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto 30px; line-height: 1.7; }
+        .home-ccw-details { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; flex-wrap: wrap; }
+        .home-ccw-detail { text-align: center; }
+        .home-ccw-detail .value { font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--secondary); line-height: 1; }
+        .home-ccw-detail .label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+
+        /* WHY US */
+        .why-us { background: #111; }
+        .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto; text-align: center; }
+        .why-item .number { font-family: 'Oswald', sans-serif; font-size: 3rem; font-weight: 700; color: var(--secondary); line-height: 1; }
+        .why-item h4 { font-family: 'Oswald', sans-serif; color: var(--accent); margin: 10px 0 8px; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; }
+        .why-item p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+        /* CONTACT CTA */
+        .home-contact { background: #111; }
+        .home-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1000px; margin: 0 auto; align-items: center; }
+        .home-contact-info h3 { font-family: 'Oswald', sans-serif; color: var(--accent); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+        .home-contact-info p { color: var(--muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 8px; }
+        .home-contact-info .phone-big { font-family: 'Oswald', sans-serif; font-size: 2rem; color: #fff; text-decoration: none; display: inline-block; margin: 15px 0 25px; }
+        .home-contact-map { border: 1px solid #333; overflow: hidden; }
+        .home-contact-map iframe { width: 100%; height: 300px; border: 0; display: block; filter: grayscale(60%) invert(85%) contrast(85%); }
+
+        /* FOOTER */
+        footer { background: #0a0a0a; padding: 50px 40px 30px; border-top: 3px solid var(--secondary); }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; max-width: 1100px; margin: 0 auto 40px; }
+        .footer-brand .footer-logo { font-family: 'Oswald', sans-serif; font-size: 1.5rem; color: var(--accent); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+        .footer-brand p { color: #666; font-size: 0.9rem; line-height: 1.7; max-width: 320px; }
+        .footer-col h4 { font-family: 'Oswald', sans-serif; color: var(--accent); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #666; text-decoration: none; font-size: 0.875rem; transition: color 0.3s; }
+        .footer-col ul li a:hover { color: var(--accent); }
+        .social-btn { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; margin-top: 12px; padding: 12px 24px; border-radius: 8px; transition: opacity 0.2s; }
+        .social-btn:hover { opacity: 0.9; color: #fff; }
+        .social-btn-facebook { background: #1877F2; margin-top: 16px; }
+        .social-btn-instagram { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+        .footer-bottom { border-top: 1px solid #1a1a1a; padding-top: 25px; max-width: 1100px; margin: 0 auto; text-align: center; }
+        .footer-bottom p { color: #444; font-size: 0.82rem; line-height: 1.8; }
+
+        /* AGE GATE */
+        #ageGate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 999999; display: flex; align-items: center; justify-content: center; }
+        .age-gate-box { background: #1a1a1a; border: 2px solid var(--accent); border-radius: 12px; padding: 40px 50px; text-align: center; max-width: 440px; width: 90%; }
+        .age-gate-box h2 { font-family: 'Oswald', sans-serif; color: var(--accent); font-size: 1.8rem; letter-spacing: 3px; text-transform: uppercase; margin: 0 0 10px; }
+        .age-gate-box p { color: #ccc; font-size: 1rem; margin: 0 0 25px; line-height: 1.5; }
+        .age-gate-box .btn { border-radius: 6px; padding: 12px 40px; font-size: 1.1rem; }
+
+        /* ANIMATIONS */
+        .fade-in { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .home-services-grid { grid-template-columns: 1fr; }
+            .home-contact-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-top { grid-template-columns: 1fr; }
+            section { padding: 60px 20px; }
+            nav { padding: 15px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- AGE GATE -->
+    <div id="ageGate">
+        <div class="age-gate-box">
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="1.5" style="margin-bottom:15px"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg>
+            <h2>Age Verification</h2>
+            <p>You must be 21 years or older to view this website. By clicking "I Am 21+" you confirm you meet this requirement.</p>
+            <button class="btn btn-primary" onclick="document.getElementById('ageGate').style.display='none'">I Am 21+</button>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-icon">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg>
+            </div>
+            <div class="logo-text">
+                <h1>WEST COAST PAWN & GUN</h1>
+                <p>Lakeland, Florida</p>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#" style="color:var(--accent)">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">CCW Class</a></li>
+            <li><a href="#">Deals</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="#C0A060" style="vertical-align:middle;margin-right:4px"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg> Lakeland's Local Gun Shop</h2>
+                <h1>West Coast<br><span>Pawn &amp; Gun</span></h1>
+                <p>We buy, sell, trade, and pawn firearms, ammo, and accessories. Walk in, see what we've got, and talk to someone who actually knows guns.</p>
+                <div class="btn-group">
+                    <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                    <a href="#" class="btn btn-outline">Shop Online</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- TICKER -->
+        <div class="ticker">
+            <div class="ticker-track">
+                <div class="ticker-item">Handguns <span>&#9733;</span> Rifles <span>&#9733;</span> Shotguns <span>&#9733;</span> Ammo <span>&#9733;</span> Accessories <span>&#9733;</span> Scopes <span>&#9733;</span> Holsters <span>&#9733;</span> Pawn Loans <span>&#9733;</span> Free Appraisals <span>&#9733;</span> Layaway Available <span>&#9733;</span> FFL Transfers <span>&#9733;</span>&nbsp;&nbsp;&nbsp;</div>
+                <div class="ticker-item">Handguns <span>&#9733;</span> Rifles <span>&#9733;</span> Shotguns <span>&#9733;</span> Ammo <span>&#9733;</span> Accessories <span>&#9733;</span> Scopes <span>&#9733;</span> Holsters <span>&#9733;</span> Pawn Loans <span>&#9733;</span> Free Appraisals <span>&#9733;</span> Layaway Available <span>&#9733;</span> FFL Transfers <span>&#9733;</span>&nbsp;&nbsp;&nbsp;</div>
+            </div>
+        </div>
+
+        <!-- SERVICES -->
+        <section class="home-services">
+            <div class="section-title">
+                <h2>What We Do</h2>
+                <div class="divider"></div>
+                <p>Here's what we can do for you</p>
+            </div>
+            <div class="home-services-grid">
+                <div class="home-service-card fade-in visible">
+                    <div class="icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="#C0A060"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/></svg></div>
+                    <h3>Buy &amp; Sell</h3>
+                    <p>We've got 500+ guns in stock. Looking to sell? Bring it in and we'll give you a fair offer, cash on the spot.</p>
+                </div>
+                <div class="home-service-card fade-in visible">
+                    <div class="icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></div>
+                    <h3>Trade &amp; Pawn</h3>
+                    <p>Want to upgrade? Trade in what you've got. Need cash? We do pawn loans too. Quick, easy, no questions asked.</p>
+                </div>
+                <div class="home-service-card fade-in visible">
+                    <div class="icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg></div>
+                    <h3>FFL Transfers</h3>
+                    <p>Bought a gun online? Ship it to us and we'll take care of the paperwork. $40 per transfer.</p>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top: 40px;">
+                <a href="#" class="btn btn-outline">View All Services</a>
+            </div>
+        </section>
+
+        <!-- CCW BANNER -->
+        <div class="home-ccw-banner">
+            <h2><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C0A060" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px"><polygon points="12,3 1,9 12,15 23,9"/><path d="M5 12v6c0 2 3 4 7 4s7-2 7-4v-6"/><line x1="23" y1="9" x2="23" y2="17"/></svg> Conceal Carry Class</h2>
+            <p>Get your concealed carry certificate in one day. 4.5-hour class and live-fire qualification.</p>
+            <div class="home-ccw-details">
+                <div class="home-ccw-detail"><div class="value">$59.99</div><div class="label">Per Person</div></div>
+                <div class="home-ccw-detail"><div class="value">4.5 hrs</div><div class="label">Class + Range</div></div>
+                <div class="home-ccw-detail"><div class="value">JUL 19</div><div class="label">Next Class — Sunday</div></div>
+                <div class="home-ccw-detail"><div class="value">20</div><div class="label">Max Class Size</div></div>
+            </div>
+            <a href="#" class="btn btn-primary">Learn More &amp; Sign Up</a>
+        </div>
+
+        <!-- WHY US -->
+        <section class="why-us">
+            <div class="section-title">
+                <h2>Why Choose Us</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="why-grid">
+                <div class="why-item fade-in visible"><div class="number">15+</div><h4>Years in Business</h4><p>Been here since 2008 and we're not going anywhere</p></div>
+                <div class="why-item fade-in visible"><div class="number">500+</div><h4>Firearms in Stock</h4><p>New and used: handguns, rifles, shotguns, you name it</p></div>
+                <div class="why-item fade-in visible"><div class="number">FFL/SOT</div><h4>Licensed Dealer</h4><p>We do everything by the book, always have, always will</p></div>
+                <div class="why-item fade-in visible"><div class="number">&#9733;&#9733;&#9733;&#9733;&#9733;</div><h4>Top Rated</h4><p>Our customers keep coming back and bring their friends</p></div>
+            </div>
+        </section>
+
+        <!-- CONTACT CTA -->
+        <section class="home-contact" id="contact">
+            <div class="section-title">
+                <h2>Visit Our Store</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="home-contact-grid">
+                <div class="home-contact-info">
+                    <h3>Come See Us</h3>
+                    <p>&#128205; 5619 US Hwy 98 N, Lakeland, FL 33809</p>
+                    <p>&#128336; Mon–Fri 10am–6pm · Sat 9am–6pm · Sun Closed</p>
+                    <a href="tel:+18638165830" class="phone-big">(863) 816-5830</a>
+                    <div class="btn-group" style="justify-content: flex-start;">
+                        <a href="#" class="btn btn-primary">Contact Us</a>
+                        <a href="#" class="btn btn-outline">Store Policies</a>
+                    </div>
+                </div>
+                <div class="home-contact-map">
+                    <iframe src="https://maps.google.com/maps?q=5619+US+Hwy+98+N+Lakeland+FL+33809&t=&z=15&ie=UTF8&iwloc=&output=embed" title="Store location" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="footer-logo">West Coast Pawn &amp; Gun</div>
+                <p>Lakeland's trusted source for firearms, ammo, pawn loans, and precious metals since 2009.</p>
+                <a href="#" class="social-btn social-btn-facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
+                <a href="#" class="social-btn social-btn-instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> Instagram</a>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">NFA Items</a></li>
+                    <li><a href="#">Pawn & Loan</a></li>
+                    <li><a href="#">Precious Metals</a></li>
+                    <li><a href="#">Store Policies</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Hours</h4>
+                <ul>
+                    <li><a href="#">Mon–Fri: 10am – 6pm</a></li>
+                    <li><a href="#">Saturday: 9am – 6pm</a></li>
+                    <li><a href="#">Sunday: Closed</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 West Coast Pawn & Gun. All rights reserved.<br>5619 US Hwy 98 N, Lakeland, FL 33809 · (863) 816-5830</p>
+            <p style="margin-top:10px"><a href="#">Privacy Policy</a> · <a href="#">Terms & Conditions</a></p>
+        </div>
+    </footer>
+</body>
+</html>
