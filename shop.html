@@ -12,6 +12,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .shop-card{background:#111;border:1px solid #333;border-radius:12px;overflow:hidden;transition:border-color 0.3s,transform 0.2s;}
+        .shop-card:hover{border-color:#C0A060;transform:translateY(-3px);}
+        .shop-card-img{position:relative;width:100%;padding-top:75%;overflow:hidden;background:#0a0a0a;}
+        .shop-card-img img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;padding:15px;transition:opacity 0.3s;}
+        .shop-card-badge{position:absolute;top:12px;left:12px;background:#8B0000;color:#fff;font-family:'Oswald',sans-serif;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;z-index:2;}
+        .shop-card-body{padding:20px;}
+        .shop-card-title{font-family:'Oswald',sans-serif;color:#fff;font-size:1.3rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+        .shop-card-price{font-family:'Oswald',sans-serif;color:#C0A060;font-size:1.5rem;margin-bottom:12px;}
+        .shop-card-specs{list-style:none;padding:0;margin:0 0 15px;}
+        .shop-card-specs li{color:#aaa;font-size:0.9rem;padding:4px 0;border-bottom:1px solid #222;}
+        .shop-card-specs li span{color:#fff;float:right;}
+        .shop-card-desc{color:#888;font-size:0.85rem;line-height:1.6;margin-bottom:15px;}
+        .shop-card-thumbs{display:flex;gap:6px;margin-bottom:15px;flex-wrap:wrap;}
+        .shop-card-thumbs img{width:60px;height:60px;object-fit:cover;border-radius:4px;border:2px solid #333;cursor:pointer;transition:border-color 0.2s;}
+        .shop-card-thumbs img:hover,.shop-card-thumbs img.active{border-color:#C0A060;}
+        .btn-buy{display:block;text-align:center;background:#8B0000;color:#fff;font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:2px;text-decoration:none;padding:14px;border-radius:6px;transition:background 0.2s;}
+        .btn-buy:hover{background:#a00000;}
+    </style>
 </head>
 <body>
     <!-- AGE VERIFICATION -->
@@ -59,10 +78,37 @@
         </div>
 
         <section style="max-width:1100px;margin:0 auto;padding:40px 20px;">
-            <div id="shopGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:25px;">
-                <!-- Listings will be added here -->
+            <div id="shopGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:25px;">
+
+                <!-- LISTING: Heckler & Koch P7 M8 -->
+                <div class="shop-card">
+                    <div class="shop-card-img">
+                        <span class="shop-card-badge">Used — Excellent</span>
+                        <img id="mainImg1" src="https://images.guns.com/prod/2026/06/10/6a298d0d1fd5bf2f522de2edc358628e928f3882ea37e.JPG?imwidth=1200" alt="Heckler & Koch P7 M8 9mm semi-automatic pistol for sale at West Coast Pawn & Gun Lakeland FL">
+                    </div>
+                    <div class="shop-card-body">
+                        <div class="shop-card-thumbs">
+                            <img src="https://images.guns.com/prod/2026/06/10/6a298d0d1fd5bf2f522de2edc358628e928f3882ea37e.JPG?imwidth=1200" alt="HK P7 M8 side view" class="active" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
+                            <img src="https://images.guns.com/prod/DrDVDJQM2VsVYrpPQEK8fo3fhEr98cogfvQUtvoE.jpeg" alt="HK P7 M8 with box" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
+                            <img src="https://images.guns.com/prod/xh36zNSGkckcTnMmFC381AyIQnylTCuHXkzSm4F2.jpeg" alt="HK P7 M8 in case" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
+                            <img src="https://images.guns.com/prod/DSAueMqIyYehMzvq3U5khGT41G49Jo0MTxzDOHJz.jpeg" alt="HK P7 M8 with magazine" onclick="document.getElementById('mainImg1').src=this.src;this.parentNode.querySelectorAll('img').forEach(i=>i.classList.remove('active'));this.classList.add('active');">
+                        </div>
+                        <h3 class="shop-card-title">Heckler & Koch P7 M8</h3>
+                        <div class="shop-card-price">$3,800.99</div>
+                        <ul class="shop-card-specs">
+                            <li>Caliber <span>9mm Luger</span></li>
+                            <li>Action <span>Semi Automatic</span></li>
+                            <li>Barrel Length <span>4.13"</span></li>
+                            <li>Capacity <span>8 Rounds</span></li>
+                            <li>Condition <span>Used — Excellent</span></li>
+                        </ul>
+                        <p class="shop-card-desc">HK P7 M8 in great condition, with box (serial number is missing from box), 8 round magazine. No cleaning rod.</p>
+                        <a href="https://www.guns.com/used-guns/p/heckler-koch-p7-m8?i=689814" target="_blank" rel="noopener noreferrer" class="btn-buy">Buy on Guns.com</a>
+                    </div>
+                </div>
+                <!-- END LISTING -->
+
             </div>
-            <p id="shopEmpty" style="text-align:center;color:#888;font-size:1.1rem;padding:60px 20px;">No listings right now — check back soon!</p>
         </section>
     </main>
 
